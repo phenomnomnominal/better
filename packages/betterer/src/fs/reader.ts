@@ -23,3 +23,13 @@ export async function read(filePath: string): Promise<string | null> {
     return null;
   }
 }
+
+export async function readdir(dirPath: string): Promise<true | null> {
+  try {
+    const stat = await fs.stat(dirPath);
+    const isDirectory = stat.isDirectory();
+    return isDirectory || null;
+  } catch {
+    return null;
+  }
+}

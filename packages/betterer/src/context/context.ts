@@ -14,7 +14,7 @@ import type { BettererContext, BettererContextSummary } from './types.js';
 
 import { overrideContextConfig } from '../context/index.js';
 import { overrideReporterConfig } from '../reporters/index.js';
-import { overrideWatchConfig } from '../runner/index.js';
+import { overrideWatchConfig } from '../fs/index.js';
 import { BettererSuiteΩ } from '../suite/index.js';
 import { getGlobals } from '../globals.js';
 import { BettererContextSummaryΩ } from './context-summary.js';
@@ -51,11 +51,11 @@ export class BettererContextΩ implements BettererContext {
       specifiedFilePaths = [];
     }
 
-    const { config, reporter, resolvers, results, versionControl } = getGlobals();
+    const { config, fs, reporter, resolvers, results } = getGlobals();
 
-    await versionControl.api.sync();
+    await fs.api.sync();
 
-    const resolver = resolvers.cwd as BettererFileResolverΩ;
+    const resolver = resolvers.base as BettererFileResolverΩ;
 
     const { includes, excludes } = config;
     resolver.include(...includes);

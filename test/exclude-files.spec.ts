@@ -18,7 +18,7 @@ export default {
 import { regexp } from '@betterer/regexp';
 
 export default {
-  test: () => regexp(/(\\/\\/\\s*HACK)/i).include('./src/**/*.ts').exclude(/exclude.ts/)
+  test: () => regexp(/(\\/\\/\\s*HACK)/i).include('./src/**/*.ts').exclude(/exclude.ts/).exclude('**/exclude-glob.ts')
 };
       `
     });
@@ -28,6 +28,7 @@ export default {
 
     await writeFile(resolve('./src/index.ts'), '// Hack');
     await writeFile(resolve('./src/exclude.ts'), '// Hack');
+    await writeFile(resolve('./src/exclude-glob.ts'), '// Hack');
 
     await betterer({ configPaths, resultsPath, workers: false });
 

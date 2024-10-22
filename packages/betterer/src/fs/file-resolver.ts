@@ -1,4 +1,3 @@
-import type { BettererTestMeta } from '../test/index.js';
 import type {
   BettererFileGlobs,
   BettererFilePath,
@@ -7,44 +6,23 @@ import type {
   BettererFileResolver
 } from './types.js';
 
-import { invariantΔ } from '@betterer/errors';
 import minimatch from 'minimatch';
 import path from 'node:path';
 
 import { getGlobals } from '../globals.js';
-import { flatten, normalisedPath } from '../utils.js';
+import { flatten, isString, normalisedPath } from '../utils.js';
 import { getTmpPath } from './temp.js';
 
 const INCLUDE_ALL = '**/*';
-
 export class BettererFileResolverΩ implements BettererFileResolver {
-  private _excluded: Array<RegExp> = [];
+  private _excluded: Array<RegExp | string> = [];
+  private _excludedResolved: Array<RegExp | string> | null = null;
   private _included: Array<string> = [INCLUDE_ALL];
   private _includedResolved: Array<string> | null = null;
-  private _testMeta: BettererTestMeta | null = null;
   private _validatedFilePaths: Array<string> = [];
   private _validatedFilePathsMap: Record<string, boolean> = {};
 
-  constructor(private _baseDirectory: string | null = null) {}
-
-  public get baseDirectory(): string {
-    invariantΔ(this._baseDirectory, '`baseDirectory` is only set once the resolver is initialised!');
-    return this._baseDirectory;
-  }
-
-  public get initialised(): boolean {
-    return !!this._baseDirectory;
-  }
-
-  public get testMeta(): BettererTestMeta {
-    invariantΔ(this._testMeta, '`testMeta` is only set once the resolver is initialised!');
-    return this._testMeta;
-  }
-
-  public init(testMeta: BettererTestMeta): void {
-    this._testMeta = testMeta;
-    this._baseDirectory = path.dirname(this._testMeta.configPath);
-  }
+  constructor(public readonly baseDirectory: string) {}
 
   public async validate(filePaths: BettererFilePaths): Promise<BettererFilePaths> {
     if (!filePaths.length) {
@@ -53,14 +31,6 @@ export class BettererFileResolverΩ implements BettererFileResolver {
 
     await this._update();
     return filePaths.filter((filePath) => this._validatedFilePathsMap[filePath]);
-  }
-
-  public async filterCached(filePaths: BettererFilePaths): Promise<BettererFilePaths> {
-    const { config, versionControl } = getGlobals();
-    if (!config.cache) {
-      return filePaths;
-    }
-    return await versionControl.api.filterCached(this.testMeta, filePaths);
   }
 
   public included(filePaths: BettererFilePaths): BettererFilePaths {
@@ -83,16 +53,18 @@ export class BettererFileResolverΩ implements BettererFileResolver {
       return this;
     }
 
-    if (this._included.includes(INCLUDE_ALL)) {
-      this._included = this._included.filter((include) => include !== INCLUDE_ALL);
+    if (this._included.length === 1 && this._included.includes(INCLUDE_ALL)) {
+      this._included = [];
     }
 
     this._included = [...this._included, ...flatten(includePatterns)];
+    this._includedResolved = null;
     return this;
   }
 
   public exclude(...excludePatterns: BettererFilePatterns): this {
     this._excluded = [...this._excluded, ...flatten(excludePatterns)];
+    this._excludedResolved = null;
     return this;
   }
 
@@ -107,10 +79,10 @@ export class BettererFileResolverΩ implements BettererFileResolver {
   }
 
   private async _update(): Promise<void> {
-    const { versionControl } = getGlobals();
+    const { fs } = getGlobals();
 
     this._validatedFilePathsMap = {};
-    const filePaths = await versionControl.api.getFilePaths();
+    const filePaths = await fs.api.getFilePaths();
     const validatedFilePaths: Array<string> = [];
     filePaths.forEach((filePath) => {
       const includedAndNotExcluded = this._isIncluded(filePath) && !this._isExcluded(filePath);
@@ -130,6 +102,11 @@ export class BettererFileResolverΩ implements BettererFileResolver {
   }
 
   private _isExcluded(filePath: string): boolean {
-    return this._excluded.some((exclude: RegExp) => exclude.test(filePath));
+    if (!this._excludedResolved) {
+      this._excludedResolved = this._excluded.map((pattern) => (isString(pattern) ? this.resolve(pattern) : pattern));
+    }
+    return this._excluded.some((pattern) =>
+      isString(pattern) ? minimatch(filePath, pattern) : pattern.test(filePath)
+    );
   }
 }

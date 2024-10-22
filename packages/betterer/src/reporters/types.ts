@@ -21,6 +21,7 @@ export type BettererOptionsReporters = Array<string | BettererReporter>;
 export interface BettererOptionsReporter {
   /**
    * When `true`, the default reporter will render the Betterer logo.
+   *
    * @defaultValue `false`
    */
   logo?: boolean;
@@ -28,6 +29,9 @@ export interface BettererOptionsReporter {
    * An array of names of npm packages that export a {@link @betterer/betterer#BettererReporter | `BettererReporter` }
    * or `object`s that implement {@link @betterer/betterer#BettererReporter | `BettererReporter`}.
    * Ignored when `silent` is `true`.
+   *
+   * @remarks When given a file path, the path will be resolved relative to the `cwd`.
+   *
    * @defaultValue `['@betterer/reporter']`
    */
   reporters?: BettererOptionsReporters;

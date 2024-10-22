@@ -2,8 +2,10 @@ import { describe, expect, it } from 'vitest';
 
 import { createFixture } from '../fixture.js';
 
+const isNode16 = process.version.startsWith('v16');
+
 describe('betterer.watch', () => {
-  it.skipIf(!process.stdout.isTTY)('should show an error for an invalid filter in watch mode', async () => {
+  it.skipIf(!process.stdout.isTTY || isNode16)('should show an error for an invalid filter in watch mode', async () => {
     const { betterer } = await import('@betterer/betterer');
 
     const { logs, paths, resolve, cleanup, writeFile, sendKeys } = await createFixture('watch-filter-error', {

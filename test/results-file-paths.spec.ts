@@ -15,7 +15,13 @@ function test(): BettererFileTest {
   return new BettererFileTest((files, fileTestResult) => {
     files.forEach(filePath => {
       const file = fileTestResult.addFile(filePath, '');
-      file.addIssue(0, 0, path.join(process.cwd(), 'some', 'file', 'path'));
+      file.addIssue(0, 0, \`some error found in \${filePath} oh no\`);
+      file.addIssue(0, 0, \`some error found in ../../some/file/path and ..\\\\..\\\\some\\\\other\\\\file\\\\path oh no\`);
+      file.addIssue(0, 0, \`some error found in '\${filePath}' oh no\`);
+      file.addIssue(0, 0, \`some error found in [../../some/file/path] and "..\\\\..\\\\some\\\\other\\\\file\\\\path" oh no\`);
+      file.addIssue(0, 0, \`some error found in \\\`\${filePath}\\\` oh no\`);
+      file.addIssue(0, 0, \`some error found in (../../some/file/path) and {..\\\\..\\\\some\\\\other\\\\file\\\\path} oh no\`);
+      file.addIssue(0, 0, \`some error found in <\${filePath}> oh no\`);
     });
   });
 }
@@ -23,7 +29,8 @@ function test(): BettererFileTest {
 export default {
   test: () => test().include('./src/**/*.ts')
 };
-      `
+      `,
+      './src/another-file.ts': ''
     });
 
     const configPaths = [paths.config];

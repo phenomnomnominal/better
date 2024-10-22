@@ -49,12 +49,12 @@ export class BettererRunΩ implements BettererRun {
   }
 
   public static async create(testMeta: BettererTestMeta, filePaths: BettererFilePaths): Promise<BettererRunΩ> {
-    const { config, reporter, results, runWorkerPool, versionControl } = getGlobals();
+    const { config, fs, reporter, results, runWorkerPool } = getGlobals();
 
     const workerHandle = runWorkerPool.getWorkerHandle();
     const worker = await workerHandle.claim();
 
-    const runMeta = await worker.api.init(testMeta, { ...config, workers: 1 }, results, versionControl);
+    const runMeta = await worker.api.init(testMeta, { ...config, workers: 1 }, fs, results);
     workerHandle.release();
 
     let baseline: BettererResultΩ | null = null;

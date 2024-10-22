@@ -46,12 +46,24 @@ exports[`betterer > should sort files by their file path even when only running 
 1 test got checked. 🤔
 1 test got checked for the first time! 🎉
 ",
-  "🌟 Betterer (0ms):
+  "Checking 1 file... 🤔
+
+・ fixtures/file-test-sort-subset/src/c.ts
+
+🌟 Betterer (0ms):
 ",
-  "🌟 Betterer (0ms): 1 test running...
+  "Checking 1 file... 🤔
+
+・ fixtures/file-test-sort-subset/src/c.ts
+
+🌟 Betterer (0ms): 1 test running...
 🤔 test: running "test"!
 ",
-  "🎉 Betterer (0ms): 1 test done!
+  "Checking 1 file... 🤔
+
+・ fixtures/file-test-sort-subset/src/c.ts
+
+🎉 Betterer (0ms): 1 test done!
 ✅ test: "test" got force updated. (1 new issue, 8 existing, 9 total) 🆙
 ・ 2 existing, 1 new issues in "fixtures/file-test-sort-subset/src/c.ts".
 ・
@@ -61,7 +73,11 @@ exports[`betterer > should sort files by their file path even when only running 
 ・     | ^^^^^^^^^ eslint(no-debugger): Unexpected 'debugger' statement.
 ・
 ",
-  "🎉 Betterer (0ms): 1 test done!
+  "Checked 1 file! 🔍
+
+・ fixtures/file-test-sort-subset/src/c.ts
+
+🎉 Betterer (0ms): 1 test done!
 ✅ test: "test" got force updated. (1 new issue, 8 existing, 9 total) 🆙
 ・ 2 existing, 1 new issues in "fixtures/file-test-sort-subset/src/c.ts".
 ・

@@ -32,9 +32,9 @@ export async function createReporterConfig(
 
 export async function overrideReporterConfig(optionsOverride: BettererOptionsReporterOverride): Promise<void> {
   if (optionsOverride.reporters) {
-    const { config, results, runWorkerPool, testMetaLoader, versionControl } = getGlobals();
+    const { config, results, runWorkerPool, testMetaLoader, fs } = getGlobals();
     const reporters = toArray<string | BettererReporter>(optionsOverride.reporters);
     const reporter = await loadReporters(reporters, config.cwd);
-    setGlobals(config, reporter, results, runWorkerPool, testMetaLoader, versionControl);
+    setGlobals(config, fs, reporter, results, runWorkerPool, testMetaLoader);
   }
 }

@@ -27,7 +27,10 @@ export class BettererResolverTest<
   SerialisedType = DeserialisedType,
   DiffType = null
 > extends BettererTest<DeserialisedType, SerialisedType, DiffType> {
-  private _resolverΩ = new BettererFileResolverΩ();
+  /**
+   * The file resolver relative to this test's config file.
+   */
+  public readonly resolver: BettererFileResolver;
 
   constructor(options: BettererTestOptions<DeserialisedType, SerialisedType, DiffType>) {
     super({
@@ -35,15 +38,14 @@ export class BettererResolverTest<
       test: async (run: BettererRun): Promise<DeserialisedType> => {
         const runΩ = run as BettererWorkerRunΩ;
 
-        this._resolverΩ.init(runΩ.testMeta);
-
         const { filePaths } = runΩ;
         invariantΔ(filePaths, `\`filePaths\` should always exist for a \`BettererResolverTest\` run!`);
 
         const hasSpecifiedFiles = filePaths.length > 0;
 
+        const resolverΩ = this.resolver as BettererFileResolverΩ;
         // Get the maximal set of files that the test could run on:
-        const testFiles = await this._resolverΩ.files();
+        const testFiles = await resolverΩ.files();
 
         // Get the set of files that the test will run on:
         let filePathsForThisRun: BettererFilePaths;
@@ -51,7 +53,7 @@ export class BettererResolverTest<
         // Specified files will include files from a global `includes`.
         if (hasSpecifiedFiles) {
           // Validate that they are relevant for this file test:
-          filePathsForThisRun = await this._resolverΩ.validate(filePaths);
+          filePathsForThisRun = await resolverΩ.validate(filePaths);
         } else {
           filePathsForThisRun = testFiles;
         }
@@ -60,7 +62,10 @@ export class BettererResolverTest<
 
         let hasCached = false;
         if (!run.isNew) {
-          const cacheMisses = await this._resolverΩ.filterCached(filePathsForThisRun);
+          const { config, fs } = getGlobals();
+          const cacheMisses = config.cache
+            ? await fs.api.filterCached(runΩ.testMeta, filePathsForThisRun)
+            : filePathsForThisRun;
           hasCached = cacheMisses.length !== filePathsForThisRun.length;
           isFullRun = isFullRun && !hasCached;
           filePathsForThisRun = cacheMisses;
@@ -88,7 +93,7 @@ export class BettererResolverTest<
           .filter((filePath) => !filePaths.includes(filePath));
 
         // Filter them based on the resolver:
-        const relevantExcludedFilePaths = await this._resolverΩ.validate(excludedFilesWithIssues);
+        const relevantExcludedFilePaths = await resolverΩ.validate(excludedFilesWithIssues);
 
         // Add the existing issues to the new result:
         relevantExcludedFilePaths.forEach((filePath) => {
@@ -99,15 +104,8 @@ export class BettererResolverTest<
         return result;
       }
     });
-  }
-
-  /**
-   * The file resolver relative to this test's config file. Will only exist while
-   * the `test()` function is being executed.
-   */
-  public get resolver(): BettererFileResolver {
-    invariantΔ(this._resolverΩ.initialised, '`resolver` can only be used while the `test` function is being executed!');
-    return this._resolverΩ;
+    const { config } = getGlobals();
+    this.resolver = new BettererFileResolverΩ(config.basePath);
   }
 
   /**
@@ -117,7 +115,8 @@ export class BettererResolverTest<
    * @returns This {@link @betterer/betterer#BettererResolverTest | `BettererResolverTest`}, so it is chainable.
    */
   public exclude(...excludePatterns: BettererFilePatterns): this {
-    this._resolverΩ.exclude(...excludePatterns);
+    const resolverΩ = this.resolver as BettererFileResolverΩ;
+    resolverΩ.exclude(...excludePatterns);
     return this;
   }
 
@@ -130,7 +129,8 @@ export class BettererResolverTest<
    * @returns This {@link @betterer/betterer#BettererResolverTest | `BettererResolverTest`}, so it is chainable.
    */
   public include(...includePatterns: BettererFileGlobs): this {
-    this._resolverΩ.include(...includePatterns);
+    const resolverΩ = this.resolver as BettererFileResolverΩ;
+    resolverΩ.include(...includePatterns);
     return this;
   }
 }

@@ -1,7 +1,6 @@
 import type { BettererOptionsContext, BettererOptionsMode, BettererOptionsModeWatch } from '../context/index.js';
-import type { BettererOptionsFS } from '../fs/index.js';
+import type { BettererOptionsFS, BettererOptionsWatcher } from '../fs/index.js';
 import type { BettererOptionsReporter } from '../reporters/index.js';
-import type { BettererOptionsWatcher } from '../runner/index.js';
 import type { betterer } from './betterer.js';
 
 /**

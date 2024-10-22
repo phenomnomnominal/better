@@ -2,7 +2,7 @@ import assert from 'node:assert';
 
 import { BettererError, invariantΔ } from '@betterer/errors';
 
-import { read } from '../fs/index.js';
+import { read, readdir } from '../fs/index.js';
 import { isBoolean, isNumber, isRegExp, isString, isUndefined } from '../utils.js';
 
 function getKeyValue(config: object): [string, unknown] {
@@ -29,6 +29,15 @@ export async function validateFilePath<Config extends object>(config: Config): P
   validate(
     value == null || (isString(value) && (await read(value)) !== null),
     `"${key}" must be a path to a file. ${received(value)}`
+  );
+  return config;
+}
+
+export async function validateDirectory<Config extends object>(config: Config): Promise<Config> {
+  const [key, value] = getKeyValue(config);
+  validate(
+    value == null || (isString(value) && (await readdir(value)) !== null),
+    `"${key}" must be a path to a directory. ${received(value)}`
   );
   return config;
 }
