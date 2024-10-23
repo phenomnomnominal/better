@@ -110,12 +110,12 @@ export function replaceWrappedPaths(input: string, fromPath: string, regexps: Ar
             return;
           }
         }
-        const resolved = path.resolve(fromPath, maybePath);
-        let relative = path.relative(fromPath, resolved);
+        const resolved = normalisedPath(path.resolve(fromPath, maybePath));
+        let relative = normalisedPath(path.relative(fromPath, resolved));
         if (path.dirname(resolved) === fromPath) {
           relative = `./${relative}`;
         }
-        message = message.replace(maybePath, relative).replaceAll(path.win32.sep, path.posix.sep);
+        message = message.replace(maybePath, relative);
       });
     });
   }
