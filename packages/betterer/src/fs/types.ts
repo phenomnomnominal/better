@@ -16,43 +16,121 @@ export type BettererOptionsPaths = Array<string> | string;
  */
 export interface BettererOptionsFS {
   /**
+   * The path to the directory containing the code to be covered by **Betterer**.
+   * By default this is the directory that contains the first given {@link https://phenomnomnominal.github.io/betterer/docs/test-definition-file | test definition file },
+   *
+   * All `include`, `exclude`, and `ignore` patterns are matched relative to the `basePath`.
+   *
+   * @remarks When overriding `basePath`, the path will be resolved relative to the `cwd`.
+   *
+   * @defaultValue `const [first] = options.configPath; const basePath = path.dirname(first)`
+   */
+  basePath?: string;
+  /**
    * When `true`, caching will be enabled for {@link @betterer/betterer#BettererFileTest | `BettererFileTest`s}.
    * Betterer will only check files that have changes since the last test run. **Betterer** will
-   * create a cache file at the `configPath`.
+   * create a cache file at the given `cachePath`.
+   *
    * @defaultValue `false`
    */
   cache?: boolean;
   /**
    * The path to where the **Betterer** cache file will be saved. Only used when `cache` is `true`.
-   * The `cachePath` should be relative to the `cwd`.
+   *
+   * @remarks When overriding `cachePath`, the path will be resolved relative to the `cwd`.
+   *
    * @defaultValue `'./.betterer.cache'`
    */
   cachePath?: string;
   /**
    * A path to a {@link https://phenomnomnominal.github.io/betterer/docs/test-definition-file | test definition file }
-   * containing **Betterer** tests, or an array of them. All `configPaths` should be relative to
-   * the `cwd`.
+   * containing **Betterer** tests, or an array of them.
+   *
+   * @remarks When overriding `configPaths`, the paths will be resolved relative to the `cwd`.
+   *
    * @defaultValue `['./.betterer.ts']`
    */
   configPaths?: BettererOptionsPaths;
   /**
    * The current working directory.
+   *
+   * @remarks All other path options will be resolved relative to the given `cwd`.
+   *
    * @defaultValue {@link https://nodejs.org/api/process.html#process_process_cwd | `process.cwd()`}
    */
   cwd?: string;
   /**
+   * The path to the root of the repository.
+   * By default this is the same as the `basePath`, but can be useful to override in a monorepo.
+   *
+   * All `include`, `exclude`, and `ignore` patterns are matched relative to the `basePath`.
+   *
+   * @remarks When overriding `repoPath`, the path will be resolved relative to the `cwd`.
+   *
+   * @defaultValue `options.basePath`
+   */
+  repoPath?: string;
+  /**
    * The path to the {@link https://phenomnomnominal.github.io/betterer/docs/results-file | results file}.
-   * The `resultsPath` should be relative to the `cwd`.
+   *
+   * @remarks When overriding `resultsPath`, the path will be resolved relative to the `cwd`.
+   *
    * @defaultValue `'./.betterer.results'`
    */
   resultsPath?: string;
 }
 
 /**
+ * @public A {@link https://www.npmjs.com/package/glob#user-content-glob-primer | glob} pattern
+ * to match file paths that should be ignored by the file watcher in watch mode, or an array of
+ * them.
+ */
+export type BettererOptionsIgnores = Array<string>;
+
+/**
+ * @public **Betterer** options for instantiating a file watcher.
+ *
+ * @remarks The options object will be validated by **Betterer** and will be available on the
+ * {@link @betterer/betterer#BettererConfig | `BettererConfig`}.
+ */
+export interface BettererOptionsWatcher {
+  /**
+   * A {@link https://www.npmjs.com/package/glob#user-content-glob-primer | glob} pattern to match
+   * file paths that should be ignored by the file watcher in watch mode, or an array of them.
+   * All `ignores` should be relative to the `cwd`.
+   * @defaultValue `[]`
+   */
+  ignores?: BettererOptionsIgnores;
+  /**
+   * Must be `true` when using Watch mode.
+   */
+  watch?: true;
+}
+
+/**
+ * @public Options for when you override the file watcher config via the {@link @betterer/betterer#BettererContext.options | `BettererContext.options()` API}.
+ */
+export interface BettererOptionsWatcherOverride {
+  /**
+   * A {@link https://www.npmjs.com/package/glob#user-content-glob-primer | glob} pattern to match
+   * file paths that should be ignored by the file watcher in watch mode, or an array of them. All
+   * `ignores` should be relative to the `cwd`.
+   * @defaultValue `[]`
+   */
+  ignores?: BettererOptionsIgnores;
+}
+
+/**
+ * @public An array of absolute {@link https://www.npmjs.com/package/glob#user-content-glob-primer | glob }
+ * patterns that match file paths that will be ignored by the file watcher in watch mode.
+ */
+export type BettererConfigIgnores = ReadonlyArray<string>;
+
+/**
  * @public An array of absolute {@link https://phenomnomnominal.github.io/betterer/docs/test-definition-file | test definition file paths }
  * containing **Betterer** tests.
  */
-export type BettererConfigPaths = ReadonlyArray<string>;
+export type BettererConfigPaths = readonly [string, ...Array<string>];
 
 /**
  * @public Full validated config object for a `BettererFS`.
@@ -60,6 +138,12 @@ export type BettererConfigPaths = ReadonlyArray<string>;
  * @remarks Ths config can be accessed via the {@link @betterer/betterer#BettererConfig | `BettererConfig`}.
  */
 export interface BettererConfigFS {
+  /**
+   * The absolute path to the directory containing the code to be covered by **Betterer**.
+   *
+   * All `include`, `exclude`, and `ignore` patterns are resolved relative to the `basePath`.
+   */
+  basePath: string;
   /**
    * When `true`, caching will be enabled for {@link @betterer/betterer#BettererFileTest | `BettererFileTest`s }.
    * **Betterer** will only check files that have changes since the last test run. **Betterer**
@@ -81,13 +165,31 @@ export interface BettererConfigFS {
    */
   cwd: string;
   /**
+   * An array of absolute {@link https://www.npmjs.com/package/glob#user-content-glob-primer | glob }
+   * patterns that match file paths that will be ignored by the file watcher in watch mode.
+   */
+  ignores: BettererConfigIgnores;
+  /**
+   * The absolute path to the root of the repository.
+   */
+  repoPath: string;
+  /**
    * The absolute path to the {@link https://phenomnomnominal.github.io/betterer/docs/results-file | results file}.
    */
   resultsPath: string;
   /**
-   * The path to the local version control root.
+   * The absolute path to the local version control root. This will only be set in {@link https://phenomnomnominal.github.io/betterer/docs/running-betterer/#pre-commit-mode | precommit mode}.
    */
-  versionControlPath: string;
+  versionControlPath: string | null;
+  /**
+   * When `true`, {@link https://phenomnomnominal.github.io/betterer/docs/running-betterer#watch-mode | watch mode }
+   * is enabled. In watch mode, **Betterer** will run all {@link @betterer/betterer#BettererFileTest | `BettererFileTest`s }
+   * whenever a file changes. Only files that are tracked by version control will be watched by
+   * default. You can ignore additional files using `ignores`.
+   *
+   * If `ci`, `precommit`, `strict`, or `update` is `true`, `watch` will be `false`.
+   */
+  watch: boolean;
 }
 
 /**
@@ -115,7 +217,7 @@ export type BettererFilePaths = ReadonlyArray<BettererFilePath>;
  *
  * @remarks - Can contain nested arrays, which will be {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat | flattened}.
  */
-export type BettererFilePatterns = ReadonlyArray<RegExp | ReadonlyArray<RegExp>>;
+export type BettererFilePatterns = ReadonlyArray<RegExp | string | ReadonlyArray<RegExp | string>>;
 
 export type BettererFileHashMap = Map<string, string>;
 export type BettererFileHashMapSerialised = Record<string, string>;
@@ -134,14 +236,16 @@ export interface BettererFileCache {
   updateCache(testMeta: BettererTestMeta, filePaths: BettererFilePaths): Promise<void>;
   writeCache(): Promise<void>;
 }
-
-export interface BettererVersionControl {
-  add(resultsPath: string): Promise<void>;
+export interface BettererFS {
   getFilePaths(): BettererFilePaths;
   sync(): Promise<void>;
 }
 
-export type BettererVersionControlWorker = BettererWorkerAPI<typeof import('./version-control.worker.js')>;
+export interface BettererVersionControl {
+  add(resultsPath: string): Promise<void>;
+}
+
+export type BettererFSWorker = BettererWorkerAPI<typeof import('./fs.worker.js')>;
 
 /**
  * @public A helper for resolving file paths in a {@link @betterer/betterer#BettererResolverTest | `BettererResolverTest`}.
@@ -178,7 +282,7 @@ export type BettererVersionControlWorker = BettererWorkerAPI<typeof import('./ve
  *     }
  *   })
  *   .include('**\/*.js')
- *   .exclude(/file-2.js/);
+ *   .exclude('**\/file-2.js');
  * };
  * ```
  */

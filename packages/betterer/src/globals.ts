@@ -1,11 +1,10 @@
 import type { BettererError } from '@betterer/errors';
 import type { BettererOptions } from './api/index.js';
 import type { BettererConfig } from './config/types.js';
-import type { BettererFileResolver, BettererVersionControlWorker } from './fs/index.js';
+import type { BettererFileResolver, BettererFSWorker, BettererOptionsWatcher } from './fs/index.js';
 import type { BettererReporter } from './reporters/index.js';
 import type { BettererResultsWorker } from './results/index.js';
 import type { BettererRunWorkerPool } from './run/types.js';
-import type { BettererOptionsWatcher } from './runner/index.js';
 import type { BettererTestMetaLoaderWorker } from './test/index.js';
 
 import { invariantΔ } from '@betterer/errors';
@@ -15,13 +14,12 @@ import { createContextConfig, enableMode } from './context/index.js';
 import { BettererFileResolverΩ, createFSConfig } from './fs/index.js';
 import { createReporterConfig, loadDefaultReporter } from './reporters/index.js';
 import { createRunWorkerPool } from './run/index.js';
-import { createWatcherConfig } from './runner/index.js';
 
 class BettererGlobalResolvers {
-  public cwd: BettererFileResolver;
+  public base: BettererFileResolver;
 
   public constructor(config: BettererConfig) {
-    this.cwd = new BettererFileResolverΩ(config.cwd);
+    this.base = new BettererFileResolverΩ(config.basePath);
   }
 }
 
@@ -30,11 +28,11 @@ class BettererGlobals {
 
   constructor(
     public readonly config: BettererConfig,
-    public readonly _reporter: BettererReporter | null,
+    public readonly fs: BettererFSWorker,
+    private readonly _reporter: BettererReporter | null,
     public readonly results: BettererResultsWorker,
     private readonly _runWorkerPool: BettererRunWorkerPool | null,
-    private readonly _testMetaLoader: BettererTestMetaLoaderWorker | null,
-    public readonly versionControl: BettererVersionControlWorker
+    private readonly _testMetaLoader: BettererTestMetaLoaderWorker | null
   ) {}
 
   public get reporter(): BettererReporter {
@@ -63,30 +61,27 @@ export async function createGlobals(
 
   try {
     const configContext = await createContextConfig(options);
-    const configFS = await createFSConfig(options);
+    const configFS = await createFSConfig(configContext, options, optionsWatch);
 
     const [configReporter, reporter] = await createReporterConfig(configFS, options);
     errorReporter = reporter;
 
-    const configWatcher = createWatcherConfig(configFS, optionsWatch);
-
     const results: BettererResultsWorker = await importWorkerΔ('./results/results.worker.js');
-    const versionControl: BettererVersionControlWorker = await importWorkerΔ('./fs/version-control.worker.js');
+    const fs: BettererFSWorker = await importWorkerΔ('./fs/fs.worker.js');
     const testMetaLoader: BettererTestMetaLoaderWorker = await importWorkerΔ('./test/test-meta/loader.worker.js');
 
     const config = enableMode({
       ...configContext,
       ...configFS,
-      ...configReporter,
-      ...configWatcher
+      ...configReporter
     });
 
     await results.api.init(config);
-    await versionControl.api.init(config);
+    await fs.api.init(config);
 
     const runWorkerPool = await createRunWorkerPool(config.workers);
 
-    setGlobals(config, reporter, results, runWorkerPool, testMetaLoader, versionControl);
+    setGlobals(config, fs, reporter, results, runWorkerPool, testMetaLoader);
   } catch (error) {
     const reporterΩ = errorReporter;
     await reporterΩ.configError(options, error as BettererError);
@@ -107,7 +102,7 @@ export async function destroyGlobals(): Promise<void> {
   if (!GLOBAL_CONTAINER) {
     return;
   }
-  const { results, runWorkerPool, testMetaLoader, versionControl } = getGlobals();
-  await Promise.all([results.destroy(), runWorkerPool.destroy(), testMetaLoader.destroy(), versionControl.destroy()]);
+  const { fs, results, runWorkerPool, testMetaLoader } = getGlobals();
+  await Promise.all([fs.destroy(), results.destroy(), runWorkerPool.destroy(), testMetaLoader.destroy()]);
   GLOBAL_CONTAINER = null;
 }

@@ -27,7 +27,7 @@ export class BettererResultsSummaryΩ implements BettererResultsSummary {
         testsMeta = testsMeta.filter((testMeta) => filters.some((filter) => filter.test(testMeta.name)));
       }
 
-      const resolverΩ = resolvers.cwd as BettererFileResolverΩ;
+      const resolverΩ = resolvers.base as BettererFileResolverΩ;
       resolverΩ.include(...includes);
       resolverΩ.exclude(...excludes);
 

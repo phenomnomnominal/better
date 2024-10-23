@@ -69,7 +69,7 @@ export class BettererSuiteΩ implements BettererSuite {
 
     const runSummaries = await Promise.all(
       this.runs.map(async (run) => {
-        const { config, versionControl } = getGlobals();
+        const { config, fs } = getGlobals();
 
         if (run.isObsolete) {
           const runObsoleteΩ = run as BettererRunObsoleteΩ;
@@ -77,7 +77,7 @@ export class BettererSuiteΩ implements BettererSuite {
           const runSummary = await runObsoleteΩ.run();
 
           if (runObsoleteΩ.isRemoved && config.cache) {
-            await versionControl.api.clearCache(runObsoleteΩ.name);
+            await fs.api.clearCache(runObsoleteΩ.name);
           }
 
           return runSummary;
@@ -126,7 +126,7 @@ export class BettererSuiteΩ implements BettererSuite {
           // The cache should update on `isSame` because the files still might have changed:
           if (isBetter || isComplete || isNew || isUpdated || isSame) {
             invariantΔ(runSummary.filePaths, `if a run is cacheable, then the summary will always have file paths!`);
-            await versionControl.api.updateCache(runΩ.testMeta, runSummary.filePaths);
+            await fs.api.updateCache(runΩ.testMeta, runSummary.filePaths);
           }
         }
 

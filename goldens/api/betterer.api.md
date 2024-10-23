@@ -21,7 +21,7 @@ export const betterer: {
 export type BettererAPI = typeof betterer;
 
 // @public
-export interface BettererConfig extends BettererConfigFS, BettererConfigReporter, BettererConfigContext, BettererConfigWatcher {
+export interface BettererConfig extends BettererConfigFS, BettererConfigReporter, BettererConfigContext {
 }
 
 // @public
@@ -45,12 +45,16 @@ export type BettererConfigFilters = ReadonlyArray<RegExp>;
 
 // @public
 export interface BettererConfigFS {
+    basePath: string;
     cache: boolean;
     cachePath: string;
     configPaths: BettererConfigPaths;
     cwd: string;
+    ignores: BettererConfigIgnores;
+    repoPath: string;
     resultsPath: string;
-    versionControlPath: string;
+    versionControlPath: string | null;
+    watch: boolean;
 }
 
 // @public
@@ -60,17 +64,11 @@ export type BettererConfigIgnores = ReadonlyArray<string>;
 export type BettererConfigIncludes = ReadonlyArray<string>;
 
 // @public
-export type BettererConfigPaths = ReadonlyArray<string>;
+export type BettererConfigPaths = readonly [string, ...Array<string>];
 
 // @public
 export interface BettererConfigReporter {
     logo: boolean;
-}
-
-// @public
-export interface BettererConfigWatcher {
-    ignores: BettererConfigIgnores;
-    watch: boolean;
 }
 
 // @public
@@ -159,7 +157,7 @@ export type BettererFilePath = string;
 export type BettererFilePaths = ReadonlyArray<BettererFilePath>;
 
 // @public
-export type BettererFilePatterns = ReadonlyArray<RegExp | ReadonlyArray<RegExp>>;
+export type BettererFilePatterns = ReadonlyArray<RegExp | string | ReadonlyArray<RegExp | string>>;
 
 // @public
 export interface BettererFileResolver {
@@ -232,10 +230,12 @@ export type BettererOptionsFilters = Array<string | RegExp> | string | RegExp;
 
 // @public
 export interface BettererOptionsFS {
+    basePath?: string;
     cache?: boolean;
     cachePath?: string;
     configPaths?: BettererOptionsPaths;
     cwd?: string;
+    repoPath?: string;
     resultsPath?: string;
 }
 
@@ -395,7 +395,7 @@ export class BettererResolverTest<DeserialisedType = unknown, SerialisedType = D
     constructor(options: BettererTestOptions<DeserialisedType, SerialisedType, DiffType>);
     exclude(...excludePatterns: BettererFilePatterns): this;
     include(...includePatterns: BettererFileGlobs): this;
-    get resolver(): BettererFileResolver;
+    readonly resolver: BettererFileResolver;
 }
 
 // @public

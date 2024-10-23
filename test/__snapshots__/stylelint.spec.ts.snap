@@ -9,7 +9,7 @@ exports[`betterer > should report the status of a new stylelint rule 1`] = `
 exports[\`stylelint\`] = {
   value: \`{
     "src/styles.scss:3896471814": [
-      [3, 2, 0, "stylelint(order/order): Expected rule with selector matching \\\\"/^&:/w/\\\\" to come before rule with selector matching \\\\"/^&/\\\\"", "1120509443"],
+      [3, 2, 0, "stylelint(order/order): Expected rule with selector matching \\\\"/^&:\\\\\\\\w/\\\\" to come before rule with selector matching \\\\"/^&/\\\\"", "1075804560"],
       [7, 9, 0, "stylelint(unit-no-unknown): Unexpected unknown unit \\\\"borks\\\\"", "3713529269"]
     ]
   }\`

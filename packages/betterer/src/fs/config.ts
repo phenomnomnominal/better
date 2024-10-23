@@ -1,17 +1,36 @@
-import type { BettererConfigFS, BettererOptionsFS } from './types.js';
+import type { BettererConfigContext } from './../context/index.js';
+import type {
+  BettererConfigFS,
+  BettererConfigPaths,
+  BettererOptionsFS,
+  BettererOptionsWatcher,
+  BettererOptionsWatcherOverride
+} from './types.js';
 
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 
-import { BettererError } from '@betterer/errors';
+import { BettererError, invariantΔ } from '@betterer/errors';
 
-import { toArray, validateBool, validateFilePath, validateString, validateStringArray } from '../config/index.js';
+import {
+  toArray,
+  validateBool,
+  validateDirectory,
+  validateFilePath,
+  validateString,
+  validateStringArray
+} from '../config/index.js';
+import { getGlobals } from '../globals.js';
 
 const BETTERER_CACHE = './.betterer.cache';
 const BETTERER_RESULTS = './.betterer.results';
 const BETTERER_TS = './.betterer.ts';
 
-export async function createFSConfig(options: BettererOptionsFS): Promise<BettererConfigFS> {
+export async function createFSConfig(
+  configContext: BettererConfigContext,
+  options: BettererOptionsFS,
+  optionsWatcher: BettererOptionsWatcher
+): Promise<BettererConfigFS> {
   const cache = (!!options.cachePath || options.cache) ?? false;
   const cachePath = options.cachePath ?? BETTERER_CACHE;
 
@@ -20,31 +39,58 @@ export async function createFSConfig(options: BettererOptionsFS): Promise<Better
   validateStringArray({ configPaths });
   const validatedConfigPaths = await validateConfigPaths(cwd, configPaths);
 
+  const ignores = toArray<string>(optionsWatcher.ignores);
+  const watch = optionsWatcher.watch ?? false;
+
   const resultsPath = options.resultsPath ?? BETTERER_RESULTS;
+  const [configPath] = validatedConfigPaths;
+
+  let basePath = options.basePath;
+  if (basePath) {
+    await validateDirectory({ basePath: path.resolve(cwd, basePath) });
+  } else {
+    basePath = path.dirname(configPath);
+  }
+  const repoPath = options.repoPath ?? basePath;
 
   validateString({ cwd });
   validateBool({ cache });
   validateStringArray({ cachePath });
   validateStringArray({ resultsPath });
 
-  const gitRoot = await validateGitRepo(cwd);
+  const gitPath = configContext.precommit ? await validateGitRepo(repoPath) : null;
+
+  validateStringArray({ ignores });
+  validateBool({ watch });
 
   return {
+    basePath,
     cache,
     cachePath: path.resolve(cwd, cachePath),
     cwd,
     configPaths: validatedConfigPaths,
+    ignores,
+    repoPath,
     resultsPath: path.resolve(cwd, resultsPath),
-    versionControlPath: path.dirname(gitRoot)
+    versionControlPath: gitPath ?? null,
+    watch
   };
+}
+
+export function overrideWatchConfig(optionsOverride: BettererOptionsWatcherOverride): void {
+  if (optionsOverride.ignores) {
+    const { config } = getGlobals();
+    validateStringArray({ ignores: optionsOverride.ignores });
+    config.ignores = toArray<string>(optionsOverride.ignores);
+  }
 }
 
 const JS_EXTENSIONS = ['.js', '.cjs', '.mjs'];
 const TS_EXTENSIONS = ['.ts', '.tsx', '.cts', '.ctsx', '.mtx', '.mtsx'];
 const IMPORT_EXTENSIONS = [...JS_EXTENSIONS, ...TS_EXTENSIONS];
 
-async function validateConfigPaths(cwd: string, configPaths: Array<string>): Promise<Array<string>> {
-  return await Promise.all(
+async function validateConfigPaths(cwd: string, configPaths: Array<string>): Promise<BettererConfigPaths> {
+  const validatedConfigPaths = await Promise.all(
     configPaths.map(async (configPath) => {
       const absoluteConfigPath = path.resolve(cwd, configPath);
       const { dir, name, ext } = path.parse(absoluteConfigPath);
@@ -71,6 +117,9 @@ async function validateConfigPaths(cwd: string, configPaths: Array<string>): Pro
       }
     })
   );
+  const [first, ...rest] = validatedConfigPaths.filter(Boolean);
+  invariantΔ(first, 'the existence of at least one config path should have been validated!');
+  return [first, ...rest];
 }
 
 async function validateGitRepo(cwd: string): Promise<string> {
@@ -79,10 +128,10 @@ async function validateGitRepo(cwd: string): Promise<string> {
     try {
       const gitPath = path.join(dir, '.git');
       await fs.access(gitPath);
-      return gitPath;
+      return dir;
     } catch {
       dir = path.join(dir, '..');
     }
   }
-  throw new BettererError('.git directory not found. Betterer must be used within a git repository.');
+  throw new BettererError('.git directory not found. Precommit mode only works within a git repository.');
 }

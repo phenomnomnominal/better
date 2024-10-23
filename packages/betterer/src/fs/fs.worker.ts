@@ -1,22 +1,27 @@
 import type { BettererConfig } from '../config/index.js';
 import type { BettererTestMeta } from '../test/index.js';
-import type { BettererFileCache, BettererFilePaths, BettererVersionControl } from './types.js';
+import type { BettererFileCache, BettererFilePaths, BettererFS, BettererVersionControl } from './types.js';
 
 import { invariantΔ } from '@betterer/errors';
 import { exposeToMainΔ } from '@betterer/worker';
 
 import { BettererGitΩ } from './git.js';
 import { BettererFileCacheΩ } from './file-cache.js';
+import { BettererFSΩ } from './fs.js';
 
+let fs: BettererFS | null = null;
 let versionControl: BettererVersionControl | null = null;
 let cache: BettererFileCache | null = null;
 
 /** @knipignore part of worker API */
 export async function init(config: BettererConfig): Promise<void> {
+  fs = await BettererFSΩ.create(config.basePath);
   if (config.cache) {
     cache = await BettererFileCacheΩ.create(config.cachePath);
   }
-  versionControl = await BettererGitΩ.create(config.versionControlPath);
+  if (config.precommit && config.versionControlPath) {
+    versionControl = new BettererGitΩ(config.versionControlPath);
+  }
 }
 
 /** @knipignore part of worker API */
@@ -27,14 +32,14 @@ export function add(resultsPath: string): Promise<void> {
 
 /** @knipignore part of worker API */
 export function getFilePaths(): BettererFilePaths {
-  checkInitialisedVersionControl(versionControl);
-  return versionControl.getFilePaths();
+  checkInitialisedFS(fs);
+  return fs.getFilePaths();
 }
 
 /** @knipignore part of worker API */
 export function sync(): Promise<void> {
-  checkInitialisedVersionControl(versionControl);
-  return versionControl.sync();
+  checkInitialisedFS(fs);
+  return fs.sync();
 }
 
 /** @knipignore part of worker API */
@@ -69,6 +74,10 @@ function checkInitialisedVersionControl(
 
 function checkInitialisedCache(cache: BettererFileCache | null): asserts cache is BettererFileCache {
   invariantΔ(cache, '`init` must be called before using cache!');
+}
+
+function checkInitialisedFS(fs: BettererFS | null): asserts fs is BettererFS {
+  invariantΔ(fs, '`init` must be called before using file system!');
 }
 
 exposeToMainΔ({

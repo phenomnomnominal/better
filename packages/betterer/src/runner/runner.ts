@@ -2,17 +2,18 @@ import type { FSWatcher } from 'chokidar';
 import type { BettererOptions } from '../api/index.js';
 import type { BettererConfig, BettererOptionsOverride } from '../config/index.js';
 import type { BettererContextSummary } from '../context/index.js';
-import type { BettererFilePaths } from '../fs/index.js';
+import type { BettererFilePaths, BettererOptionsWatcher } from '../fs/index.js';
 import type { BettererReporterΩ } from '../reporters/index.js';
 import type { BettererSuiteSummary, BettererSuiteSummaryΩ, BettererSuiteΩ } from '../suite/index.js';
-import type { BettererOptionsWatcher, BettererRunner } from './types.js';
+import type { BettererRunner } from './types.js';
 
 import { BettererError } from '@betterer/errors';
+import minimatch from 'minimatch';
 
 import { BettererContextΩ } from '../context/index.js';
+import { createWatcher, isTempFilePath, WATCHER_EVENTS } from '../fs/index.js';
 import { createGlobals, destroyGlobals, getGlobals } from '../globals.js';
 import { normalisedPath } from '../utils.js';
-import { createWatcher, WATCHER_EVENTS } from './watcher.js';
 
 const DEBOUNCE_TIME = 200;
 
@@ -44,7 +45,7 @@ export class BettererRunnerΩ implements BettererRunner {
 
     if (this._watcher) {
       this._watcher.on('all', (event: string, filePath: string) => {
-        if (WATCHER_EVENTS.includes(event)) {
+        if (this._shouldQueue(event, filePath)) {
           void this.queue([filePath]);
         }
       });
@@ -53,9 +54,9 @@ export class BettererRunnerΩ implements BettererRunner {
 
   public static async create(
     options: BettererOptions,
-    optionsWatch: BettererOptionsWatcher = {}
+    optionsWatcher: BettererOptionsWatcher = {}
   ): Promise<BettererRunnerΩ> {
-    await createGlobals(options, optionsWatch);
+    await createGlobals(options, optionsWatcher);
     const watcher = await createWatcher();
     const context = new BettererContextΩ();
 
@@ -124,17 +125,17 @@ export class BettererRunnerΩ implements BettererRunner {
       const contextSummary = await this._context.stop();
       const suiteSummaryΩ = contextSummary.lastSuite as BettererSuiteSummaryΩ;
 
-      const { config, results, versionControl } = getGlobals();
+      const { config, fs, results } = getGlobals();
 
       if (!config.ci) {
         const didWrite = await results.api.write(suiteSummaryΩ.result);
         if (didWrite && config.precommit) {
-          await versionControl.api.add(config.resultsPath);
+          await fs.api.add(config.resultsPath);
         }
       }
 
       if (config.cache) {
-        await versionControl.api.writeCache();
+        await fs.api.writeCache();
       }
 
       // Lifecycle promise is resolved, so it's safe to await
@@ -159,6 +160,36 @@ export class BettererRunnerΩ implements BettererRunner {
       // eslint-disable-next-line @typescript-eslint/no-misused-promises -- SIGTERM doesn't care about Promises
       process.off('SIGTERM', this._sigterm);
     }
+  }
+
+  private _shouldQueue(event: string, itemPath: string): boolean {
+    if (!WATCHER_EVENTS.includes(event)) {
+      return false;
+    }
+
+    const { config } = getGlobals();
+    const { cachePath, cwd, resultsPath } = config;
+
+    itemPath = normalisedPath(itemPath);
+    const normalisedCwd = normalisedPath(cwd);
+    const isCwd = itemPath === normalisedPath(normalisedCwd);
+    if (isCwd) {
+      return true;
+    }
+
+    const isGitPath = itemPath.includes('.git');
+    const isResultsPath = itemPath === normalisedPath(resultsPath);
+    const isCachePath = itemPath === normalisedPath(cachePath);
+    const isTempPath = isTempFilePath(itemPath);
+    if (isGitPath || isResultsPath || isCachePath || isTempPath) {
+      return false;
+    }
+
+    // read `ignores` here so that it can be updated by watch mode:
+    const { ignores } = config;
+    const watchIgnores = ignores.map((ignore) => `${normalisedCwd}/${ignore}`);
+    const isIgnored = watchIgnores.some((ignore) => minimatch(itemPath, ignore, { matchBase: true }));
+    return !isIgnored;
   }
 
   private _sigterm = () => this.stop(true);

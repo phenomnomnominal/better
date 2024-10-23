@@ -1,7 +1,7 @@
 import type { BettererLogger } from '@betterer/logger';
 
 import type { BettererConfig } from '../config/types.js';
-import type { BettererFilePaths, BettererVersionControlWorker } from '../fs/index.js';
+import type { BettererFilePaths, BettererFSWorker } from '../fs/index.js';
 import type { BettererResultsWorker } from '../results/index.js';
 import type { BettererTest, BettererTestMeta } from '../test/index.js';
 import type { BettererRunMeta } from './meta/index.js';
@@ -20,12 +20,12 @@ const TEST_META_MAP: Record<string, [BettererTest, BettererTestMeta, BettererRun
 export async function init(
   testMeta: BettererTestMeta,
   config: BettererConfig,
-  results: BettererResultsWorker,
-  versionControl: BettererVersionControlWorker
+  fs: BettererFSWorker,
+  results: BettererResultsWorker
 ): Promise<BettererRunMeta> {
   // If we're in a worker, we need to populate the globals:
   if (process.env.BETTERER_WORKER !== 'false') {
-    setGlobals(config, null, results, null, null, versionControl);
+    setGlobals(config, fs, null, results, null, null);
   }
 
   const { name } = testMeta;

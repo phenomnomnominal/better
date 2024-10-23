@@ -22,9 +22,9 @@ export async function run(
   await status.progress(`enabling Betterer merge for "${resultsPath}" file...`);
 
   const gitDir = await validateGitRepo(cwd);
-  const rootDir = path.dirname(gitDir);
+  const rootPath = path.dirname(gitDir);
 
-  await Promise.all([gitconfig(logger, gitDir), gitattributes(logger, rootDir, resultsPath)]);
+  await Promise.all([gitconfig(logger, gitDir), gitattributes(logger, rootPath, resultsPath)]);
 }
 
 async function gitconfig(logger: BettererLogger, gitDir: string): Promise<void> {

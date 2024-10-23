@@ -8,8 +8,23 @@ exports[`betterer > should remove the version control path from issue messages 1
 //
 exports[\`test\`] = {
   value: \`{
+    "src/another-file.ts:5381": [
+      [0, 0, 0, "some error found in ./another-file.ts oh no", "1569250134"],
+      [0, 0, 0, "some error found in ../../some/file/path and ../../some/other/file/path oh no", "3421279934"],
+      [0, 0, 0, "some error found in \\'./another-file.ts\\' oh no", "2549770710"],
+      [0, 0, 0, "some error found in [../../some/file/path] and \\\\"../../some/other/file/path\\\\" oh no", "2281893176"],
+      [0, 0, 0, "some error found in \\\`./another-file.ts\\\` oh no", "2401868310"],
+      [0, 0, 0, "some error found in (../../some/file/path) and {../../some/other/file/path} oh no", "656960857"],
+      [0, 0, 0, "some error found in <./another-file.ts> oh no", "3813503124"]
+    ],
     "src/index.ts:5381": [
-      [0, 0, 0, "some/file/path", "1664982906"]
+      [0, 0, 0, "some error found in ./index.ts oh no", "112608808"],
+      [0, 0, 0, "some error found in ../../some/file/path and ../../some/other/file/path oh no", "3421279934"],
+      [0, 0, 0, "some error found in \\'./index.ts\\' oh no", "3372577928"],
+      [0, 0, 0, "some error found in [../../some/file/path] and \\\\"../../some/other/file/path\\\\" oh no", "2281893176"],
+      [0, 0, 0, "some error found in \\\`./index.ts\\\` oh no", "1404741928"],
+      [0, 0, 0, "some error found in (../../some/file/path) and {../../some/other/file/path} oh no", "656960857"],
+      [0, 0, 0, "some error found in <./index.ts> oh no", "699898666"]
     ]
   }\`
 };
@@ -24,10 +39,10 @@ exports[`betterer > should remove the version control path from issue messages 2
 🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: "test" got checked for the first time! (1 issue) 🎉
+✅ test: "test" got checked for the first time! (14 issues) 🎉
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: "test" got checked for the first time! (1 issue) 🎉
+✅ test: "test" got checked for the first time! (14 issues) 🎉
 
 1 test got checked. 🤔
 1 test got checked for the first time! 🎉
@@ -38,10 +53,10 @@ exports[`betterer > should remove the version control path from issue messages 2
 🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: "test" stayed the same. (1 issue) 😐
+✅ test: "test" stayed the same. (14 issues) 😐
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: "test" stayed the same. (1 issue) 😐
+✅ test: "test" stayed the same. (14 issues) 😐
 
 1 test got checked. 🤔
 1 test stayed the same. 😐

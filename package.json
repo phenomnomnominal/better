@@ -58,6 +58,7 @@
     "@microsoft/api-extractor": "^7.47.7",
     "@phenomnomnominal/commitlint-plugin": "^1.1.1",
     "@types/eslint": "^9.6.1",
+    "@types/ignore-walk": "^4.0.3",
     "@types/node": "^18.19.50",
     "@vitest/ui": "^2.0.5",
     "eslint": "^9.9.1",

@@ -39,6 +39,7 @@
     "core-js": "^3.38.1",
     "djb2a": "^2.0.0",
     "fast-memoize": "^2.5.2",
+    "ignore-walk": "^7.0.0",
     "lines-and-columns": "^2.0.3",
     "minimatch": "^5.0.1",
     "prettier": "^3.2.5",

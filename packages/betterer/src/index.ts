@@ -36,6 +36,7 @@ export type {
 } from './context/index.js';
 export type {
   BettererConfigFS,
+  BettererConfigIgnores,
   BettererConfigPaths,
   BettererFileGlobs,
   BettererFilePath,
@@ -43,7 +44,10 @@ export type {
   BettererFilePatterns,
   BettererFileResolver,
   BettererOptionsFS,
-  BettererOptionsPaths
+  BettererOptionsIgnores,
+  BettererOptionsPaths,
+  BettererOptionsWatcher,
+  BettererOptionsWatcherOverride
 } from './fs/index.js';
 export type {
   BettererConfigReporter,
@@ -72,14 +76,7 @@ export type {
   BettererRunSummary,
   BettererRuns
 } from './run/index.js';
-export type {
-  BettererConfigIgnores,
-  BettererConfigWatcher,
-  BettererOptionsIgnores,
-  BettererOptionsWatcher,
-  BettererOptionsWatcherOverride,
-  BettererRunner
-} from './runner/index.js';
+export type { BettererRunner } from './runner/index.js';
 export type { BettererSuite, BettererSuiteSummaries, BettererSuiteSummary } from './suite/index.js';
 export type {
   BettererDeserialise,
