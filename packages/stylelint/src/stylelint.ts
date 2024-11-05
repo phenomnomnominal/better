@@ -66,7 +66,7 @@ export function stylelint(configOverrides: Partial<Configuration>): BettererFile
         });
       })
     );
-  });
+  }).cache();
 }
 
 function stylelintIssueMessage(rule: string, message: string) {

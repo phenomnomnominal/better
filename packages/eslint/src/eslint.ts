@@ -83,7 +83,7 @@ This makes it easier to configure exactly which files should be checked! ❌`
           file.addIssue(startLine, startColumn, endLine, endColumn, eslintIssueMessage(ruleId, message.message));
         });
       });
-  });
+  }).cache();
 }
 
 function eslintIssueMessage(ruleId: string | null, message: string) {

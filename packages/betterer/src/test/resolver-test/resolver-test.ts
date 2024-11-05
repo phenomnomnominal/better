@@ -1,19 +1,14 @@
-import type {
-  BettererFileGlobs,
-  BettererFilePaths,
-  BettererFilePatterns,
-  BettererFileResolver
-} from '../../fs/index.js';
+import type { BettererFileGlobs, BettererFilePatterns, BettererFileResolver } from '../../fs/index.js';
 import type { BettererRun, BettererWorkerRunΩ } from '../../run/index.js';
 import type { BettererFileTestResultΩ } from '../file-test/index.js';
 import type { BettererTestOptions } from '../types.js';
 
 import { invariantΔ } from '@betterer/errors';
 
-import { BettererFileResolverΩ } from '../../fs/index.js';
+import { BettererCacheStrategy, BettererFileResolverΩ } from '../../fs/index.js';
+import { getGlobals } from '../../globals.js';
 import { BettererTest } from '../test.js';
 import { checkBaseName } from '../utils.js';
-import { getGlobals } from '../../globals.js';
 
 /**
  * @public A very common need for a **Betterer** test is to resolve file paths, and include and exclude files
@@ -41,41 +36,29 @@ export class BettererResolverTest<
         const { filePaths } = runΩ;
         invariantΔ(filePaths, `\`filePaths\` should always exist for a \`BettererResolverTest\` run!`);
 
-        const hasSpecifiedFiles = filePaths.length > 0;
-
         const resolverΩ = this.resolver as BettererFileResolverΩ;
-        // Get the maximal set of files that the test could run on:
-        const testFiles = await resolverΩ.files();
+        // Get the maximal set of files `included()` for the test:
+        const testFilePaths = await resolverΩ.files();
 
-        // Get the set of files that the test will run on:
-        let filePathsForThisRun: BettererFilePaths;
+        // If there are specified file paths, validate them with the resolver, or just use the full set of included files:
+        let runFilePaths = filePaths.length > 0 ? await resolverΩ.validate(filePaths) : testFilePaths;
 
-        // Specified files will include files from a global `includes`.
-        if (hasSpecifiedFiles) {
-          // Validate that they are relevant for this file test:
-          filePathsForThisRun = await resolverΩ.validate(filePaths);
-        } else {
-          filePathsForThisRun = testFiles;
-        }
-
-        let isFullRun = filePathsForThisRun === testFiles;
+        let isFullRun = runFilePaths === testFilePaths;
 
         let hasCached = false;
         if (!run.isNew) {
-          const { config, fs } = getGlobals();
-          const cacheMisses = config.cache
-            ? await fs.api.filterCached(runΩ.testMeta, filePathsForThisRun)
-            : filePathsForThisRun;
-          hasCached = cacheMisses.length !== filePathsForThisRun.length;
+          const { config } = getGlobals();
+          const cacheMisses = config.cache ? await resolverΩ.filterCached(runΩ.testMeta, runFilePaths) : runFilePaths;
+          hasCached = cacheMisses.length !== runFilePaths.length;
           isFullRun = isFullRun && !hasCached;
-          filePathsForThisRun = cacheMisses;
+          runFilePaths = cacheMisses;
         }
 
         // Set the final files back on the `BettererRun`:
-        runΩ.setFilePaths(filePathsForThisRun);
+        runΩ.setFilePaths(runFilePaths);
 
         const { config } = getGlobals();
-        if (!hasCached && filePathsForThisRun.length === 0 && !config.precommit) {
+        if (!hasCached && runFilePaths.length === 0 && !config.precommit) {
           await run.logger.info(
             'No relevant files found. Are the `include()`/`exclude()` options for this test correct?'
           );
@@ -131,6 +114,12 @@ export class BettererResolverTest<
   public include(...includePatterns: BettererFileGlobs): this {
     const resolverΩ = this.resolver as BettererFileResolverΩ;
     resolverΩ.include(...includePatterns);
+    return this;
+  }
+
+  public cache(strategy: BettererCacheStrategy = BettererCacheStrategy.FilePath): this {
+    const resolverΩ = this.resolver as BettererFileResolverΩ;
+    resolverΩ.cache(strategy);
     return this;
   }
 }

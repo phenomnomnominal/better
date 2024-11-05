@@ -75,7 +75,7 @@ export class BettererRunΩ implements BettererRun {
       runMeta,
       baseline,
       expected,
-      runMeta.isCacheable ? filePaths : null
+      runMeta.hasFilePaths ? filePaths : null
     );
   }
 

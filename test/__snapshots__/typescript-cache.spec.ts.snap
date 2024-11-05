@@ -1,0 +1,100 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer > should still reports errors if another file effects a cached TypeScript file 1`] = `
+"// BETTERER RESULTS V2.
+//
+// If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
+// https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
+//
+exports[\`typescript\`] = {
+  value: \`{
+    "src/index.ts:2822297654": [
+      [5, 4, 5, "tsc: Object literal may only specify known properties, and \\'three\\' does not exist in type \\'MyThing\\'.", "183191147"]
+    ]
+  }\`
+};
+"
+`;
+
+exports[`betterer > should still reports errors if another file effects a cached TypeScript file 2`] = `
+[
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 typescript: running "typescript"!
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ typescript: "typescript" got checked for the first time! (1 issue) 🎉
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ typescript: "typescript" got checked for the first time! (1 issue) 🎉
+
+1 test got checked. 🤔
+1 test got checked for the first time! 🎉
+",
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 typescript: running "typescript"!
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ typescript: "typescript" stayed the same. (1 issue) 😐
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ typescript: "typescript" stayed the same. (1 issue) 😐
+
+1 test got checked. 🤔
+1 test stayed the same. 😐
+",
+  "Checking 1 file... 🤔
+
+・ fixtures/typescript-cache/src/index.ts
+
+🌟 Betterer (0ms):
+",
+  "Checking 1 file... 🤔
+
+・ fixtures/typescript-cache/src/index.ts
+
+🌟 Betterer (0ms): 1 test running...
+🤔 typescript: running "typescript"!
+",
+  "Checking 1 file... 🤔
+
+・ fixtures/typescript-cache/src/index.ts
+
+💥 Betterer (0ms): 1 test done! 1 test errored!
+🔥 typescript: "typescript" got worse. (1 issue) 😔
+・ 1 fixed, 1 new issues in "fixtures/typescript-cache/src/index.ts".
+・
+・   3 | const myThing: MyThing = {
+・   4 |     one: 1,
+・ > 5 |     two: 2,
+・     |     ^^^ tsc: Object literal may only specify known properties, and 'two' does not exist in type 'MyThing'.
+・   6 |     three: 3
+・   7 | }
+・
+",
+  "Checked 1 file! 🔍
+
+・ fixtures/typescript-cache/src/index.ts
+
+💥 Betterer (0ms): 1 test done! 1 test errored!
+🔥 typescript: "typescript" got worse. (1 issue) 😔
+・ 1 fixed, 1 new issues in "fixtures/typescript-cache/src/index.ts".
+・
+・   3 | const myThing: MyThing = {
+・   4 |     one: 1,
+・ > 5 |     two: 2,
+・     |     ^^^ tsc: Object literal may only specify known properties, and 'two' does not exist in type 'MyThing'.
+・   6 |     three: 3
+・   7 | }
+・
+
+1 test got checked. 🤔
+1 test got worse. 😔
+
+You should try to fix the new issues! As a last resort, you can run \`betterer --update\` to force an update of the results file. 🆙
+",
+]
+`;

@@ -1,7 +1,7 @@
 import type { BettererLogger } from '@betterer/logger';
 
 import type { BettererConfig } from '../config/types.js';
-import type { BettererFilePaths, BettererFSWorker } from '../fs/index.js';
+import type { BettererFilePaths, BettererFileResolverΩ, BettererFSWorker } from '../fs/index.js';
 import type { BettererResultsWorker } from '../results/index.js';
 import type { BettererTest, BettererTestMeta } from '../test/index.js';
 import type { BettererRunMeta } from './meta/index.js';
@@ -36,10 +36,16 @@ export async function init(
   invariantΔ(isTest, `"${name}" must return a \`BettererTest\`!`);
 
   const isNew = !(await results.api.hasBaseline(name));
-  const isResolverTest = isBettererResolverTest(test);
   const { isOnly, isSkipped } = test;
+  const hasFilePaths = isBettererResolverTest(test);
+  let isCacheable = false;
+  if (hasFilePaths) {
+    const { resolver } = test;
+    const resolverΩ = resolver as BettererFileResolverΩ;
+    isCacheable = resolverΩ.isCacheable;
+  }
 
-  const runMeta = { isCacheable: isResolverTest, isNew, isOnly, isSkipped };
+  const runMeta = { hasFilePaths, isCacheable, isNew, isOnly, isSkipped };
 
   TEST_META_MAP[testMeta.name] = [test, testMeta, runMeta];
   return runMeta;

@@ -7,7 +7,7 @@ Error: could not import config from "fixtures/config-no-esbuild/.betterer.tsx". 
 
 Error: could not import "fixtures/config-no-esbuild/.betterer.tsx". 😔
 
-Error: Build failed with 1 error:
+Error: Transform failed with 1 error:
        fixtures/config-no-esbuild/.betterer.tsx:4:1: ERROR: Expected identifier but found "{"
 ",
 ]

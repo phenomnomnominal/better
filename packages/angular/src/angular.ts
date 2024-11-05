@@ -1,7 +1,7 @@
 import type { CompilerOptions } from '@angular/compiler-cli';
 
 import { performCompilation, readConfiguration } from '@angular/compiler-cli';
-import { BettererFileTest } from '@betterer/betterer';
+import { BettererFileTest, BettererCacheStrategy } from '@betterer/betterer';
 import { BettererError } from '@betterer/errors';
 import ts from 'typescript';
 
@@ -79,7 +79,7 @@ export function angular(configFilePath: string, extraCompilerOptions: CompilerOp
         const message = ts.flattenDiagnosticMessageText(messageText, NEW_LINE);
         resultFile.addIssue(start, start + length, angularIssueMessage(source, message));
       });
-  });
+  }).cache(BettererCacheStrategy.FilePaths);
 }
 
 function angularIssueMessage(source = 'ng', message: string) {

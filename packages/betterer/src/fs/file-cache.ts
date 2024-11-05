@@ -115,6 +115,7 @@ export class BettererFileCacheΩ implements BettererFileCache {
     );
     return cacheMisses;
   }
+
   public async updateCache(testMeta: BettererTestMeta, filePaths: BettererFilePaths): Promise<void> {
     const { name } = testMeta;
     if (!this._memoryCacheMap.get(name)) {

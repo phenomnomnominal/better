@@ -56,5 +56,5 @@ export function tsquery(query: string, issueMessage = 'TSQuery match'): Betterer
         });
       })
     );
-  });
+  }).cache();
 }

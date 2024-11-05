@@ -1,7 +1,7 @@
 import type { CompilerOptions, DiagnosticWithLocation, ParseConfigHost } from 'typescript';
 import type { TypeScriptReadConfigResult } from './types.js';
 
-import { BettererFileTest } from '@betterer/betterer';
+import { BettererFileTest, BettererCacheStrategy } from '@betterer/betterer';
 import { BettererError, invariantΔ } from '@betterer/errors';
 import path from 'node:path';
 import ts from 'typescript';
@@ -113,7 +113,7 @@ export function typescript(configFilePath: string, extraCompilerOptions: Compile
         const message = ts.flattenDiagnosticMessageText(messageText, NEW_LINE);
         resultFile.addIssue(start, start + length, typescriptIssueMessage(source, message));
       });
-  });
+  }).cache(BettererCacheStrategy.FilePaths);
 }
 
 function typescriptIssueMessage(source = 'tsc', message: string) {

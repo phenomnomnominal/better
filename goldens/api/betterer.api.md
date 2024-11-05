@@ -21,6 +21,12 @@ export const betterer: {
 export type BettererAPI = typeof betterer;
 
 // @public
+export enum BettererCacheStrategy {
+    FilePath = "FilePath",
+    FilePaths = "FilePaths"
+}
+
+// @public
 export interface BettererConfig extends BettererConfigFS, BettererConfigReporter, BettererConfigContext {
 }
 
@@ -393,6 +399,8 @@ export interface BettererReporter {
 // @public
 export class BettererResolverTest<DeserialisedType = unknown, SerialisedType = DeserialisedType, DiffType = null> extends BettererTest<DeserialisedType, SerialisedType, DiffType> {
     constructor(options: BettererTestOptions<DeserialisedType, SerialisedType, DiffType>);
+    // (undocumented)
+    cache(strategy?: BettererCacheStrategy): this;
     exclude(...excludePatterns: BettererFilePatterns): this;
     include(...includePatterns: BettererFileGlobs): this;
     readonly resolver: BettererFileResolver;
