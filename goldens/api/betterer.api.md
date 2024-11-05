@@ -399,7 +399,6 @@ export interface BettererReporter {
 // @public
 export class BettererResolverTest<DeserialisedType = unknown, SerialisedType = DeserialisedType, DiffType = null> extends BettererTest<DeserialisedType, SerialisedType, DiffType> {
     constructor(options: BettererTestOptions<DeserialisedType, SerialisedType, DiffType>);
-    // (undocumented)
     cache(strategy?: BettererCacheStrategy): this;
     exclude(...excludePatterns: BettererFilePatterns): this;
     include(...includePatterns: BettererFileGlobs): this;

@@ -117,6 +117,15 @@ export class BettererResolverTest<
     return this;
   }
 
+  /**
+   * Tell **Betterer** how this test should be cached. Currently this handles two different scenarios:
+   *
+   * * `FilePath` - for when each individual file is independent from all others, e.g. linters
+   * * `FilePaths` - for when a group of files must be treated as one unit, e.g. compilers
+   *
+   * @param strategy - The {@link @betterer/betterer#BettererCacheStrategy} to use.
+   * @returns This {@link @betterer/betterer#BettererResolverTest | `BettererResolverTest`}, so it is chainable.
+   */
   public cache(strategy: BettererCacheStrategy = BettererCacheStrategy.FilePath): this {
     const resolverΩ = this.resolver as BettererFileResolverΩ;
     resolverΩ.cache(strategy);
