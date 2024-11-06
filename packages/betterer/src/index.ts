@@ -110,4 +110,5 @@ export type {
 export type { MaybeAsync, Func } from './types.js';
 
 export { betterer, merge, results, runner, watch } from './api/index.js';
+export { BettererCacheStrategy } from './fs/index.js';
 export { BettererFileTest, BettererResolverTest, BettererTest } from './test/index.js';

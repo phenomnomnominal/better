@@ -59,7 +59,7 @@ export function regexp(pattern: RegExp, issueMessage = 'RegExp match'): Betterer
         });
       })
     );
-  });
+  }).cache();
 }
 
 function getFileMatches(pattern: RegExp, fileText: string): Array<RegExpExecArray> {

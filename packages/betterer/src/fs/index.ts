@@ -16,6 +16,7 @@ export type {
 } from './types.js';
 
 export { createFSConfig, overrideWatchConfig } from './config.js';
+export { BettererCacheStrategy } from './file-cache-strategy.js';
 export { BettererFileResolverΩ } from './file-resolver.js';
 export { BettererResultsFileΩ } from './results-file.js';
 export { importDefault, importTranspiled, importTranspiledHashed } from './import.js';

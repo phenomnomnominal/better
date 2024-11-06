@@ -1,3 +1,4 @@
+import type { BettererTestMeta } from '../test/index.js';
 import type {
   BettererFileGlobs,
   BettererFilePath,
@@ -11,10 +12,12 @@ import path from 'node:path';
 
 import { getGlobals } from '../globals.js';
 import { flatten, isString, normalisedPath } from '../utils.js';
+import { BettererCacheStrategy } from './file-cache-strategy.js';
 import { getTmpPath } from './temp.js';
 
 const INCLUDE_ALL = '**/*';
 export class BettererFileResolverΩ implements BettererFileResolver {
+  private _cacheStrategy: BettererCacheStrategy | null = null;
   private _excluded: Array<RegExp | string> = [];
   private _excludedResolved: Array<RegExp | string> | null = null;
   private _included: Array<string> = [INCLUDE_ALL];
@@ -23,6 +26,14 @@ export class BettererFileResolverΩ implements BettererFileResolver {
   private _validatedFilePathsMap: Record<string, boolean> = {};
 
   constructor(public readonly baseDirectory: string) {}
+
+  public get isCacheable(): boolean {
+    return this._cacheStrategy !== null;
+  }
+
+  public cache(strategy: BettererCacheStrategy): void {
+    this._cacheStrategy = strategy;
+  }
 
   public async validate(filePaths: BettererFilePaths): Promise<BettererFilePaths> {
     if (!filePaths.length) {
@@ -71,6 +82,27 @@ export class BettererFileResolverΩ implements BettererFileResolver {
   public async files(): Promise<BettererFilePaths> {
     await this._update();
     return this._validatedFilePaths;
+  }
+
+  public async filterCached(testMeta: BettererTestMeta, filePaths: BettererFilePaths): Promise<BettererFilePaths> {
+    const { fs } = getGlobals();
+
+    // If file changes do not impact other files e.g. linting, RegExp/syntax checks,
+    if (this._cacheStrategy === BettererCacheStrategy.FilePath) {
+      // then only changed files need to be tested:
+      const cacheMisses = await fs.api.filterCached(testMeta, filePaths);
+      return cacheMisses;
+    }
+
+    // If file changes might impact another file: e.g. full compilation
+    if (this._cacheStrategy === BettererCacheStrategy.FilePaths) {
+      // Then it's all or nothing:
+      const cacheMisses = await fs.api.filterCached(testMeta, await this.files());
+      const allFilesCached = cacheMisses.length === 0;
+      return allFilesCached ? [] : filePaths;
+    }
+
+    return filePaths;
   }
 
   public async tmp(filePath = ''): Promise<BettererFilePath> {
