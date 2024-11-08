@@ -407,7 +407,6 @@ export class BettererResolverTest<DeserialisedType = unknown, SerialisedType = D
 
 // @public
 export interface BettererResult {
-    printed: string;
     value: unknown;
 }
 

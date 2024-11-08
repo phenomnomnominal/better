@@ -51,12 +51,6 @@ export interface BettererResult {
    * @remarks could be anything, including `null`!
    */
   value: unknown;
-  /**
-   * The printed value of the result.
-   *
-   * @remarks may not exist if the test is _new_, and _failed_ or _skipped_!
-   */
-  printed: string;
 }
 
 /**
