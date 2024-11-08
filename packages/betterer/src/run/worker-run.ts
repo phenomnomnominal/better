@@ -113,9 +113,10 @@ export class BettererWorkerRunΩ implements BettererRun, BettererTestConfig {
   private _serialise(deserialised: BettererResult): BettererResultΩ | null {
     try {
       const { config } = getGlobals();
+      const deserialisedΩ = deserialised as BettererResultΩ;
       return new BettererResultΩ(
-        this.serialiser.serialise.call(this, deserialised.value, config.resultsPath),
-        deserialised.printed
+        this.serialiser.serialise.call(this, deserialisedΩ.value, config.resultsPath),
+        deserialisedΩ.printed
       );
     } catch {
       return null;

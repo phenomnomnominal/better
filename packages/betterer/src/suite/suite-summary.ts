@@ -1,5 +1,5 @@
 import type { BettererFilePaths } from '../fs/index.js';
-import type { BettererResultsSerialised } from '../results/index.js';
+import type { BettererResultsSerialised, BettererResultΩ } from '../results/index.js';
 import type { BettererRuns, BettererRunSummaries } from '../run/index.js';
 import type { BettererTestNames } from '../test/index.js';
 import type { BettererSuiteSummary } from './types.js';
@@ -93,7 +93,9 @@ export class BettererSuiteSummaryΩ implements BettererSuiteSummary {
         const { result, expected } = runSummary;
         invariantΔ(result, 'Test is not _new_, _failed_, or _skipped_ so it must have a result!');
         invariantΔ(expected, 'Test is not _new_ so it must have an expected result!');
-        return result.printed !== expected.printed;
+        const resultΩ = result as BettererResultΩ;
+        const expectedΩ = expected as BettererResultΩ;
+        return resultΩ.printed !== expectedΩ.printed;
       });
     const newRuns = notFailedOrSkippedOrObsolete.filter((runSummary) => runSummary.isNew && !runSummary.isComplete);
     const newOrChangedRunNames = [...changedRuns, ...newRuns].map((runSummary) => runSummary.name);
@@ -110,11 +112,13 @@ export class BettererSuiteSummaryΩ implements BettererSuiteSummary {
       const { expected, name, result } = runSummary;
       if ((isSkippedOrFailed && !isNew) || (isWorse && !isUpdated) || isObsolete) {
         invariantΔ(expected, 'Test has successfully run in the past so it must have an expected result!');
-        results[name] = { value: expected.printed };
+        const expectedΩ = expected as BettererResultΩ;
+        results[name] = { value: expectedΩ.printed };
         return results;
       }
       invariantΔ(result, 'Test has successfully run so it must have a new result!');
-      results[name] = { value: result.printed };
+      const resultΩ = result as BettererResultΩ;
+      results[name] = { value: resultΩ.printed };
       return results;
     }, {});
   }
