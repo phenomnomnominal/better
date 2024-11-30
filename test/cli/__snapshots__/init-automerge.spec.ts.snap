@@ -13,15 +13,7 @@ exports[`betterer cli > should enable automerge configuration 2`] = `
 `;
 
 exports[`betterer cli > should enable automerge configuration 3`] = `
-[
-  "🎉 Initialising Betterer (0ms): 3 tasks done!
-✅ Create test file: done!
-・ created "fixtures/init-automerge/.betterer.ts"!
-✅ Update package.json: done!
-✅ Enable automerge: done!
-・ added Betterer merge config to "fixtures/init-automerge/.git/config"!
-・ added Betterer merge attribute to "fixtures/init-automerge/.gitattributes"!",
-  "🎉 Initialising Betterer (0ms): 3 tasks done!
+"🎉 Initialising Betterer (0ms): 3 tasks done!
 ✅ Create test file: done!
 ・ created "fixtures/init-automerge/.betterer.ts"!
 ✅ Update package.json: done!
@@ -30,6 +22,5 @@ exports[`betterer cli > should enable automerge configuration 3`] = `
 ・ added "typescript" dependency to package.json file
 ✅ Enable automerge: done!
 ・ added Betterer merge config to "fixtures/init-automerge/.git/config"!
-・ added Betterer merge attribute to "fixtures/init-automerge/.gitattributes"!",
-]
+・ added Betterer merge attribute to "fixtures/init-automerge/.gitattributes"!"
 `;

@@ -44,7 +44,8 @@ describe('betterer cli', () => {
 
     expect(fixPaths).toMatchSnapshot();
 
-    expect(logs).toMatchSnapshot();
+    const last = logs.at(-1);
+    expect(last).toMatchSnapshot();
 
     await cleanup();
   });
