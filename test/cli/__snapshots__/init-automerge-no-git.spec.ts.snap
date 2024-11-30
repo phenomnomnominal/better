@@ -1,17 +1,17 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer cli > should enable automerge configuration 1`] = `
+exports[`betterer cli > should enable automerge configuration without git 1`] = `
 [
   "💥 Initialising Betterer (0ms): 3 tasks done! 1 task errored!
 ✅ Create test file: done!
-・ created "fixtures/init-automerge/.betterer.ts"!
+・ created "fixtures/init-automerge-no-git/.betterer.ts"!
 ✅ Update package.json: done!
 🔥 Enable automerge: ".git" directory not found in "/". \`--automerge\` only works within a Git repository.
 
 Error: ".git" directory not found in "/". \`--automerge\` only works within a Git repository.",
   "💥 Initialising Betterer (0ms): 3 tasks done! 1 task errored!
 ✅ Create test file: done!
-・ created "fixtures/init-automerge/.betterer.ts"!
+・ created "fixtures/init-automerge-no-git/.betterer.ts"!
 ✅ Update package.json: done!
 ・ added "betterer" script to package.json file
 ・ added "@betterer/cli" dependency to package.json file
