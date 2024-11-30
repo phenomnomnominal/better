@@ -24,7 +24,8 @@ export async function run(
   resultsPath = path.resolve(cwd, resultsPath);
 
   await status.progress(`enabling Betterer merge for "${resultsPath}" file...`);
-  await Promise.all([gitconfig(logger, gitDir), gitattributes(logger, rootPath, resultsPath)]);
+  await gitconfig(logger, gitDir);
+  await gitattributes(logger, rootPath, resultsPath);
 }
 
 async function gitconfig(logger: BettererLogger, gitDir: string): Promise<void> {
