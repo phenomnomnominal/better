@@ -22,6 +22,11 @@ import { createGlobals } from '../globals.js';
  * Will throw if something goes wrong while getting the summary of the results.
  */
 export async function results(options: BettererOptionsResults = {}): Promise<BettererResultsSummary> {
-  await createGlobals(options);
-  return await BettererResultsSummaryΩ.create();
+  try {
+    await createGlobals(options);
+    return await BettererResultsSummaryΩ.create();
+  } catch (error) {
+    process.exitCode = 1;
+    throw error;
+  }
 }

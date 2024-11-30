@@ -32,7 +32,11 @@ import { promises as fs } from 'node:fs';
  * Will throw if the user doesn't pass `query`.
  */
 export function tsquery(query: string, issueMessage = 'TSQuery match'): BettererFileTest {
-  if (!query) {
+  // The `tsquery` function could be called from JS code, without type-checking.
+  // We *could* change the parameter to be `query?: string`,
+  // but that would imply that it was optional, and it isn't.
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- see above!
+  if (query == null || !query) {
     throw new BettererError(
       "for `@betterer/tsquery` to work, you need to provide a query, e.g. `'CallExpression > PropertyAccessExpression'`. ❌"
     );

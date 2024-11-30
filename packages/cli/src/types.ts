@@ -19,6 +19,7 @@ export enum BettererCommand {
 export type BettererCommandName = `${BettererCommand}`;
 
 export interface BettererCLIConfig {
+  basePath: string;
   cache: boolean;
   cachePath: string;
   config: BettererCLIArguments;
@@ -28,6 +29,7 @@ export interface BettererCLIConfig {
   include: BettererCLIArguments;
   logo: boolean;
   reporter: BettererCLIArguments;
+  repoPath: string;
   results: string;
   silent: boolean;
   strict: boolean;
@@ -41,6 +43,7 @@ export interface BettererCLIInitConfig {
   automerge: boolean;
   config: string;
   logo: boolean;
+  repoPath: string;
   results: string;
 }
 
@@ -51,11 +54,13 @@ export interface BettererCLIMergeConfig {
 }
 
 export interface BettererCLIResultsConfig {
+  basePath: string;
   config: BettererCLIArguments;
   exclude: BettererCLIArguments;
   filter: BettererCLIArguments;
   include: BettererCLIArguments;
   logo: boolean;
+  repoPath: string;
   results: string;
 }
 

@@ -223,7 +223,7 @@ describe('QueryOperationRow', () => {
     const indexContent = await readFile(indexPath);
     await writeFile(indexPath, indexContent.replace(`import { mount, shallow } from 'enzyme';\n`, ''));
 
-    await betterer({ configPaths, resultsPath, cachePath, workers: false, precommit: true });
+    await betterer({ configPaths, resultsPath, cachePath, workers: false, precommit: true, repoPath: './' });
 
     const nextCache = await readFile(cachePath);
 

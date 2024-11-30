@@ -17,6 +17,7 @@ export function precommit(cwd: string): Command {
     // Cast the options to BettererOptions. This is possibly invalid,
     // but it's nicer to do the validation in @betterer/betterer
     const { error } = await betterer({
+      basePath: config.basePath,
       cache: config.cache,
       cachePath: config.cachePath,
       configPaths: config.config,
@@ -27,6 +28,7 @@ export function precommit(cwd: string): Command {
       logo: config.logo,
       precommit: true,
       reporters: config.reporter,
+      repoPath: config.repoPath,
       resultsPath: config.results,
       silent: config.silent,
       strictDeadlines: config.strictDeadlines,

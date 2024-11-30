@@ -1,0 +1,26 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer cli > should enable automerge configuration 1`] = `
+"# Betterer merge
+.betterer.results merge=betterer
+"
+`;
+
+exports[`betterer cli > should enable automerge configuration 2`] = `
+"[merge "betterer"]
+	driver = <root>/packages/cli/bin/betterer.js merge %A %B
+"
+`;
+
+exports[`betterer cli > should enable automerge configuration 3`] = `
+"🎉 Initialising Betterer (0ms): 3 tasks done!
+✅ Create test file: done!
+・ created "fixtures/init-automerge/.betterer.ts"!
+✅ Update package.json: done!
+・ added "betterer" script to package.json file
+・ added "@betterer/cli" dependency to package.json file
+・ added "typescript" dependency to package.json file
+✅ Enable automerge: done!
+・ added Betterer merge config to "fixtures/init-automerge/.git/config"!
+・ added Betterer merge attribute to "fixtures/init-automerge/.gitattributes"!"
+`;

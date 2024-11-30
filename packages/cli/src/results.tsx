@@ -18,11 +18,13 @@ export function results(cwd: string): Command {
   command.action(async (config: BettererCLIResultsConfig, command: Command): Promise<void> => {
     // Mark options as unknown...
     const options: unknown = {
+      basePath: config.basePath,
       configPaths: config.config,
       cwd,
       excludes: config.exclude,
       filters: config.filter,
       includes: command.args,
+      repoPath: config.repoPath,
       resultsPath: config.results
     };
 

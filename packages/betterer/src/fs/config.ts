@@ -45,13 +45,11 @@ export async function createFSConfig(
   const resultsPath = options.resultsPath ?? BETTERER_RESULTS;
   const [configPath] = validatedConfigPaths;
 
-  let basePath = options.basePath;
-  if (basePath) {
-    await validateDirectory({ basePath: path.resolve(cwd, basePath) });
-  } else {
-    basePath = path.dirname(configPath);
-  }
-  const repoPath = options.repoPath ?? basePath;
+  const basePath = options.basePath ? path.resolve(cwd, options.basePath) : path.dirname(configPath);
+  await validateDirectory({ basePath });
+
+  const repoPath = options.repoPath ? path.resolve(cwd, options.repoPath) : basePath;
+  await validateDirectory({ repoPath });
 
   validateString({ cwd });
   validateBool({ cache });
@@ -63,6 +61,9 @@ export async function createFSConfig(
   validateStringArray({ ignores });
   validateBool({ watch });
 
+  // eslint-disable-next-line @typescript-eslint/no-deprecated -- deprecated and will be removed in V7
+  const tsconfigPath = options.tsconfigPath ?? null;
+
   return {
     basePath,
     cache,
@@ -72,6 +73,7 @@ export async function createFSConfig(
     ignores,
     repoPath,
     resultsPath: path.resolve(cwd, resultsPath),
+    tsconfigPath: tsconfigPath != null ? path.resolve(cwd, tsconfigPath) : null,
     versionControlPath: gitPath ?? null,
     watch
   };
@@ -122,16 +124,14 @@ async function validateConfigPaths(cwd: string, configPaths: Array<string>): Pro
   return [first, ...rest];
 }
 
-async function validateGitRepo(cwd: string): Promise<string> {
-  let dir = cwd;
-  while (dir !== path.parse(dir).root) {
-    try {
-      const gitPath = path.join(dir, '.git');
-      await fs.access(gitPath);
-      return dir;
-    } catch {
-      dir = path.join(dir, '..');
-    }
+async function validateGitRepo(repoPath: string): Promise<string> {
+  try {
+    const gitPath = path.join(repoPath, '.git');
+    await fs.access(gitPath);
+    return repoPath;
+  } catch {
+    throw new BettererError(
+      `".git" directory not found in "${repoPath}". Precommit mode only works within a Git repository.`
+    );
   }
-  throw new BettererError('.git directory not found. Precommit mode only works within a git repository.');
 }

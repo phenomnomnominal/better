@@ -12,11 +12,12 @@ export interface InitProps {
   configPath: string;
   cwd: string;
   logo: boolean;
+  repoPath: string;
   resultsPath: string;
   ts: boolean;
 }
 
-export const Init: FC<InitProps> = function Init({ automerge, cwd, configPath, logo, resultsPath, ts }) {
+export const Init: FC<InitProps> = function Init({ automerge, cwd, configPath, logo, repoPath, resultsPath, ts }) {
   const runCreateTestFile = useCallback(
     async (logger: BettererLogger, status: BettererLogger) => {
       const createTestFile: CreateTestFileWorker = await importWorkerΔ('./create-test-file.worker.js');
@@ -43,7 +44,7 @@ export const Init: FC<InitProps> = function Init({ automerge, cwd, configPath, l
     async (logger: BettererLogger, status: BettererLogger) => {
       const enableAutomerge: EnableAutomergeWorker = await importWorkerΔ('./enable-automerge.worker.js');
       try {
-        await enableAutomerge.api.run(exposeToWorkerΔ(logger), exposeToWorkerΔ(status), cwd, resultsPath);
+        await enableAutomerge.api.run(exposeToWorkerΔ(logger), exposeToWorkerΔ(status), cwd, repoPath, resultsPath);
       } finally {
         await enableAutomerge.destroy();
       }

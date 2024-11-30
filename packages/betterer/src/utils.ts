@@ -89,7 +89,7 @@ export function replaceRelativePaths(input: string, fromPath: string, path: Plat
   return replaceWrappedPaths(input, fromPath, regexps);
 }
 
-export function replaceWrappedPaths(input: string, fromPath: string, regexps: Array<RegExp>): string {
+function replaceWrappedPaths(input: string, fromPath: string, regexps: Array<RegExp>): string {
   let message = input;
   const foundWrappers = regexps.filter((regexp) => input.match(regexp));
   if (foundWrappers.length) {

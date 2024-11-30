@@ -17,6 +17,11 @@ import { BettererResultsMergerΩ } from '../results/index.js';
  * Will throw if something goes wrong while merging conflicts in the results file.
  */
 export async function merge(options: BettererOptionsMerge = {}): Promise<void> {
-  const merger = await BettererResultsMergerΩ.create(options);
-  await merger.merge();
+  try {
+    const merger = await BettererResultsMergerΩ.create(options);
+    await merger.merge();
+  } catch (error) {
+    process.exitCode = 1;
+    throw error;
+  }
 }

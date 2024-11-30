@@ -78,6 +78,16 @@ export interface BettererOptionsFS {
    * @defaultValue `'./.betterer.results'`
    */
   resultsPath?: string;
+  /**
+   * The path to the {@link https://phenomnomnominal.github.io/betterer/docs/betterer-and-typescript | TypeScript configuration}.
+   *
+   * @remarks When overriding `tsconfigPath`, the path will be resolved relative to the `cwd`.
+   *
+   * @deprecated This will be removed in v7.0.0 🚨
+   *
+   * @defaultValue `null`
+   */
+  tsconfigPath?: string;
 }
 
 /**
@@ -177,6 +187,12 @@ export interface BettererConfigFS {
    * The absolute path to the {@link https://phenomnomnominal.github.io/betterer/docs/results-file | results file}.
    */
   resultsPath: string;
+  /**
+   * The absolute path to the {@link https://phenomnomnominal.github.io/betterer/docs/betterer-and-typescript | TypeScript configuration file}.
+   *
+   * @deprecated This will be removed in v7.0.0 🚨
+   */
+  tsconfigPath: string | null;
   /**
    * The absolute path to the local version control root. This will only be set in {@link https://phenomnomnominal.github.io/betterer/docs/running-betterer/#pre-commit-mode | precommit mode}.
    */

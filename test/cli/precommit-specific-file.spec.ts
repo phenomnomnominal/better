@@ -68,7 +68,7 @@ debugger;
 
     await cliΔ(fixturePath, [...ARGV, 'start', '--workers=false'], false);
 
-    await cliΔ(fixturePath, [...ARGV, 'precommit', '--workers=false', newFilePath], false);
+    await cliΔ(fixturePath, [...ARGV, 'precommit', '--workers=false', '--repoPath=../../', newFilePath], false);
 
     expect(logs).toMatchSnapshot();
 

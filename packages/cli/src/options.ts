@@ -6,16 +6,21 @@ import { BettererCommand } from './types.js';
 
 let command: Command;
 
+const DEPRECATED_V7 = 'This is now a noop and will be removed in v7.0.0 🚨';
+
 export function ciCommand(): Command {
   command = new Command(BettererCommand.ci);
   cacheOption();
   configPathsOption();
   excludesOption();
   filtersOption();
+  pathOptions();
   reportersOptions();
   resultsPathOption();
   strictDeadlinesOption();
+  tsconfigPathOption();
   workersOption();
+  debug();
   return command;
 }
 
@@ -25,10 +30,13 @@ export function precommitCommand(): Command {
   configPathsOption();
   excludesOption();
   filtersOption();
+  pathOptions();
   reportersOptions();
   resultsPathOption();
   strictDeadlinesOption();
+  tsconfigPathOption();
   workersOption();
+  debug();
   return command;
 }
 
@@ -38,12 +46,15 @@ export function startCommand(): Command {
   configPathsOption();
   excludesOption();
   filtersOption();
+  pathOptions();
   reportersOptions();
   resultsPathOption();
   strictOption();
   strictDeadlinesOption();
+  tsconfigPathOption();
   updateOption();
   workersOption();
+  debug();
   return command;
 }
 
@@ -53,9 +64,12 @@ export function watchCommand(): Command {
   configPathsOption();
   filtersOption();
   ignoresOption();
+  pathOptions();
   reportersOptions();
   resultsPathOption();
+  tsconfigPathOption();
   workersOption();
+  debug();
   return command;
 }
 
@@ -65,12 +79,15 @@ export function initCommand(): Command {
   configPathOption();
   logoOption();
   resultsPathOption();
+  repoPathOption();
+  debug();
   return command;
 }
 
 export function mergeCommand(): Command {
   command = new Command(BettererCommand.merge);
   resultsPathOption();
+  debug();
   return command;
 }
 
@@ -80,7 +97,9 @@ export function resultsCommand(): Command {
   excludesOption();
   filtersOption();
   logoOption();
+  pathOptions();
   resultsPathOption();
+  debug();
   return command;
 }
 
@@ -89,7 +108,17 @@ export function upgradeCommand(): Command {
   configPathsOption();
   logoOption();
   saveOption();
+  debug();
   return command;
+}
+
+function debug(): void {
+  command.option('-d, --debug', `Enable verbose debug logging. ${DEPRECATED_V7}`);
+  command.option('-l, --debug-log [value]', `File path to save verbose debug logging to disk. ${DEPRECATED_V7}`);
+}
+
+function tsconfigPathOption(): void {
+  command.option('-t, --tsconfig [value]', `Path to TypeScript config file relative to CWD. ${DEPRECATED_V7}`);
 }
 
 function cacheOption(): void {
@@ -110,7 +139,10 @@ function configPathsOption(): void {
 }
 
 function automergeOption(): void {
-  command.option('--automerge', 'Enable automatic merging for the Betterer results file');
+  command.option(
+    '--automerge',
+    'Enable automatic merging for the Betterer results file. Only valid in a Git repository'
+  );
 }
 
 function resultsPathOption(): void {
@@ -182,6 +214,19 @@ function workersOption(): void {
     'number of workers to use. Set to `false` to run tests serially. Defaults to number of CPUs - 2.',
     argsToPrimitive
   );
+}
+
+function pathOptions(): void {
+  basePathOption();
+  repoPathOption();
+}
+
+function basePathOption(): void {
+  command.option('--basePath [value]', 'The path to the directory containing the code to be covered by Betterer.');
+}
+
+function repoPathOption(): void {
+  command.option('--repoPath [value]', 'The path to the root of the repository.');
 }
 
 function argsToArray(value: string, previous: BettererCLIArguments = []): BettererCLIArguments {

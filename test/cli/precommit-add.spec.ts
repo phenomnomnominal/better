@@ -52,7 +52,7 @@ export default {
 
     await writeFile(indexPath, `const a = 'a';\nconst one = 1;\nconsole.log(one + one);`);
 
-    await cliΔ(fixturePath, [...ARGV, 'precommit', '--workers=false']);
+    await cliΔ(fixturePath, [...ARGV, 'precommit', '--workers=false', '--repoPath=../../']);
 
     expect(logs).toMatchSnapshot();
 
