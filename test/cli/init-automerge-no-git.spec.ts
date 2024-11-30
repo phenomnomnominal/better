@@ -6,11 +6,11 @@ import { createFixture } from '../fixture.js';
 const ARGV = ['node', './bin/betterer'];
 
 describe('betterer cli', () => {
-  it('should enable automerge configuration', async () => {
+  it('should enable automerge configuration without git', async () => {
     const { cliΔ } = await import('@betterer/cli');
 
     const { cleanup, logs, paths } = await createFixture(
-      'init-automerge',
+      'init-automerge-no-git',
       {
         './package.json': `
       {
