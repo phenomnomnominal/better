@@ -13,9 +13,9 @@ Error: ".git" directory not found in "/". \`--automerge\` only works within a Gi
 ✅ Create test file: done!
 ・ created "fixtures/init-automerge/.betterer.ts"!
 ✅ Update package.json: done!
-・ added "betterer" script to package.json file
-・ added "@betterer/cli" dependency to package.json file
-・ added "typescript" dependency to package.json file
+・ "betterer" script already exists, moving on...
+・ "@betterer/cli" dependency already exists, moving on...
+・ "typescript" dependency already exists, moving on...
 🔥 Enable automerge: ".git" directory not found in "/". \`--automerge\` only works within a Git repository.
 
 Error: ".git" directory not found in "/". \`--automerge\` only works within a Git repository.",

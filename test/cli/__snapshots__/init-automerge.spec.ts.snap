@@ -8,7 +8,7 @@ exports[`betterer cli > should enable automerge configuration 1`] = `
 
 exports[`betterer cli > should enable automerge configuration 2`] = `
 "[merge "betterer"]
-	driver = ../../../../packages/cli/bin/betterer.js merge %A %B
+	driver = <root>/packages/cli/bin/betterer.js merge %A %B
 "
 `;
 
