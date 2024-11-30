@@ -38,7 +38,7 @@ import { lint } from 'stylelint';
 export function stylelint(configOverrides: Partial<Configuration>): BettererFileTest {
   // The `stylelint` function could be called from JS code, without type-checking.
   // We *could* change the parameter to be `configOverrides?: Partial<Configuration>`,
-  // but that would imply that it was optional, but it isn't.
+  // but that would imply that it was optional, and it isn't.
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- see above!
   if (!configOverrides) {
     throw new BettererError(

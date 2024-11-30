@@ -40,9 +40,9 @@ import { ESLint } from 'eslint';
  * Will throw if the user doesn't pass `config`.
  */
 export function eslint(...overrideConfig: BettererESLintConfig): BettererFileTest {
-  // The `regexp` function could be called from JS code, without type-checking.
+  // The `eslint` function could be called from JS code, without type-checking.
   // We *could* change the parameter to be `rules?: BettererESLintRulesConfig`,
-  // but that would imply that it was optional, but it isn't.
+  // but that would imply that it was optional, and it isn't.
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- see above!
   if (!overrideConfig?.length) {
     throw new BettererError(

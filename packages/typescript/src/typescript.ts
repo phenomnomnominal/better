@@ -41,10 +41,24 @@ const CODE_FILE_NOT_INCLUDED = 6307;
  * @throws {@link @betterer/errors#BettererError | `BettererError` }
  * Will throw if the user doesn't pass `configFilePath` or `extraCompilerOptions`.
  */
-export function typescript(configFilePath: string, extraCompilerOptions: CompilerOptions = {}): BettererFileTest {
-  if (!configFilePath) {
+export function typescript(configFilePath: string, extraCompilerOptions: CompilerOptions): BettererFileTest {
+  // The `typescript` function could be called from JS code, without type-checking.
+  // We *could* change the parameter to be `configFilePath?: string`,
+  // but that would imply that it was optional, and it isn't.
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- see above!
+  if (configFilePath == null || !configFilePath) {
     throw new BettererError(
       "for `@betterer/typescript` to work, you need to provide the path to a tsconfig.json file, e.g. `'./tsconfig.json'`. ❌"
+    );
+  }
+
+  // The `typescript` function could be called from JS code, without type-checking.
+  // We *could* change the parameter to be `extraCompilerOptions?: CompilerOptions`,
+  // but that would imply that it was optional, and it isn't.
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- see above!
+  if (!extraCompilerOptions) {
+    throw new BettererError(
+      'For `@betterer/typescript` to work, you need to provide compiler options, e.g. `{ strict: true }`. ❌'
     );
   }
 

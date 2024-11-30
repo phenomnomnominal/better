@@ -59,6 +59,8 @@ export interface BettererConfigFS {
     ignores: BettererConfigIgnores;
     repoPath: string;
     resultsPath: string;
+    // @deprecated
+    tsconfigPath: string | null;
     versionControlPath: string | null;
     watch: boolean;
 }
@@ -243,6 +245,8 @@ export interface BettererOptionsFS {
     cwd?: string;
     repoPath?: string;
     resultsPath?: string;
+    // @deprecated
+    tsconfigPath?: string;
 }
 
 // @public

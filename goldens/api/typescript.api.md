@@ -8,6 +8,6 @@ import { BettererFileTest } from '@betterer/betterer';
 import type { CompilerOptions } from 'typescript';
 
 // @public
-export function typescript(configFilePath: string, extraCompilerOptions?: CompilerOptions): BettererFileTest;
+export function typescript(configFilePath: string, extraCompilerOptions: CompilerOptions): BettererFileTest;
 
 ```

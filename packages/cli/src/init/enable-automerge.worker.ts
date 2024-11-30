@@ -15,15 +15,15 @@ export async function run(
   logger: BettererLogger,
   status: BettererLogger,
   cwd: string,
+  repoPath: string,
   resultsPath: string
 ): Promise<void> {
+  const gitDir = await validateGitRepo(repoPath);
+  const rootPath = path.dirname(gitDir);
+
   resultsPath = path.resolve(cwd, resultsPath);
 
   await status.progress(`enabling Betterer merge for "${resultsPath}" file...`);
-
-  const gitDir = await validateGitRepo(cwd);
-  const rootPath = path.dirname(gitDir);
-
   await Promise.all([gitconfig(logger, gitDir), gitattributes(logger, rootPath, resultsPath)]);
 }
 
@@ -47,8 +47,9 @@ async function gitconfig(logger: BettererLogger, gitDir: string): Promise<void> 
   }
 
   const cliPath = require.resolve('@betterer/cli');
-  const mergePath = path.resolve(cliPath, '../../bin/betterer-merge');
-  const mergeCommand = `\tdriver = ${mergePath} %A %B`;
+  const mergePath = path.resolve(cliPath, '../../bin/betterer.js');
+  const mergePathRelative = path.relative(gitconfigPath, mergePath);
+  const mergeCommand = `\tdriver = ${mergePathRelative} merge %A %B`;
 
   lines.push(MERGE_CONFIG, mergeCommand, '');
 
@@ -95,18 +96,16 @@ async function gitattributes(logger: BettererLogger, rootDir: string, resultsPat
   }
 }
 
-async function validateGitRepo(cwd: string): Promise<string> {
-  let dir = cwd;
-  while (dir !== path.parse(dir).root) {
-    try {
-      const gitPath = path.join(dir, '.git');
-      await fs.access(gitPath);
-      return gitPath;
-    } catch {
-      dir = path.join(dir, '..');
-    }
+async function validateGitRepo(repoPath: string): Promise<string> {
+  try {
+    const gitPath = path.join(repoPath, '.git');
+    await fs.access(gitPath);
+    return gitPath;
+  } catch {
+    throw new BettererError(
+      `".git" directory not found in "${repoPath}". \`--automerge\` only works within a Git repository.`
+    );
   }
-  throw new BettererError('.git directory not found. Betterer must be used within a git repository.');
 }
 
 exposeToMainΔ({ run });

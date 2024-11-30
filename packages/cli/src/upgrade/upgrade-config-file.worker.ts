@@ -14,10 +14,6 @@ import { upgradeESM } from './upgrade-esm.js';
 
 const printer = createPrinter();
 
-// module.exports
-const EXPORT_MODULE_EXPORTS_QUERY =
-  'PropertyAccessExpression:has(Identifier[name="module"]):has(Identifier[name="exports"])';
-
 /** @knipignore part of worker API */
 export async function run(
   logger: BettererLogger,
@@ -72,6 +68,10 @@ const EXPORT_QUERY = 'ExportDeclaration, ExportAssignment';
 
 // export const thing = 'foo';
 const EXPORT_VARIABLE_DECLARATION_QUERY = 'VariableStatement:has(ExportKeyword)';
+
+// module.exports
+const EXPORT_MODULE_EXPORTS_QUERY =
+  'PropertyAccessExpression:has(Identifier[name="module"]):has(Identifier[name="exports"])';
 
 function getModuleType(originalSourceFile: SourceFile): ModuleKind | null {
   const [exportStatement] = tsquery(originalSourceFile, EXPORT_QUERY);

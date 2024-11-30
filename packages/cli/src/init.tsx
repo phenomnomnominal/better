@@ -19,6 +19,7 @@ export function init(cwd: string): Command {
   command.description('init Betterer in a project');
   command.action(async (config: BettererCLIInitConfig): Promise<void> => {
     const finalConfig = config.config || BETTERER_TS;
+    const finalRepo = config.repoPath || cwd;
     const finalResults = config.results || BETTERER_RESULTS;
 
     const ext = path.extname(finalConfig);
@@ -30,6 +31,7 @@ export function init(cwd: string): Command {
         configPath={finalConfig}
         cwd={cwd}
         logo={config.logo}
+        repoPath={finalRepo}
         resultsPath={finalResults}
         ts={ts}
       />,

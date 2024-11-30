@@ -29,7 +29,7 @@ export default {
     const fixturePath = paths.cwd;
 
     await expect(async () => {
-      await cliΔ(fixturePath, [...ARGV, 'precommit', '--workers=false']);
+      await cliΔ(fixturePath, [...ARGV, 'precommit', '--workers=false', '--repoPath=../../']);
     }).rejects.toThrow('Tests failed while running in precommit mode. ❌');
 
     expect(logs).toMatchSnapshot();

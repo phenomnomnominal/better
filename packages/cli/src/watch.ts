@@ -17,6 +17,7 @@ export function watch(cwd: string): Command {
     // Cast the options to BettererOptions. This is possibly invalid,
     // but it's nicer to do the validation in @betterer/betterer
     await betterer.watch({
+      basePath: config.basePath,
       cache: config.cache,
       cachePath: config.cachePath,
       configPaths: config.config,
@@ -25,6 +26,7 @@ export function watch(cwd: string): Command {
       ignores: config.ignore,
       logo: config.logo,
       reporters: config.reporter,
+      repoPath: config.repoPath,
       resultsPath: config.results,
       silent: config.silent,
       workers: config.workers

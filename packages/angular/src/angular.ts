@@ -36,7 +36,11 @@ const NEW_LINE = '\n';
  * Will throw if the user doesn't pass `configFilePath` or `extraCompilerOptions`.
  */
 export function angular(configFilePath: string, extraCompilerOptions: CompilerOptions): BettererFileTest {
-  if (!configFilePath) {
+  // The `angular` function could be called from JS code, without type-checking.
+  // We *could* change the parameter to be `configFilePath?: string`,
+  // but that would imply that it was optional, and it isn't.
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- see above!
+  if (configFilePath == null || !configFilePath) {
     throw new BettererError(
       "For `@betterer/angular` to work, you need to provide the path to a tsconfig.json file, e.g. `'./tsconfig.json'`. ❌"
     );
@@ -44,7 +48,7 @@ export function angular(configFilePath: string, extraCompilerOptions: CompilerOp
 
   // The `angular` function could be called from JS code, without type-checking.
   // We *could* change the parameter to be `extraCompilerOptions?: CompilerOptions`,
-  // but that would imply that it was optional, but it isn't.
+  // but that would imply that it was optional, and it isn't.
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- see above!
   if (!extraCompilerOptions) {
     throw new BettererError(
