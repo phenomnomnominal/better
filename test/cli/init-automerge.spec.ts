@@ -40,8 +40,9 @@ describe('betterer cli', () => {
     const __dirname = path.dirname(fileURLToPath(import.meta.url));
     const rootDir = path.resolve(__dirname, '../../');
     const gitconfigFile = await readFile(resolve('./.git/config'));
+    const fixPaths = gitconfigFile.replace(rootDir, '<root>').split(path.win32.sep).join(path.posix.sep);
 
-    expect(gitconfigFile.replace(rootDir, '<root>')).toMatchSnapshot();
+    expect(fixPaths).toMatchSnapshot();
 
     expect(logs).toMatchSnapshot();
 
