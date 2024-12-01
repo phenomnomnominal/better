@@ -29,6 +29,9 @@
       "path": "fixture"
     },
     {
+      "path": "knip"
+    },
+    {
       "path": "logger"
     },
     {

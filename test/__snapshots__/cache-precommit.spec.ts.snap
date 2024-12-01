@@ -1,0 +1,208 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer > should work with precommit 1`] = `
+"{
+  "version": 2,
+  "testCache": {
+    "no enzyme tests": {
+      ".betterer.js": "92f35b217570542740490c0963357d1b4d300a6dc7a5a8f5282465f943ffbe4e",
+      "src/example.test.tsx": "df699ceb1d1d086a3e6bc9e834e6059006523cd8199ee8fd3351e295ee035442"
+    },
+    "no explicit any": {
+      ".betterer.js": "92f35b217570542740490c0963357d1b4d300a6dc7a5a8f5282465f943ffbe4e",
+      "src/example.test.tsx": "df699ceb1d1d086a3e6bc9e834e6059006523cd8199ee8fd3351e295ee035442"
+    },
+    "no type assertions": {
+      ".betterer.js": "92f35b217570542740490c0963357d1b4d300a6dc7a5a8f5282465f943ffbe4e",
+      "src/example.test.tsx": "df699ceb1d1d086a3e6bc9e834e6059006523cd8199ee8fd3351e295ee035442"
+    }
+  }
+}"
+`;
+
+exports[`betterer > should work with precommit 2`] = `
+"// BETTERER RESULTS V2.
+//
+// If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
+// https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
+//
+exports[\`no enzyme tests\`] = {
+  value: \`{
+    "src/example.test.tsx:2716461667": [
+      [0, 26, 13, "RegExp match", "2409514259"]
+    ]
+  }\`
+};
+
+exports[\`no explicit any\`] = {
+  value: \`{
+    "src/example.test.tsx:2716461667": [
+      [20, 6, 125, "eslint(@typescript-eslint/ban-ts-comment): Use \\\\"@ts-expect-error\\\\" instead of \\\\"@ts-ignore\\\\", as \\\\"@ts-ignore\\\\" will do nothing if the following line is error-free.", "2422533031"],
+      [42, 6, 125, "eslint(@typescript-eslint/ban-ts-comment): Use \\\\"@ts-expect-error\\\\" instead of \\\\"@ts-ignore\\\\", as \\\\"@ts-ignore\\\\" will do nothing if the following line is error-free.", "2422533031"],
+      [48, 6, 125, "eslint(@typescript-eslint/ban-ts-comment): Use \\\\"@ts-expect-error\\\\" instead of \\\\"@ts-ignore\\\\", as \\\\"@ts-ignore\\\\" will do nothing if the following line is error-free.", "2422533031"],
+      [86, 28, 3, "eslint(@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.", "193409811"],
+      [126, 30, 3, "eslint(@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.", "193409811"]
+    ]
+  }\`
+};
+
+exports[\`no type assertions\`] = {
+  value: \`{
+    "src/example.test.tsx:2716461667": [
+      [20, 6, 125, "eslint(@typescript-eslint/ban-ts-comment): Use \\\\"@ts-expect-error\\\\" instead of \\\\"@ts-ignore\\\\", as \\\\"@ts-ignore\\\\" will do nothing if the following line is error-free.", "2422533031"],
+      [42, 6, 125, "eslint(@typescript-eslint/ban-ts-comment): Use \\\\"@ts-expect-error\\\\" instead of \\\\"@ts-ignore\\\\", as \\\\"@ts-ignore\\\\" will do nothing if the following line is error-free.", "2422533031"],
+      [48, 6, 125, "eslint(@typescript-eslint/ban-ts-comment): Use \\\\"@ts-expect-error\\\\" instead of \\\\"@ts-ignore\\\\", as \\\\"@ts-ignore\\\\" will do nothing if the following line is error-free.", "2422533031"],
+      [86, 28, 3, "eslint(@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.", "193409811"],
+      [126, 30, 3, "eslint(@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.", "193409811"]
+    ]
+  }\`
+};
+"
+`;
+
+exports[`betterer > should work with precommit 3`] = `
+"{
+  "version": 2,
+  "testCache": {
+    "no enzyme tests": {
+      ".betterer.js": "92f35b217570542740490c0963357d1b4d300a6dc7a5a8f5282465f943ffbe4e",
+      "src/example.test.tsx": "6e7963438bee7f226bc7ed4d4aa0bf3b32453d8d596cb929995286f744de6bbb"
+    },
+    "no explicit any": {
+      ".betterer.js": "92f35b217570542740490c0963357d1b4d300a6dc7a5a8f5282465f943ffbe4e",
+      "src/example.test.tsx": "6e7963438bee7f226bc7ed4d4aa0bf3b32453d8d596cb929995286f744de6bbb"
+    },
+    "no type assertions": {
+      ".betterer.js": "92f35b217570542740490c0963357d1b4d300a6dc7a5a8f5282465f943ffbe4e",
+      "src/example.test.tsx": "6e7963438bee7f226bc7ed4d4aa0bf3b32453d8d596cb929995286f744de6bbb"
+    }
+  }
+}"
+`;
+
+exports[`betterer > should work with precommit 4`] = `
+"// BETTERER RESULTS V2.
+//
+// If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
+// https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
+//
+exports[\`no enzyme tests\`] = {
+  value: \`{}\`
+};
+
+exports[\`no explicit any\`] = {
+  value: \`{
+    "src/example.test.tsx:2127447100": [
+      [19, 6, 125, "eslint(@typescript-eslint/ban-ts-comment): Use \\\\"@ts-expect-error\\\\" instead of \\\\"@ts-ignore\\\\", as \\\\"@ts-ignore\\\\" will do nothing if the following line is error-free.", "2422533031"],
+      [41, 6, 125, "eslint(@typescript-eslint/ban-ts-comment): Use \\\\"@ts-expect-error\\\\" instead of \\\\"@ts-ignore\\\\", as \\\\"@ts-ignore\\\\" will do nothing if the following line is error-free.", "2422533031"],
+      [47, 6, 125, "eslint(@typescript-eslint/ban-ts-comment): Use \\\\"@ts-expect-error\\\\" instead of \\\\"@ts-ignore\\\\", as \\\\"@ts-ignore\\\\" will do nothing if the following line is error-free.", "2422533031"],
+      [85, 28, 3, "eslint(@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.", "193409811"],
+      [125, 30, 3, "eslint(@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.", "193409811"]
+    ]
+  }\`
+};
+
+exports[\`no type assertions\`] = {
+  value: \`{
+    "src/example.test.tsx:2127447100": [
+      [19, 6, 125, "eslint(@typescript-eslint/ban-ts-comment): Use \\\\"@ts-expect-error\\\\" instead of \\\\"@ts-ignore\\\\", as \\\\"@ts-ignore\\\\" will do nothing if the following line is error-free.", "2422533031"],
+      [41, 6, 125, "eslint(@typescript-eslint/ban-ts-comment): Use \\\\"@ts-expect-error\\\\" instead of \\\\"@ts-ignore\\\\", as \\\\"@ts-ignore\\\\" will do nothing if the following line is error-free.", "2422533031"],
+      [47, 6, 125, "eslint(@typescript-eslint/ban-ts-comment): Use \\\\"@ts-expect-error\\\\" instead of \\\\"@ts-ignore\\\\", as \\\\"@ts-ignore\\\\" will do nothing if the following line is error-free.", "2422533031"],
+      [85, 28, 3, "eslint(@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.", "193409811"],
+      [125, 30, 3, "eslint(@typescript-eslint/no-explicit-any): Unexpected any. Specify a different type.", "193409811"]
+    ]
+  }\`
+};
+"
+`;
+
+exports[`betterer > should work with precommit 5`] = `
+[
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 no enzyme tests: running "no enzyme tests"!
+🤔 no explicit any: running "no explicit any"!
+🤔 no type assertions: running "no type assertions"!
+",
+  "🌟 Betterer (0ms): 2 tests running...
+🤔 no enzyme tests: running "no enzyme tests"!
+🤔 no explicit any: running "no explicit any"!
+🤔 no type assertions: running "no type assertions"!
+",
+  "🌟 Betterer (0ms): 3 tests running...
+🤔 no enzyme tests: running "no enzyme tests"!
+🤔 no explicit any: running "no explicit any"!
+🤔 no type assertions: running "no type assertions"!
+",
+  "🌟 Betterer (0ms): 2 tests running... 1 test done!
+✅ no enzyme tests: "no enzyme tests" got checked for the first time! (1 issue) 🎉
+✅ no explicit any: "no explicit any" got checked for the first time! (5 issues) 🎉
+✅ no type assertions: "no type assertions" got checked for the first time! (5 issues) 🎉
+",
+  "🌟 Betterer (0ms): 1 test running... 2 tests done!
+✅ no enzyme tests: "no enzyme tests" got checked for the first time! (1 issue) 🎉
+✅ no explicit any: "no explicit any" got checked for the first time! (5 issues) 🎉
+✅ no type assertions: "no type assertions" got checked for the first time! (5 issues) 🎉
+",
+  "🎉 Betterer (0ms): 3 tests done!
+✅ no enzyme tests: "no enzyme tests" got checked for the first time! (1 issue) 🎉
+✅ no explicit any: "no explicit any" got checked for the first time! (5 issues) 🎉
+✅ no type assertions: "no type assertions" got checked for the first time! (5 issues) 🎉
+",
+  "🎉 Betterer (0ms): 3 tests done!
+✅ no enzyme tests: "no enzyme tests" got checked for the first time! (1 issue) 🎉
+✅ no explicit any: "no explicit any" got checked for the first time! (5 issues) 🎉
+✅ no type assertions: "no type assertions" got checked for the first time! (5 issues) 🎉
+
+3 tests got checked. 🤔
+3 tests got checked for the first time! 🎉
+",
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 no enzyme tests: running "no enzyme tests"!
+🤔 no explicit any: running "no explicit any"!
+🤔 no type assertions: running "no type assertions"!
+",
+  "🌟 Betterer (0ms): 2 tests running...
+🤔 no enzyme tests: running "no enzyme tests"!
+🤔 no explicit any: running "no explicit any"!
+🤔 no type assertions: running "no type assertions"!
+",
+  "🌟 Betterer (0ms): 3 tests running...
+🤔 no enzyme tests: running "no enzyme tests"!
+🤔 no explicit any: running "no explicit any"!
+🤔 no type assertions: running "no type assertions"!
+",
+  "🌟 Betterer (0ms): 2 tests running... 1 test done!
+✅ no enzyme tests: "no enzyme tests" met its goal! 🎉
+・ 1 fixed issue in "fixtures/cache-precommit/src/example.test.tsx".
+✅ no explicit any: "no explicit any" stayed the same. (5 issues) 😐
+✅ no type assertions: "no type assertions" stayed the same. (5 issues) 😐
+",
+  "🌟 Betterer (0ms): 1 test running... 2 tests done!
+✅ no enzyme tests: "no enzyme tests" met its goal! 🎉
+・ 1 fixed issue in "fixtures/cache-precommit/src/example.test.tsx".
+✅ no explicit any: "no explicit any" stayed the same. (5 issues) 😐
+✅ no type assertions: "no type assertions" stayed the same. (5 issues) 😐
+",
+  "🎉 Betterer (0ms): 3 tests done!
+✅ no enzyme tests: "no enzyme tests" met its goal! 🎉
+・ 1 fixed issue in "fixtures/cache-precommit/src/example.test.tsx".
+✅ no explicit any: "no explicit any" stayed the same. (5 issues) 😐
+✅ no type assertions: "no type assertions" stayed the same. (5 issues) 😐
+",
+  "🎉 Betterer (0ms): 3 tests done!
+✅ no enzyme tests: "no enzyme tests" met its goal! 🎉
+・ 1 fixed issue in "fixtures/cache-precommit/src/example.test.tsx".
+✅ no explicit any: "no explicit any" stayed the same. (5 issues) 😐
+✅ no type assertions: "no type assertions" stayed the same. (5 issues) 😐
+
+3 tests got checked. 🤔
+1 test got better! 😍
+1 test met its goal! 🎉
+2 tests stayed the same. 😐
+",
+]
+`;

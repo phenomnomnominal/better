@@ -4,4 +4,4 @@
  * @packageDocumentation
  */
 
-export { getPreciseTime__, getTime__ } from './time.js';
+export { getPreciseTimeΔ, getTimeΔ } from './time.js';

@@ -1,0 +1,20 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer > should work with a TS config file that has no extension 1`] = `
+[
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 test: running "test"!
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" got checked for the first time! 🎉
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" got checked for the first time! 🎉
+
+1 test got checked. 🤔
+1 test got checked for the first time! 🎉
+",
+]
+`;

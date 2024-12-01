@@ -1,7 +1,7 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should throw if there is no query 1`] = `
-Array [
+exports[`betterer > should throw if there is no query 1`] = `
+[
   "
 Error: for \`@betterer/tsquery\` to work, you need to provide a query, e.g. \`'CallExpression > PropertyAccessExpression'\`. ❌
 ",

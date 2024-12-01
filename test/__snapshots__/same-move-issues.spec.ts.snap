@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should stay the same when multiple issues are moved 1`] = `
+exports[`betterer > should stay the same when multiple issues are moved 1`] = `
 "// BETTERER RESULTS V2.
 //
 // If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
@@ -8,16 +8,16 @@ exports[`betterer should stay the same when multiple issues are moved 1`] = `
 //
 exports[\`test\`] = {
   value: \`{
-    \\"src/index.ts:3120621594\\": [
-      [2, 12, 1, \\"The left-hand side of an arithmetic operation must be of type \\\\'any\\\\', \\\\'number\\\\', \\\\'bigint\\\\' or an enum type.\\", \\"177604\\"],
-      [3, 18, 1, \\"The right-hand side of an arithmetic operation must be of type \\\\'any\\\\', \\\\'number\\\\', \\\\'bigint\\\\' or an enum type.\\", \\"177604\\"]
+    "src/index.ts:3120621594": [
+      [2, 12, 1, "tsc: The left-hand side of an arithmetic operation must be of type \\'any\\', \\'number\\', \\'bigint\\' or an enum type.", "177604"],
+      [3, 18, 1, "tsc: The right-hand side of an arithmetic operation must be of type \\'any\\', \\'number\\', \\'bigint\\' or an enum type.", "177604"]
     ]
   }\`
 };
 "
 `;
 
-exports[`betterer should stay the same when multiple issues are moved 2`] = `
+exports[`betterer > should stay the same when multiple issues are moved 2`] = `
 "// BETTERER RESULTS V2.
 //
 // If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
@@ -25,30 +25,27 @@ exports[`betterer should stay the same when multiple issues are moved 2`] = `
 //
 exports[\`test\`] = {
   value: \`{
-    \\"src/index.ts:3189117303\\": [
-      [4, 18, 1, \\"The right-hand side of an arithmetic operation must be of type \\\\'any\\\\', \\\\'number\\\\', \\\\'bigint\\\\' or an enum type.\\", \\"177604\\"],
-      [5, 12, 1, \\"The left-hand side of an arithmetic operation must be of type \\\\'any\\\\', \\\\'number\\\\', \\\\'bigint\\\\' or an enum type.\\", \\"177604\\"]
+    "src/index.ts:3189117303": [
+      [4, 18, 1, "tsc: The right-hand side of an arithmetic operation must be of type \\'any\\', \\'number\\', \\'bigint\\' or an enum type.", "177604"],
+      [5, 12, 1, "tsc: The left-hand side of an arithmetic operation must be of type \\'any\\', \\'number\\', \\'bigint\\' or an enum type.", "177604"]
     ]
   }\`
 };
 "
 `;
 
-exports[`betterer should stay the same when multiple issues are moved 3`] = `
-Array [
+exports[`betterer > should stay the same when multiple issues are moved 3`] = `
+[
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" got checked for the first time! (2 issues) 🎉
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! (2 issues) 🎉
+✅ test: "test" got checked for the first time! (2 issues) 🎉
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! (2 issues) 🎉
+✅ test: "test" got checked for the first time! (2 issues) 🎉
 
 1 test got checked. 🤔
 1 test got checked for the first time! 🎉
@@ -56,16 +53,13 @@ Array [
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" stayed the same. (2 issues) 😐
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" stayed the same. (2 issues) 😐
+✅ test: "test" stayed the same. (2 issues) 😐
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" stayed the same. (2 issues) 😐
+✅ test: "test" stayed the same. (2 issues) 😐
 
 1 test got checked. 🤔
 1 test stayed the same. 😐

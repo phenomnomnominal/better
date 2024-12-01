@@ -1,0 +1,117 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer > should report the total coverage for included files 1`] = `
+"// BETTERER RESULTS V2.
+//
+// If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
+// https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
+//
+exports[\`test\`] = {
+  value: \`{
+  "total": { "lines": 50, "statements": 130, "functions": 15, "branches": 100 }
+}
+\`
+};
+"
+`;
+
+exports[`betterer > should report the total coverage for included files 2`] = `
+"// BETTERER RESULTS V2.
+//
+// If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
+// https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
+//
+exports[\`test\`] = {
+  value: \`{
+  "total": { "lines": 30, "statements": 130, "functions": 15, "branches": 100 }
+}
+\`
+};
+"
+`;
+
+exports[`betterer > should report the total coverage for included files 3`] = `
+"// BETTERER RESULTS V2.
+//
+// If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
+// https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
+//
+exports[\`test\`] = {
+  value: \`{
+  "total": { "lines": 30, "statements": 130, "functions": 15, "branches": 100 }
+}
+\`
+};
+"
+`;
+
+exports[`betterer > should report the total coverage for included files 4`] = `
+[
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 test: running "test"!
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" got checked for the first time! 🎉
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" got checked for the first time! 🎉
+
+1 test got checked. 🤔
+1 test got checked for the first time! 🎉
+",
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 test: running "test"!
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" stayed the same. 😐
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" stayed the same. 😐
+
+1 test got checked. 🤔
+1 test stayed the same. 😐
+",
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 test: running "test"!
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" got better! 😍
+・ "lines" coverage is worse in "total": 50 > 30
+・ "lines" coverage is better in "total": 30 < 50
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" got better! 😍
+・ "lines" coverage is worse in "total": 50 > 30
+・ "lines" coverage is better in "total": 30 < 50
+
+1 test got checked. 🤔
+1 test got better! 😍
+",
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 test: running "test"!
+",
+  "💥 Betterer (0ms): 1 test done! 1 test errored!
+🔥 test: "test" got worse. 😔
+・ "lines" coverage is better in "total": 30 < 60
+・ "lines" coverage is worse in "total": 60 > 30
+",
+  "💥 Betterer (0ms): 1 test done! 1 test errored!
+🔥 test: "test" got worse. 😔
+・ "lines" coverage is better in "total": 30 < 60
+・ "lines" coverage is worse in "total": 60 > 30
+
+1 test got checked. 🤔
+1 test got worse. 😔
+
+You should try to fix the new issues! As a last resort, you can run \`betterer --update\` to force an update of the results file. 🆙
+",
+]
+`;

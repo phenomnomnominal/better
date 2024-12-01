@@ -1,5 +1,3 @@
-import type { BettererRun } from '@betterer/betterer';
-
 import type {
   BettererCoverageIssue,
   BettererCoverageIssues,
@@ -8,45 +6,50 @@ import type {
   IstanbulFileCoverage
 } from './types.js';
 
-import { BettererError } from '@betterer/errors';
+import type { BettererFileResolver } from '@betterer/betterer';
+import { BettererError, invariantΔ } from '@betterer/errors';
 import { promises as fs } from 'node:fs';
-import minimatch from 'minimatch';
-import path from 'node:path';
-
-import { isNumber, normalisedPath } from './utils.js';
 
 export async function test(
-  run: BettererRun,
   relativeCoverageSummaryPath: string,
-  included: Array<string>,
-  excluded: Array<RegExp>
+  resolver: BettererFileResolver
 ): Promise<BettererCoverageIssues> {
-  const baseDirectory = getTestBaseDirectory(run);
-  const absoluteCoverageSummaryPath = path.resolve(baseDirectory, relativeCoverageSummaryPath);
+  const absoluteCoverageSummaryPath = resolver.resolve(relativeCoverageSummaryPath);
   const summary = await readCoverageSummary(absoluteCoverageSummaryPath);
-  delete summary.total;
+
+  const absoluteFilePaths = Object.keys(summary).filter((key) => key !== 'total');
+  const includedAbsoluteFilePaths = resolver.included(absoluteFilePaths);
+
   const uncovered: BettererCoverageIssues = {};
-  Object.keys(summary)
-    .filter((filePath) => !included.length || included.some((include) => minimatch(filePath, include)))
-    .filter((filePath) => !excluded.length || !excluded.some((exclude) => exclude.test(filePath)))
-    .forEach((filePath) => {
-      const fileCoverage = summary[filePath];
-      const relativeFilePath = normalisedPath(path.relative(baseDirectory, filePath));
-      uncovered[relativeFilePath] = getUncoveredIssues(fileCoverage);
-    });
+  includedAbsoluteFilePaths.map((filePath) => {
+    const includedRelativeFilePath = resolver.relative(filePath);
+    const fileCoverage = summary[filePath];
+    invariantΔ(fileCoverage, `\`filePath\` should be a valid key of \`summary\`!`, summary, filePath);
+    uncovered[includedRelativeFilePath] = getUncoveredIssues(fileCoverage);
+  });
+
   return uncovered;
 }
 
 export async function testTotal(
-  run: BettererRun,
-  relativeCoverageSummaryPath: string
+  relativeCoverageSummaryPath: string,
+  resolver: BettererFileResolver
 ): Promise<BettererCoverageIssues> {
-  const baseDirectory = getTestBaseDirectory(run);
-  const absoluteCoverageSummaryPath = path.resolve(baseDirectory, relativeCoverageSummaryPath);
-  const { total } = await readCoverageSummary(absoluteCoverageSummaryPath);
-  return {
-    total: getUncoveredIssues(total)
+  const uncovered = await test(relativeCoverageSummaryPath, resolver);
+
+  const total: BettererCoverageIssue = {
+    lines: 0,
+    statements: 0,
+    functions: 0,
+    branches: 0
   };
+  Object.values(uncovered).forEach((fileCoverage) => {
+    total.branches += fileCoverage.branches;
+    total.functions += fileCoverage.functions;
+    total.lines += fileCoverage.lines;
+    total.statements += fileCoverage.statements;
+  });
+  return { total };
 }
 
 async function readCoverageSummary(coverageSummaryPath: string): Promise<IstanbulCoverageSummary> {
@@ -61,44 +64,46 @@ async function readCoverageSummary(coverageSummaryPath: string): Promise<Istanbu
 async function loadCoverageFile(coverageSummaryPath: string): Promise<IstanbulCoverageSummary | null> {
   try {
     const coverageReport = await fs.readFile(coverageSummaryPath, 'utf-8');
-    return decodeCoverageSummary(JSON.parse(coverageReport));
-  } catch (e) {
+    const parsed: unknown = JSON.parse(coverageReport);
+    return assertIstanbulSummary(parsed) ? parsed : null;
+  } catch {
     return null;
   }
 }
 
-function decodeCoverageSummary(data: IstanbulCoverageSummary | unknown): IstanbulCoverageSummary | null {
-  if (isIstanbulSummary(data) && data.total != null) {
-    return data;
-  }
-  return null;
-}
-
-function isIstanbulSummary(data: unknown): data is IstanbulCoverageSummary {
-  const maybeSummary = data as IstanbulCoverageSummary;
-  return maybeSummary && Object.keys(maybeSummary).every((key) => isFileCoverage(maybeSummary[key]));
+function assertIstanbulSummary(data: unknown): data is IstanbulCoverageSummary {
+  const maybeIstanbulSummary = data as Partial<IstanbulCoverageSummary> | null;
+  return (
+    !!maybeIstanbulSummary &&
+    Object.keys(maybeIstanbulSummary).every((key) => isFileCoverage(maybeIstanbulSummary[key])) &&
+    maybeIstanbulSummary.total != null
+  );
 }
 
 function isFileCoverage(data: unknown): data is IstanbulFileCoverage {
-  const maybeCoverage = data as IstanbulFileCoverage;
+  const maybeFileCoverage = data as Partial<IstanbulFileCoverage> | null;
   return (
-    maybeCoverage &&
-    isCoverage(maybeCoverage.branches) &&
-    isCoverage(maybeCoverage.functions) &&
-    isCoverage(maybeCoverage.lines) &&
-    isCoverage(maybeCoverage.statements)
+    !!maybeFileCoverage &&
+    isCoverage(maybeFileCoverage.branches) &&
+    isCoverage(maybeFileCoverage.functions) &&
+    isCoverage(maybeFileCoverage.lines) &&
+    isCoverage(maybeFileCoverage.statements)
   );
 }
 
 function isCoverage(data: unknown): data is IstanbulCoverage {
-  const maybeData = data as IstanbulCoverage;
+  const maybeData = data as Partial<IstanbulCoverage> | null;
   return (
-    maybeData &&
+    !!maybeData &&
     isNumber(maybeData.covered) &&
     isNumber(maybeData.pct) &&
     isNumber(maybeData.skipped) &&
     isNumber(maybeData.total)
   );
+}
+
+function isNumber(input: unknown): input is number {
+  return typeof input === 'number';
 }
 
 function getUncoveredIssues(fileCoverage: IstanbulFileCoverage): BettererCoverageIssue {
@@ -109,13 +114,3 @@ function getUncoveredIssues(fileCoverage: IstanbulFileCoverage): BettererCoverag
     branches: fileCoverage.branches.total - fileCoverage.branches.covered
   };
 }
-
-function getTestBaseDirectory(run: BettererRun): string {
-  return path.dirname((run as BettererRunΩ).test.configPath);
-}
-
-type BettererRunΩ = BettererRun & {
-  test: {
-    configPath: string;
-  };
-};

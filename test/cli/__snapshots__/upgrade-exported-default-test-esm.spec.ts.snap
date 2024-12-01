@@ -1,0 +1,109 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer upgrade > should upgrade exported default test in an ES module 1`] = `
+"import { BettererTest, BettererFileTest } from "@betterer/betterer";
+import { bigger } from "@betterer/constraints";
+
+let start = 0;
+
+export default {
+  getsBetter: () =>
+    new BettererTest({
+      test: () => start++,
+      constraint: bigger,
+    }),
+  "gets better": () =>
+    new BettererTest({
+      test: () => start++,
+      constraint: bigger,
+    }),
+  countFiles: () =>
+    new BettererFileTest(async (files, fileTestResult) => {
+      const [filePath] = files;
+      const file = fileTestResult.addFile(filePath, "");
+      file.addIssue(0, 0, "\`$" + "{key}\`");
+    }),
+  "count files": () =>
+    new BettererFileTest(async (files, fileTestResult) => {
+      const [filePath] = files;
+      const file = fileTestResult.addFile(filePath, "");
+      file.addIssue(0, 0, "\`$" + "{key}\`");
+    }).include("./src/**/*.ts"),
+};
+"
+`;
+
+exports[`betterer upgrade > should upgrade exported default test in an ES module 2`] = `
+[
+  "🎉 Upgrading Betterer (0ms): 1 task done!
+✅ Upgrading "./.betterer.ts": done!",
+  "🎉 Upgrading Betterer (0ms): 1 task done!
+✅ Upgrading "./.betterer.ts": done!
+・
+・ Betterer can upgrade your test definition file automatically! ✨
+・ Here's what the changes will look like:
+・
+・ - Before
+・ + After
+・
+・ - import { BettererTest, BettererFileTest } from '@betterer/betterer';
+・ + import { BettererTest, BettererFileTest } from "@betterer/betterer";
+・ - import { bigger } from '@betterer/constraints';
+・ + import { bigger } from "@betterer/constraints";
+・
+・   let start = 0;
+・
+・   export default {
+・ -   getsBetter: {
+・ +   getsBetter: () =>
+・ +     new BettererTest({
+・ -     test: () => start++,
+・ +       test: () => start++,
+・ -     constraint: bigger
+・ -   },
+・ +       constraint: bigger,
+・ +     }),
+・ -   'gets better': new BettererTest({
+・ +   "gets better": () =>
+・ +     new BettererTest({
+・ -     test: () => start++,
+・ +       test: () => start++,
+・ -     constraint: bigger
+・ -   }),
+・ +       constraint: bigger,
+・ +     }),
+・ -   countFiles: new BettererFileTest(async (files, fileTestResult) => {
+・ -     const [filePath] = files;
+・ +   countFiles: () =>
+・ +     new BettererFileTest(async (files, fileTestResult) => {
+・ +       const [filePath] = files;
+・ -     const file = fileTestResult.addFile(filePath, '');
+・ +       const file = fileTestResult.addFile(filePath, "");
+・ -     file.addIssue(0, 0, '\`$' + '{key}\`');
+・ +       file.addIssue(0, 0, "\`$" + "{key}\`");
+・ -   }),
+・ +     }),
+・ -   'count files': new BettererFileTest(async (files, fileTestResult) => {
+・ -     const [filePath] = files;
+・ +   "count files": () =>
+・ +     new BettererFileTest(async (files, fileTestResult) => {
+・ +       const [filePath] = files;
+・ -     const file = fileTestResult.addFile(filePath, '');
+・ +       const file = fileTestResult.addFile(filePath, "");
+・ -     file.addIssue(0, 0, '\`$' + '{key}\`');
+・ +       file.addIssue(0, 0, "\`$" + "{key}\`");
+・ -   }).include('./src/**/*.ts')
+・ - }
+・ +     }).include("./src/**/*.ts"),
+・ + };
+・ +
+・
+・ If that looks okay, run \`betterer upgrade --save\` to write the changes to disk. 💾
+・",
+  "🎉 Upgrading Betterer (0ms): 1 task done!
+✅ Upgrading "./.betterer.ts": done!",
+  "🎉 Upgrading Betterer (0ms): 1 task done!
+✅ Upgrading "./.betterer.ts": done!
+・ Saved upgraded config to "fixtures/upgrade-exported-default-test-esm/.betterer.ts"! ☀️",
+]
+`;

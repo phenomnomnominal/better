@@ -1,0 +1,114 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer > should report obsolete tests and remove them with the update flag 1`] = `
+"// BETTERER RESULTS V2.
+//
+// If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
+// https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
+//
+exports[\`will be renamed\`] = {
+  value: \`{
+    "src/index.ts:4087252068": [
+      [0, 0, 11, "TSQuery match", "3870399096"]
+    ]
+  }\`
+};
+
+exports[\`has been renamed\`] = {
+  value: \`{
+    "src/index.ts:4087252068": [
+      [0, 0, 11, "TSQuery match", "3870399096"]
+    ]
+  }\`
+};
+"
+`;
+
+exports[`betterer > should report obsolete tests and remove them with the update flag 2`] = `
+"// BETTERER RESULTS V2.
+//
+// If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
+// https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
+//
+exports[\`has been renamed\`] = {
+  value: \`{
+    "src/index.ts:4087252068": [
+      [0, 0, 11, "TSQuery match", "3870399096"]
+    ]
+  }\`
+};
+"
+`;
+
+exports[`betterer > should report obsolete tests and remove them with the update flag 3`] = `
+[
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 will be renamed: running "will be renamed"!
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ will be renamed: "will be renamed" got checked for the first time! (1 issue) 🎉
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ will be renamed: "will be renamed" got checked for the first time! (1 issue) 🎉
+
+1 test got checked. 🤔
+1 test got checked for the first time! 🎉
+",
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 will be renamed: running "will be renamed"!
+🤔 has been renamed: running "has been renamed"!
+",
+  "🌟 Betterer (0ms): 2 tests running...
+🤔 will be renamed: running "will be renamed"!
+🤔 has been renamed: running "has been renamed"!
+",
+  "🌟 Betterer (0ms): 1 test running... 1 test done!
+✅ will be renamed: "will be renamed" is obsolete! 🗑️
+✅ has been renamed: "has been renamed" got checked for the first time! (1 issue) 🎉
+",
+  "🎉 Betterer (0ms): 2 tests done!
+✅ will be renamed: "will be renamed" is obsolete! 🗑️
+✅ has been renamed: "has been renamed" got checked for the first time! (1 issue) 🎉
+",
+  "🎉 Betterer (0ms): 2 tests done!
+✅ will be renamed: "will be renamed" is obsolete! 🗑️
+✅ has been renamed: "has been renamed" got checked for the first time! (1 issue) 🎉
+
+1 test got checked. 🤔
+1 test got checked for the first time! 🎉
+1 test is obsolete! 🗑️
+
+You have saved tests results that no longer have tests! If they are no longer needed, you can run \`betterer --update\` to remove the obsolete results from the results file. 🆙
+",
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 will be renamed: running "will be renamed"!
+🤔 has been renamed: running "has been renamed"!
+",
+  "🌟 Betterer (0ms): 2 tests running...
+🤔 will be renamed: running "will be renamed"!
+🤔 has been renamed: running "has been renamed"!
+",
+  "🌟 Betterer (0ms): 1 test running... 1 test done!
+✅ will be renamed: "will be renamed" got removed! 👋🏻
+✅ has been renamed: "has been renamed" stayed the same. (1 issue) 😐
+",
+  "🎉 Betterer (0ms): 2 tests done!
+✅ will be renamed: "will be renamed" got removed! 👋🏻
+✅ has been renamed: "has been renamed" stayed the same. (1 issue) 😐
+",
+  "🎉 Betterer (0ms): 2 tests done!
+✅ will be renamed: "will be renamed" got removed! 👋🏻
+✅ has been renamed: "has been renamed" stayed the same. (1 issue) 😐
+
+1 test got checked. 🤔
+1 test stayed the same. 😐
+1 test got removed! 👋🏻
+",
+]
+`;

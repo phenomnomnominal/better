@@ -17,7 +17,10 @@ export type BettererErrorDetail = string | Error | BettererError;
 // @public
 export type BettererErrorDetails = ReadonlyArray<BettererErrorDetail>;
 
-// @public
-export function isBettererError(err: unknown): err is BettererError;
+// @internal
+export function invariantΔ(check: unknown, message: `${string}!`, ...values: Array<unknown>): asserts check;
+
+// @internal
+export function isBettererErrorΔ(err: unknown): err is BettererError;
 
 ```

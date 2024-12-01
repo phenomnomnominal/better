@@ -1,0 +1,49 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer > should work with multiple .betterer.ts files 1`] = `
+[
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 grows: running "grows"!
+🤔 shrinks: running "shrinks"!
+",
+  "🌟 Betterer (0ms): 2 tests running...
+🤔 grows: running "grows"!
+🤔 shrinks: running "shrinks"!
+",
+  "🌟 Betterer (0ms): 1 test running... 1 test done!
+✅ grows: "grows" got checked for the first time! 🎉
+✅ shrinks: "shrinks" got checked for the first time! 🎉
+",
+  "🎉 Betterer (0ms): 2 tests done!
+✅ grows: "grows" got checked for the first time! 🎉
+✅ shrinks: "shrinks" got checked for the first time! 🎉
+",
+  "🎉 Betterer (0ms): 2 tests done!
+✅ grows: "grows" got checked for the first time! 🎉
+✅ shrinks: "shrinks" got checked for the first time! 🎉
+
+2 tests got checked. 🤔
+2 tests got checked for the first time! 🎉
+",
+]
+`;
+
+exports[`betterer > should work with multiple .betterer.ts files 2`] = `
+"// BETTERER RESULTS V2.
+//
+// If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
+// https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
+//
+exports[\`grows\`] = {
+  value: \`1
+\`
+};
+
+exports[\`shrinks\`] = {
+  value: \`-1
+\`
+};
+"
+`;

@@ -1,0 +1,147 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer.watch > should be able to change options while running in watch mode 1`] = `
+[
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 test1: running "test1"!
+🤔 test2: running "test2"!
+",
+  "🌟 Betterer (0ms): 2 tests running...
+🤔 test1: running "test1"!
+🤔 test2: running "test2"!
+",
+  "🌟 Betterer (0ms): 1 test running... 1 test done!
+✅ test1: "test1" got checked for the first time! (1 issue) 🎉
+✅ test2: "test2" got checked for the first time! (1 issue) 🎉
+",
+  "🎉 Betterer (0ms): 2 tests done!
+✅ test1: "test1" got checked for the first time! (1 issue) 🎉
+✅ test2: "test2" got checked for the first time! (1 issue) 🎉
+",
+  "🎉 Betterer (0ms): 2 tests done!
+✅ test1: "test1" got checked for the first time! (1 issue) 🎉
+✅ test2: "test2" got checked for the first time! (1 issue) 🎉
+
+2 tests got checked. 🤔
+2 tests got checked for the first time! 🎉
+",
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): No current ignore patterns
+
+Starting Betterer in watch mode! 🎉
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Filters (press "f" to edit): /2/
+Ignores (press "i" to edit): **/ignored.*
+
+Starting Betterer in watch mode! 🎉
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Filters (press "f" to edit): /2/
+Ignores (press "i" to edit): **/ignored.*
+
+Checking 1 file... 🤔
+
+・ fixtures/watch-options/src/index.ts
+
+🌟 Betterer (0ms):
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Filters (press "f" to edit): /2/
+Ignores (press "i" to edit): **/ignored.*
+
+Checking 1 file... 🤔
+
+・ fixtures/watch-options/src/index.ts
+
+🌟 Betterer (0ms): 1 test running...
+🤔 test1: running "test1"!
+🤔 test2: running "test2"!
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Filters (press "f" to edit): /2/
+Ignores (press "i" to edit): **/ignored.*
+
+Checking 1 file... 🤔
+
+・ fixtures/watch-options/src/index.ts
+
+🌟 Betterer (0ms): 2 tests running...
+🤔 test1: running "test1"!
+🤔 test2: running "test2"!
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Filters (press "f" to edit): /2/
+Ignores (press "i" to edit): **/ignored.*
+
+Checking 1 file... 🤔
+
+・ fixtures/watch-options/src/index.ts
+
+🌟 Betterer (0ms): 1 test running... 1 test done!
+✅ test1: "test1" got skipped. 🚫
+🔥 test2: "test2" got worse. (1 new issue, 1 existing, 2 total) 😔
+・ 1 fixed, 2 new issues in "fixtures/watch-options/src/index.ts".
+・ Showing first of 2 new issues:
+・
+・ > 1 | console.log('foo');debugger;debugger;
+・     |                    ^^^^^^^^^ TSQuery match
+・
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Filters (press "f" to edit): /2/
+Ignores (press "i" to edit): **/ignored.*
+
+Checking 1 file... 🤔
+
+・ fixtures/watch-options/src/index.ts
+
+💥 Betterer (0ms): 2 tests done! 1 test errored!
+✅ test1: "test1" got skipped. 🚫
+🔥 test2: "test2" got worse. (1 new issue, 1 existing, 2 total) 😔
+・ 1 fixed, 2 new issues in "fixtures/watch-options/src/index.ts".
+・ Showing first of 2 new issues:
+・
+・ > 1 | console.log('foo');debugger;debugger;
+・     |                    ^^^^^^^^^ TSQuery match
+・
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Filters (press "f" to edit): /2/
+Ignores (press "i" to edit): **/ignored.*
+
+Checked 1 file! 🔍
+
+・ fixtures/watch-options/src/index.ts
+
+💥 Betterer (0ms): 2 tests done! 1 test errored!
+✅ test1: "test1" got skipped. 🚫
+🔥 test2: "test2" got worse. (1 new issue, 1 existing, 2 total) 😔
+・ 1 fixed, 2 new issues in "fixtures/watch-options/src/index.ts".
+・ Showing first of 2 new issues:
+・
+・ > 1 | console.log('foo');debugger;debugger;
+・     |                    ^^^^^^^^^ TSQuery match
+・
+
+1 test got checked. 🤔
+1 test got skipped. 🚫
+1 test got worse. 😔
+
+You should try to fix the new issues! As a last resort, you can run \`betterer --update\` to force an update of the results file. 🆙
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Stopping watch mode... 👋
+",
+]
+`;

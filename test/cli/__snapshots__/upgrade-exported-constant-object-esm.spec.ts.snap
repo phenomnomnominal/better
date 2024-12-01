@@ -1,0 +1,36 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer upgrade > should upgrade exported constant objects in an ES module 1`] = `
+[
+  "🎉 Upgrading Betterer (0ms): 1 task done!
+✅ Upgrading "./.betterer.ts": done!",
+  "🎉 Upgrading Betterer (0ms): 1 task done!
+✅ Upgrading "./.betterer.ts": done!
+・
+・ Betterer can upgrade your test definition file automatically! ✨
+・ Here's what the changes will look like:
+・
+・ - Before
+・ + After
+・
+・ - import { bigger } from '@betterer/constraints';
+・ + import { BettererTest } from "@betterer/betterer";
+・ + import { bigger } from "@betterer/constraints";
+・
+・   let start = 0;
+・
+・ - export const getsBetter = {
+・ + export const getsBetter = () =>
+・ +   new BettererTest({
+・ -   test: () => start++,
+・ +     test: () => start++,
+・ -   constraint: bigger
+・ - };
+・ +     constraint: bigger,
+・ +   });
+・ +
+・
+・ If that looks okay, run \`betterer upgrade --save\` to write the changes to disk. 💾
+・",
+]
+`;

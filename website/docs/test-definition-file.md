@@ -50,9 +50,9 @@ export default {
 
 ```javascript
 // .betterer.js
-const { BettererTest } = require('@betterer/betterer');
+import { BettererTest } from '@betterer/betterer';
 
-module.exports = {
+export default {
   'my test': () =>
     new BettererTest({
       // ... test config
@@ -104,15 +104,15 @@ export function myOtherTest() {
 
 ```javascript
 // .betterer.js
-const { BettererTest } = require('@betterer/betterer');
+import { BettererTest } from '@betterer/betterer';
 
-module.exports.myTest = () => {
+export const myTest = () => {
   return new BettererTest({
     // ... test config
   });
 };
 
-module.exports.myOtherTest = () => {
+export const myOtherTest = () => {
   return new BettererTest({
     // ... test config
   });

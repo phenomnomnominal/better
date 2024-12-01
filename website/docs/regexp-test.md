@@ -18,4 +18,4 @@ export default {
 };
 ```
 
-[`@betterer/regexp`](https://www.npmjs.com/package/@betterer/regexp) is a [BettererFileTest](./betterer.bettererfiletest), so you can use [`include`](./betterer.bettererfiletest.include), [`exclude`](./betterer.bettererfiletest.exclude), [`only`](betterer.bettererfiletest.only), and [`skip`](betterer.bettererfiletest.skip).
+[`@betterer/regexp`](https://www.npmjs.com/package/@betterer/regexp) is a [BettererFileTest](./betterer.bettererfiletest), so you can use [`include`](./betterer.bettererresolvertest.include), [`exclude`](./betterer.bettererresolvertest.exclude), [`only`](betterer.bettererresolvertest.only), and [`skip`](betterer.bettererresolvertest.skip).

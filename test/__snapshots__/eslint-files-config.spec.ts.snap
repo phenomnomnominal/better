@@ -1,0 +1,10 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer > should throw if there are files options included in the config 1`] = `
+[
+  "
+Error: Please use \`eslint({ ... }).include()\` or \`eslint({ ... }).exclude()\` to control linting extra files, using paths relative to your test definition file.
+       This makes it easier to configure exactly which files should be checked! ❌
+",
+]
+`;

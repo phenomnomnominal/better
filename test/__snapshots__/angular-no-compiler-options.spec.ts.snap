@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer > should throw when trying to run Angular with no compiler options 1`] = `
+[
+  "
+Error: For \`@betterer/angular\` to work, you need to provide compiler options, e.g. \`{ strictTemplates: true }\`. ❌
+",
+]
+`;

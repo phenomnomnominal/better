@@ -1,37 +1,33 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer precommit should add the results file to the changeset if there is any change to the results file 1`] = `
-Array [
+exports[`betterer precommit > should add the results file to the changeset if there is any change to the results file 1`] = `
+[
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" got checked for the first time! (1 issue) 🎉
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! (1 issue) 🎉
+✅ test: "test" got checked for the first time! (1 issue) 🎉
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! (1 issue) 🎉
+✅ test: "test" got checked for the first time! (1 issue) 🎉
 
 1 test got checked. 🤔
 1 test got checked for the first time! 🎉
 ",
-  "🌟 Betterer:
+  "🌟 Betterer (0ms):
 ",
-  "🌟 Betterer: 1 test running...
-🤔 test: running \\"test\\"!
+  "🌟 Betterer (0ms): 1 test running...
+🤔 test: running "test"!
 ",
-  "🌟 Betterer: 1 test running...
-✅ test: \\"test\\" met its goal! 🎉
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" met its goal! 🎉
+・ 1 fixed issue in "fixtures/precommit-add/src/index.ts".
 ",
-  "🎉 Betterer: 1 test done!
-✅ test: \\"test\\" met its goal! 🎉
-",
-  "🎉 Betterer: 1 test done!
-✅ test: \\"test\\" met its goal! 🎉
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" met its goal! 🎉
+・ 1 fixed issue in "fixtures/precommit-add/src/index.ts".
 
 1 test got checked. 🤔
 1 test got better! 😍
@@ -40,4 +36,4 @@ Array [
 ]
 `;
 
-exports[`betterer precommit should add the results file to the changeset if there is any change to the results file 2`] = `"fixtures/precommit-add/.betterer.results"`;
+exports[`betterer precommit > should add the results file to the changeset if there is any change to the results file 2`] = `"fixtures/precommit-add/.betterer.results"`;

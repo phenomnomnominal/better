@@ -1,18 +1,17 @@
-import type { BettererCoverageIssues } from '@betterer/coverage';
+import { describe, expect, it } from 'vitest';
 
-// eslint-disable-next-line require-extensions/require-extensions -- tests not ESM ready yet
-import { createFixture } from './fixture';
+import { createFixture } from './fixture.js';
 
 describe('betterer', () => {
   it('should report the total coverage', async () => {
     const { betterer } = await import('@betterer/betterer');
 
-    const fixture = await createFixture('coverage-total', {
+    const { paths, logs, cleanup, resolve, readFile, testNames, writeFile } = await createFixture('coverage-total', {
       '.betterer.js': `
-const { coverageTotal } = require('@betterer/coverage');
+import { coverageTotal } from '@betterer/coverage';
 
-module.exports = {
-  test: () => coverageTotal()
+export default {
+  test: () => coverageTotal('./my-report/coverage.json')
 };    
         `,
       'tsconfig.json': `
@@ -23,75 +22,110 @@ module.exports = {
       `
     });
 
-    const coverage = `{  
+    const file1Path = resolve('./src/file-1.ts');
+    const file2Path = resolve('./src/file-2.ts');
+
+    const coverage = `
+{
   "total": {
     "lines": { "total": 220, "covered": 110, "skipped": 0, "pct": 50 },
     "statements": { "total": 410, "covered": 140, "skipped": 0, "pct": 34.1 },
     "functions": { "total": 30, "covered": 11, "skipped": 0, "pct": 36.6 },
     "branches": { "total": 300, "covered": 100, "skipped": 0, "pct": 33.3 }
+  },
+  "${file1Path}": {
+    "lines": { "total": 100, "covered": 50, "skipped": 0, "pct": 50 },
+    "statements": { "total": 200, "covered": 70, "skipped": 0, "pct": 35 },
+    "functions": { "total": 20, "covered": 5, "skipped": 0, "pct": 25 },
+    "branches": { "total": 150, "covered": 50, "skipped": 0, "pct": 33.3 }
+  },
+  "${file2Path}": {
+    "lines": { "total": 120, "covered": 60, "skipped": 0, "pct": 50 },
+    "statements": { "total": 210, "covered": 70, "skipped": 0, "pct": 33.3 },
+    "functions": { "total": 10, "covered": 6, "skipped": 0, "pct": 60 },
+    "branches": { "total": 150, "covered": 50, "skipped": 0, "pct": 33.3 }
   }
-}`;
+}
+    `;
 
-    const configPaths = [fixture.paths.config];
-    const resultsPath = fixture.paths.results;
-    const coveragePath = fixture.resolve('./coverage/coverage-summary.json');
+    const configPaths = [paths.config];
+    const resultsPath = paths.results;
+    const coveragePath = resolve('./my-report/coverage.json');
 
-    await fixture.writeFile(coveragePath, coverage);
+    await writeFile(coveragePath, coverage);
 
     const newTestRun = await betterer({ configPaths, resultsPath, workers: false });
 
-    expect(fixture.testNames(newTestRun.new)).toEqual(['test']);
+    expect(testNames(newTestRun.new)).toEqual(['test']);
 
-    const result = await fixture.readFile(resultsPath);
+    const result = await readFile(resultsPath);
 
     expect(result).toMatchSnapshot();
 
     const sameTestRun = await betterer({ configPaths, resultsPath, workers: false });
 
-    expect(fixture.testNames(sameTestRun.same)).toEqual(['test']);
+    expect(testNames(sameTestRun.same)).toEqual(['test']);
 
-    const [sameSummary] = sameTestRun.same;
-    const testResult = sameSummary.result?.value as BettererCoverageIssues;
+    const betterCoverage = `
+{
+  "total": {
+    "lines": { "total": 220, "covered": 210, "skipped": 0, "pct": 95.4 },
+    "statements": { "total": 410, "covered": 140, "skipped": 0, "pct": 34.1 },
+    "functions": { "total": 30, "covered": 11, "skipped": 0, "pct": 36.6 },
+    "branches": { "total": 300, "covered": 100, "skipped": 0, "pct": 33.3 }
+  },
+  "${file1Path}": {
+    "lines": { "total": 100, "covered": 100, "skipped": 0, "pct": 100 },
+    "statements": { "total": 200, "covered": 70, "skipped": 0, "pct": 35 },
+    "functions": { "total": 20, "covered": 5, "skipped": 0, "pct": 25 },
+    "branches": { "total": 150, "covered": 50, "skipped": 0, "pct": 33.3 }
+  },
+  "${file2Path}": {
+    "lines": { "total": 120, "covered": 110, "skipped": 0, "pct": 91.6 },
+    "statements": { "total": 210, "covered": 70, "skipped": 0, "pct": 33.3 },
+    "functions": { "total": 10, "covered": 6, "skipped": 0, "pct": 60 },
+    "branches": { "total": 150, "covered": 50, "skipped": 0, "pct": 33.3 }
+  }
+}
+    `;
 
-    expect(testResult.total).toEqual({
-      lines: 220 - 110,
-      statements: 410 - 140,
-      functions: 30 - 11,
-      branches: 300 - 100
-    });
-
-    const betterCoverage = `{  
-      "total": {
-        "lines": { "total": 220, "covered": 210, "skipped": 0, "pct": 95.4 },
-        "statements": { "total": 410, "covered": 140, "skipped": 0, "pct": 34.1 },
-        "functions": { "total": 30, "covered": 11, "skipped": 0, "pct": 36.6 },
-        "branches": { "total": 300, "covered": 100, "skipped": 0, "pct": 33.3 }
-      }
-    }`;
-
-    await fixture.writeFile(coveragePath, betterCoverage);
+    await writeFile(coveragePath, betterCoverage);
 
     const betterTestRun = await betterer({ configPaths, resultsPath, workers: false });
 
-    expect(fixture.testNames(betterTestRun.better)).toEqual(['test']);
+    expect(testNames(betterTestRun.better)).toEqual(['test']);
 
-    const worseCoverage = `{  
-      "total": {
-        "lines": { "total": 220, "covered": 210, "skipped": 0, "pct": 95.4 },
-        "statements": { "total": 410, "covered": 140, "skipped": 0, "pct": 34.1 },
-        "functions": { "total": 30, "covered": 11, "skipped": 0, "pct": 36.6 },
-        "branches": { "total": 300, "covered":90, "skipped": 0, "pct": 30 }
-      }
-    }`;
+    const worseCoverage = `
+{
+  "total": {
+    "lines": { "total": 220, "covered": 210, "skipped": 0, "pct": 95.4 },
+    "statements": { "total": 410, "covered": 140, "skipped": 0, "pct": 34.1 },
+    "functions": { "total": 30, "covered": 11, "skipped": 0, "pct": 36.6 },
+    "branches": { "total": 300, "covered": 90, "skipped": 0, "pct": 30 }
+  },
+  "${file1Path}": {
+    "lines": { "total": 100, "covered": 100, "skipped": 0, "pct": 100 },
+    "statements": { "total": 200, "covered": 70, "skipped": 0, "pct": 35 },
+    "functions": { "total": 20, "covered": 5, "skipped": 0, "pct": 25 },
+    "branches": { "total": 150, "covered": 40, "skipped": 0, "pct": 26.6 }
+  },
+  "${file2Path}": {
+    "lines": { "total": 120, "covered": 110, "skipped": 0, "pct": 91.6 },
+    "statements": { "total": 210, "covered": 70, "skipped": 0, "pct": 33.3 },
+    "functions": { "total": 10, "covered": 6, "skipped": 0, "pct": 60 },
+    "branches": { "total": 150, "covered": 50, "skipped": 0, "pct": 33.3 }
+  }
+}
+    `;
 
-    await fixture.writeFile(coveragePath, worseCoverage);
+    await writeFile(coveragePath, worseCoverage);
 
     const worseTestRun = await betterer({ configPaths, resultsPath, workers: false });
 
-    expect(fixture.testNames(worseTestRun.worse)).toEqual(['test']);
+    expect(testNames(worseTestRun.worse)).toEqual(['test']);
 
-    expect(fixture.logs).toMatchSnapshot();
+    expect(logs).toMatchSnapshot();
 
-    await fixture.cleanup();
+    await cleanup();
   });
 });

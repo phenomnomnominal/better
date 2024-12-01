@@ -4,42 +4,40 @@
 
 ```ts
 
-/// <reference types="node" />
-
 import type { Remote } from 'comlink';
 
-// @public
-export type BettererWorkerAPI<API> = {
+// @internal
+export interface BettererWorkerAPI<API> {
     api: Remote<API>;
     destroy(): Promise<void>;
-};
+}
 
-// @public
-export type BettererWorkerFactory<API extends BettererWorkerAPI<unknown>> = () => API;
+// @internal
+export type BettererWorkerFactory<API extends BettererWorkerAPI<unknown>> = () => API | Promise<API>;
 
-// @public
+// @internal
 export interface BettererWorkerHandle<API extends BettererWorkerAPI<unknown>> {
     claim(): Promise<API>;
     destroy(): Promise<void>;
     release(): void;
 }
 
-// @public
+// @internal
 export interface BettererWorkerPool<API extends BettererWorkerAPI<unknown>> {
     destroy(): Promise<void>;
     getWorkerHandle(): BettererWorkerHandle<API>;
 }
 
 // @internal
-export function createWorkerPool__<API extends BettererWorkerAPI<unknown>>(workerCount: number, workerFactory: BettererWorkerFactory<API>): BettererWorkerPool<API>;
+export function createWorkerPoolΔ<API extends BettererWorkerAPI<unknown>>(workerCount: number, workerFactory: BettererWorkerFactory<API>): Promise<BettererWorkerPool<API>>;
 
 // @internal
-export function exposeToMain__<Expose>(api: Expose): void;
+export function exposeToMainΔ(api: object): void;
 
 // @internal
-export function exposeToWorker__<Expose extends object>(api: Expose): Expose;
+export function exposeToWorkerΔ<Expose extends object>(api: Expose): Expose;
 
 // @internal
-export function importWorker__<T>(importPath: string): BettererWorkerAPI<T>;
+export function importWorkerΔ<T>(importPath: string): Promise<BettererWorkerAPI<T>>;
 
 ```

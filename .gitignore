@@ -3,12 +3,10 @@ dist
 node_modules
 reports
 lerna-debug.log
-yarn-error.log
 *.tsbuildinfo
 *.vsix
 goldens/models
 goldens/temp
-packages/**/yarn.lock
 website/build
 website/docs/api/*.md
 website/.docusaurus
@@ -16,3 +14,5 @@ packages/extension/.vscode-test
 *.patch
 betterer.*.log
 .betterer.cache
+.betterer.*.mjs
+.eslintcache

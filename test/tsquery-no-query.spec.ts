@@ -1,5 +1,6 @@
-// eslint-disable-next-line require-extensions/require-extensions -- tests not ESM ready yet
-import { createFixture } from './fixture';
+import { describe, expect, it } from 'vitest';
+
+import { createFixture } from './fixture.js';
 
 describe('betterer', () => {
   it('should throw if there is no query', async () => {
@@ -7,9 +8,9 @@ describe('betterer', () => {
 
     const { paths, logs, cleanup } = await createFixture('tsquery-no-query', {
       '.betterer.js': `
-const { tsquery } = require('@betterer/tsquery');
+import { tsquery } from '@betterer/tsquery';
 
-module.exports = {
+export default {
   tsquery: () => tsquery()
 };
     `

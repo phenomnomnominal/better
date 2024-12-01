@@ -1,12 +1,13 @@
-// eslint-disable-next-line require-extensions/require-extensions -- tests not ESM ready yet
-import { createFixture } from './fixture';
+import { describe, expect, it } from 'vitest';
+
+import { createFixture } from './fixture.js';
 
 describe('betterer', () => {
   it('should report the status of the Angular compiler in strict mode', async () => {
     const { betterer } = await import('@betterer/betterer');
 
     const { paths, logs, readFile, cleanup, testNames } = await createFixture('angular-strict', {
-      '.betterer.ts': `
+      '.betterer.js': `
 import { angular } from '@betterer/angular';
 
 export default {
@@ -57,9 +58,7 @@ export default {
     "importHelpers": true,
     "strict": true,
     "target": "es2015",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
+    "typeRoots": [],
     "lib": [
       "es2018",
       "dom"

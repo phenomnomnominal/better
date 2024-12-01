@@ -1,4 +1,5 @@
-import type { BettererError } from '@betterer/errors';
+import type { BettererConstraintResult } from '@betterer/constraints';
+import type { BettererLogger } from '@betterer/logger';
 import type { BettererWorkerAPI, BettererWorkerHandle, BettererWorkerPool } from '@betterer/worker';
 
 import type { BettererFilePaths } from '../fs/index.js';
@@ -7,7 +8,7 @@ import type { BettererDiff } from '../test/index.js';
 
 /**
  * @public The change between a test runs and its baseline. A {@link @betterer/betterer#BettererRun | `BettererRun`}
- * has a `delta` property if the test has a {@link @betterer/betterer#BettererTestOptionsComplex.progress | `progress()` }
+ * has a `delta` property if the test has a {@link @betterer/betterer#BettererTestConfig.progress | `progress()` }
  * handler.
  */
 export type BettererDelta =
@@ -69,6 +70,11 @@ export type BettererDelta =
  */
 export interface BettererRun {
   /**
+   * The {@link @betterer/logger#BettererLogger | `BettererLogger`} for this run, which
+   * can be used to emit information, issues, or status updates to the reporter.
+   */
+  readonly logger: BettererLogger;
+  /**
    * The baseline result for the test run. If the {@link @betterer/betterer#BettererTest | `BettererTest`}
    * gets better over the lifetime of the {@link @betterer/betterer#BettererContext}, `baseline`
    * will always reflect the original result. Will be `null` when `isNew` is `true`.
@@ -83,26 +89,35 @@ export interface BettererRun {
   readonly expected: BettererResult | null;
   /**
    * An array of file paths that will be tested. Will be `null` if the test is not a {@link @betterer/betterer#BettererFileTest | `BettererFileTest`}.
-   * If it is an empty array then all relevant files for the test (as defined by {@link @betterer/betterer#BettererFileTest.include | `BettererFileTest.include()`}
-   * and {@link @betterer/betterer#BettererFileTest.exclude | `BettererFileTest.exclude()`}) will
+   * If it is an empty array then all relevant files for the test (as defined by {@link @betterer/betterer#BettererResolverTest.include | `BettererResolverTest.include()`}
+   * and {@link @betterer/betterer#BettererResolverTest.exclude | `BettererResolverTest.exclude()`}) will
    * be tested.
    */
   readonly filePaths: BettererFilePaths | null;
-  /**
-   * The name of the test for the run.
-   */
-  readonly name: string;
-
   /**
    * When `true`, this is the first time that a test has been run. Both `baseline` and `expected`
    * will be set to `null`. The default reporter will show that this test is new.
    */
   readonly isNew: boolean;
   /**
+   * When `true`, Betterer found a previous result for a test that is no longer relevant. Both `baseline` and `expected`
+   * will be set to previous result. The default reporter will show that this test is obsolete, and suggest that it can be removed.
+   */
+  readonly isObsolete: boolean;
+  /**
+   * When `true`, this test is "obsolete", due to a test being delete or renamed, but the `--update`
+   * option was used. is enabled. The previous result will be deleted from the {@link https://phenomnomnominal.github.io/betterer/docs/results-file | results file}.
+   */
+  readonly isRemoved: boolean;
+  /**
    * When `true`, this test has been skipped and the test function will not run. The default
    * reporter will show that this test has been skipped.
    */
   readonly isSkipped: boolean;
+  /**
+   * The name of the test for the run.
+   */
+  readonly name: string;
 }
 
 /**
@@ -110,14 +125,17 @@ export interface BettererRun {
  */
 export type BettererRuns = ReadonlyArray<BettererRun>;
 
-export interface BettererReporterRun extends BettererRun {
-  lifecycle: Promise<BettererRunSummary>;
-}
-
 export interface BettererRunning {
-  failed(error: BettererError): Promise<BettererRunSummary>;
   done(result: BettererResult): Promise<BettererRunSummary>;
   skipped(): Promise<BettererRunSummary>;
+}
+
+export interface BettererRunningEnd {
+  comparison?: BettererConstraintResult | null;
+  diff?: BettererDiff | null;
+  result?: BettererResult | null;
+  timestamp: number;
+  isSkipped?: true;
 }
 
 /**
@@ -166,7 +184,6 @@ export interface BettererRunSummary extends BettererRun {
    * The `error` that cause the run to fail. Will be present when `isFailed` is `true`.
    */
   readonly error: Error | null;
-  readonly printed: string | null;
   /**
    * The result for the test run. Will be `null` when `isFailed` or `isSkipped` is `true`.
    */

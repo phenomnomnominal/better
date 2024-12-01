@@ -1,29 +1,31 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should remove files from the cache when they are deleted 1`] = `
+exports[`betterer > should remove files from the cache when they are deleted 1`] = `
 "{
-  \\"version\\": 2,
-  \\"testCache\\": {
-    \\"test\\": {
-      \\"src/file-1.ts\\": \\"3994602698153364047\\",
-      \\"src/file-2.ts\\": \\"3994602698153364047\\"
+  "version": 2,
+  "testCache": {
+    "test": {
+      ".betterer.js": "a3a5145d2d2ec4828c977274956d91469148cddeeb33a7629e133b81f05591cf",
+      "src/file-1.ts": "5458e7616c690e6baf27a785a3f14f3e6fc3737fce3fd1f1e6c8e6692c093be0",
+      "src/file-2.ts": "5458e7616c690e6baf27a785a3f14f3e6fc3737fce3fd1f1e6c8e6692c093be0"
     }
   }
 }"
 `;
 
-exports[`betterer should remove files from the cache when they are deleted 2`] = `
+exports[`betterer > should remove files from the cache when they are deleted 2`] = `
 "{
-  \\"version\\": 2,
-  \\"testCache\\": {
-    \\"test\\": {
-      \\"src/file-1.ts\\": \\"3994602698153364047\\"
+  "version": 2,
+  "testCache": {
+    "test": {
+      ".betterer.js": "a3a5145d2d2ec4828c977274956d91469148cddeeb33a7629e133b81f05591cf",
+      "src/file-1.ts": "5458e7616c690e6baf27a785a3f14f3e6fc3737fce3fd1f1e6c8e6692c093be0"
     }
   }
 }"
 `;
 
-exports[`betterer should remove files from the cache when they are deleted 3`] = `
+exports[`betterer > should remove files from the cache when they are deleted 3`] = `
 "// BETTERER RESULTS V2.
 //
 // If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
@@ -31,27 +33,28 @@ exports[`betterer should remove files from the cache when they are deleted 3`] =
 //
 exports[\`test\`] = {
   value: \`{
-    \\"src/file-1.ts:153364047\\": [
-      [0, 0, 7, \\"RegExp match\\", \\"645651780\\"],
-      [1, 0, 7, \\"RegExp match\\", \\"645651780\\"]
+    "src/file-1.ts:153364047": [
+      [0, 0, 7, "RegExp match", "645651780"],
+      [1, 0, 7, "RegExp match", "645651780"]
     ]
   }\`
 };
 "
 `;
 
-exports[`betterer should remove files from the cache when they are deleted 4`] = `
+exports[`betterer > should remove files from the cache when they are deleted 4`] = `
 "{
-  \\"version\\": 2,
-  \\"testCache\\": {
-    \\"test\\": {
-      \\"src/file-1.ts\\": \\"3994602698153364047\\"
+  "version": 2,
+  "testCache": {
+    "test": {
+      ".betterer.js": "a3a5145d2d2ec4828c977274956d91469148cddeeb33a7629e133b81f05591cf",
+      "src/file-1.ts": "5458e7616c690e6baf27a785a3f14f3e6fc3737fce3fd1f1e6c8e6692c093be0"
     }
   }
 }"
 `;
 
-exports[`betterer should remove files from the cache when they are deleted 5`] = `
+exports[`betterer > should remove files from the cache when they are deleted 5`] = `
 "// BETTERER RESULTS V2.
 //
 // If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
@@ -59,30 +62,27 @@ exports[`betterer should remove files from the cache when they are deleted 5`] =
 //
 exports[\`test\`] = {
   value: \`{
-    \\"src/file-1.ts:153364047\\": [
-      [0, 0, 7, \\"RegExp match\\", \\"645651780\\"],
-      [1, 0, 7, \\"RegExp match\\", \\"645651780\\"]
+    "src/file-1.ts:153364047": [
+      [0, 0, 7, "RegExp match", "645651780"],
+      [1, 0, 7, "RegExp match", "645651780"]
     ]
   }\`
 };
 "
 `;
 
-exports[`betterer should remove files from the cache when they are deleted 6`] = `
-Array [
+exports[`betterer > should remove files from the cache when they are deleted 6`] = `
+[
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" got checked for the first time! (4 issues) 🎉
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! (4 issues) 🎉
+✅ test: "test" got checked for the first time! (4 issues) 🎉
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! (4 issues) 🎉
+✅ test: "test" got checked for the first time! (4 issues) 🎉
 
 1 test got checked. 🤔
 1 test got checked for the first time! 🎉
@@ -90,16 +90,15 @@ Array [
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" got better! (2 fixed issues, 2 remaining) 😍
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got better! (2 fixed issues, 2 remaining) 😍
+✅ test: "test" got better! (2 fixed issues, 2 remaining) 😍
+・ 2 fixed issues in "fixtures/cache-deleted-file/src/file-2.ts".
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got better! (2 fixed issues, 2 remaining) 😍
+✅ test: "test" got better! (2 fixed issues, 2 remaining) 😍
+・ 2 fixed issues in "fixtures/cache-deleted-file/src/file-2.ts".
 
 1 test got checked. 🤔
 1 test got better! 😍
@@ -107,41 +106,27 @@ Array [
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-🔥 test: \\"test\\" got worse. (2 new issues, 4 total) 😔
-",
-  "🌟 Betterer (0ms): 1 test running...
-🔥 test: \\"test\\" got worse. (2 new issues, 4 total) 😔
-
-Error: \\"test\\" got worse. (2 new issues, 4 total) 😔
+🤔 test: running "test"!
 ",
   "💥 Betterer (0ms): 1 test done! 1 test errored!
-🔥 test: \\"test\\" got worse. (2 new issues, 4 total) 😔
-・ New issues in \\"<project>/fixtures/cache-deleted-file/src/file-2.ts\\"!
+🔥 test: "test" got worse. (2 new issues, 2 existing, 4 total) 😔
+・ 2 new issues in "fixtures/cache-deleted-file/src/file-2.ts".
 ・ Showing first of 2 new issues:
 ・
-・   <project>/fixtures/cache-deleted-file/src/file-2.ts
 ・ > 1 | // HACK:
 ・     | ^^^^^^^ RegExp match
 ・   2 | // HACK:
 ・
-
-Error: \\"test\\" got worse. (2 new issues, 4 total) 😔
 ",
   "💥 Betterer (0ms): 1 test done! 1 test errored!
-🔥 test: \\"test\\" got worse. (2 new issues, 4 total) 😔
-・ New issues in \\"<project>/fixtures/cache-deleted-file/src/file-2.ts\\"!
+🔥 test: "test" got worse. (2 new issues, 2 existing, 4 total) 😔
+・ 2 new issues in "fixtures/cache-deleted-file/src/file-2.ts".
 ・ Showing first of 2 new issues:
 ・
-・   <project>/fixtures/cache-deleted-file/src/file-2.ts
 ・ > 1 | // HACK:
 ・     | ^^^^^^^ RegExp match
 ・   2 | // HACK:
 ・
-
-Error: \\"test\\" got worse. (2 new issues, 4 total) 😔
 
 1 test got checked. 🤔
 1 test got worse. 😔

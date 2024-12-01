@@ -1,20 +1,17 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should do nothing when a test is not past its deadline 1`] = `
-Array [
+exports[`betterer > should do nothing when a test is not past its deadline 1`] = `
+[
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" got checked for the first time! 🎉
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! 🎉
+✅ test: "test" got checked for the first time! 🎉
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! 🎉
+✅ test: "test" got checked for the first time! 🎉
 
 1 test got checked. 🤔
 1 test got checked for the first time! 🎉
@@ -22,7 +19,7 @@ Array [
 ]
 `;
 
-exports[`betterer should do nothing when a test is not past its deadline 2`] = `
+exports[`betterer > should do nothing when a test is not past its deadline 2`] = `
 "// BETTERER RESULTS V2.
 //
 // If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:

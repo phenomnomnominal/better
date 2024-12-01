@@ -1,0 +1,111 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer.watch > should show an error for an invalid filter in watch mode 1`] = `
+[
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 test: running "test"!
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" got checked for the first time! (1 issue) 🎉
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" got checked for the first time! (1 issue) 🎉
+
+1 test got checked. 🤔
+1 test got checked for the first time! 🎉
+",
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): No current ignore patterns
+
+Starting Betterer in watch mode! 🎉
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Press "enter" to confirm, or "esc" to cancel.
+Use RegExp patterns e.g. /my test/. Use "," to separate multiple filters.
+Filters:
+
+Starting Betterer in watch mode! 🎉
+
+(press "ctrl+c" to quit)
+",
+  "Press "enter" to confirm, or "esc" to cancel.
+Use RegExp patterns e.g. /my test/. Use "," to separate multiple filters.
+Filters: (
+
+Starting Betterer in watch mode! 🎉
+
+(press "ctrl+c" to quit)
+",
+  "Press "enter" to confirm, or "esc" to cancel.
+Use RegExp patterns e.g. /my test/. Use "," to separate multiple filters.
+Filters: (
+Invalid regular expression: /(/i: Unterminated group
+
+Starting Betterer in watch mode! 🎉
+
+(press "ctrl+c" to quit)
+",
+  "Filters (press "f" to edit): (
+Ignores (press "i" to edit): No current ignore patterns
+
+Starting Betterer in watch mode! 🎉
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): No current ignore patterns
+
+Checking 1 file... 🤔
+
+・ fixtures/watch-filter-error/src/index.ts
+
+🌟 Betterer (0ms):
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): No current ignore patterns
+
+Checking 1 file... 🤔
+
+・ fixtures/watch-filter-error/src/index.ts
+
+🌟 Betterer (0ms): 1 test running...
+🤔 test: running "test"!
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): No current ignore patterns
+
+Checking 1 file... 🤔
+
+・ fixtures/watch-filter-error/src/index.ts
+
+🎉 Betterer (0ms): 1 test done!
+✅ test: "test" stayed the same. (1 issue) 😐
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): No current ignore patterns
+
+Checked 1 file! 🔍
+
+・ fixtures/watch-filter-error/src/index.ts
+
+🎉 Betterer (0ms): 1 test done!
+✅ test: "test" stayed the same. (1 issue) 😐
+
+1 test got checked. 🤔
+1 test stayed the same. 😐
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Stopping watch mode... 👋
+",
+]
+`;

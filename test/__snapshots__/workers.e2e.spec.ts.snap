@@ -1,0 +1,89 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer > should run tests in workers 1`] = `
+[
+  "🌟 Betterer (0ms):
+",
+  "🎉 Betterer (0ms): 4 tests done!
+✅ test 1: "test 1" got checked for the first time! 🎉
+✅ test 2: "test 2" got checked for the first time! 🎉
+✅ test 3: "test 3" got checked for the first time! (1 issue) 🎉
+✅ test 4: "test 4" got checked for the first time! (1 issue) 🎉
+",
+  "🎉 Betterer (0ms): 4 tests done!
+✅ test 1: "test 1" got checked for the first time! 🎉
+✅ test 2: "test 2" got checked for the first time! 🎉
+✅ test 3: "test 3" got checked for the first time! (1 issue) 🎉
+✅ test 4: "test 4" got checked for the first time! (1 issue) 🎉
+
+4 tests got checked. 🤔
+4 tests got checked for the first time! 🎉
+",
+  "🌟 Betterer (0ms):
+",
+  "💥 Betterer (0ms): 4 tests done! 1 test errored!
+✅ test 1: "test 1" stayed the same. 😐
+✅ test 2: "test 2" stayed the same. 😐
+✅ test 3: "test 3" met its goal! 🎉
+・ 1 fixed issue in "fixtures/workers/src/index.ts".
+🔥 test 4: "test 4" got worse. (1 new issue, 1 existing, 2 total) 😔
+・ 1 existing, 1 new issues in "fixtures/workers/src/index.ts".
+・
+・   1 | // HACK
+・ > 2 | // HACK
+・     | ^^^^^^^ RegExp match
+・
+",
+  "💥 Betterer (0ms): 4 tests done! 1 test errored!
+✅ test 1: "test 1" stayed the same. 😐
+✅ test 2: "test 2" stayed the same. 😐
+✅ test 3: "test 3" met its goal! 🎉
+・ 1 fixed issue in "fixtures/workers/src/index.ts".
+🔥 test 4: "test 4" got worse. (1 new issue, 1 existing, 2 total) 😔
+・ 1 existing, 1 new issues in "fixtures/workers/src/index.ts".
+・
+・   1 | // HACK
+・ > 2 | // HACK
+・     | ^^^^^^^ RegExp match
+・
+
+4 tests got checked. 🤔
+1 test got better! 😍
+1 test met its goal! 🎉
+2 tests stayed the same. 😐
+1 test got worse. 😔
+
+You should try to fix the new issues! As a last resort, you can run \`betterer --update\` to force an update of the results file. 🆙
+",
+]
+`;
+
+exports[`betterer > should run tests in workers 2`] = `
+"// BETTERER RESULTS V2.
+//
+// If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
+// https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
+//
+exports[\`test 1\`] = {
+  value: \`0
+\`
+};
+
+exports[\`test 2\`] = {
+  value: \`0
+\`
+};
+
+exports[\`test 3\`] = {
+  value: \`{}\`
+};
+
+exports[\`test 4\`] = {
+  value: \`{
+    "src/index.ts:2760033717": [
+      [0, 0, 7, "RegExp match", "645651780"]
+    ]
+  }\`
+};
+"
+`;

@@ -1,20 +1,20 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should run only specific tests called with only() 1`] = `
-Array [
+exports[`betterer > should run only specific tests called with only() 1`] = `
+[
   "🌟 Betterer (0ms):
 ",
   "🎉 Betterer (0ms): 4 tests done!
-✅ test 1: \\"test 1\\" got checked for the first time! 🎉
-✅ test 2: \\"test 2\\" got checked for the first time! 🎉
-✅ test 3: \\"test 3\\" got checked for the first time! 🎉
-✅ test 4: \\"test 4\\" got checked for the first time! (1 issue) 🎉
+✅ test 1: "test 1" got checked for the first time! 🎉
+✅ test 2: "test 2" got checked for the first time! 🎉
+✅ test 3: "test 3" got checked for the first time! 🎉
+✅ test 4: "test 4" got checked for the first time! (1 issue) 🎉
 ",
   "🎉 Betterer (0ms): 4 tests done!
-✅ test 1: \\"test 1\\" got checked for the first time! 🎉
-✅ test 2: \\"test 2\\" got checked for the first time! 🎉
-✅ test 3: \\"test 3\\" got checked for the first time! 🎉
-✅ test 4: \\"test 4\\" got checked for the first time! (1 issue) 🎉
+✅ test 1: "test 1" got checked for the first time! 🎉
+✅ test 2: "test 2" got checked for the first time! 🎉
+✅ test 3: "test 3" got checked for the first time! 🎉
+✅ test 4: "test 4" got checked for the first time! (1 issue) 🎉
 
 4 tests got checked. 🤔
 4 tests got checked for the first time! 🎉
@@ -22,16 +22,16 @@ Array [
   "🌟 Betterer (0ms):
 ",
   "🎉 Betterer (0ms): 4 tests done!
-✅ test 1: \\"test 1\\" stayed the same. 😐
-✅ test 2: \\"test 2\\" got skipped. 🚫
-✅ test 3: \\"test 3\\" got skipped. 🚫
-✅ test 4: \\"test 4\\" stayed the same. (1 issue) 😐
+✅ test 1: "test 1" stayed the same. 😐
+✅ test 2: "test 2" got skipped. 🚫
+✅ test 3: "test 3" got skipped. 🚫
+✅ test 4: "test 4" stayed the same. (1 issue) 😐
 ",
   "🎉 Betterer (0ms): 4 tests done!
-✅ test 1: \\"test 1\\" stayed the same. 😐
-✅ test 2: \\"test 2\\" got skipped. 🚫
-✅ test 3: \\"test 3\\" got skipped. 🚫
-✅ test 4: \\"test 4\\" stayed the same. (1 issue) 😐
+✅ test 1: "test 1" stayed the same. 😐
+✅ test 2: "test 2" got skipped. 🚫
+✅ test 3: "test 3" got skipped. 🚫
+✅ test 4: "test 4" stayed the same. (1 issue) 😐
 
 2 tests got checked. 🤔
 2 tests stayed the same. 😐
@@ -40,7 +40,7 @@ Array [
 ]
 `;
 
-exports[`betterer should run only specific tests called with only() 2`] = `
+exports[`betterer > should run only specific tests called with only() 2`] = `
 "// BETTERER RESULTS V2.
 //
 // If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
@@ -63,8 +63,8 @@ exports[\`test 3\`] = {
 
 exports[\`test 4\`] = {
   value: \`{
-    \\"src/index.ts:4126639614\\": [
-      [0, 0, 7, \\"RegExp match\\", \\"645651780\\"]
+    "src/index.ts:4126639614": [
+      [0, 0, 7, "RegExp match", "645651780"]
     ]
   }\`
 };

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should report the status of a new eslint rule 1`] = `
+exports[`betterer > should report the status of a new eslint rule 1`] = `
 "// BETTERER RESULTS V2.
 //
 // If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
@@ -8,29 +8,26 @@ exports[`betterer should report the status of a new eslint rule 1`] = `
 //
 exports[\`test\`] = {
   value: \`{
-    \\"src/index.ts:3201740415\\": [
-      [0, 0, 9, \\"Unexpected \\\\'debugger\\\\' statement.\\", \\"3201740415\\"]
+    "src/index.ts:3201740415": [
+      [0, 0, 9, "eslint(no-debugger): Unexpected \\'debugger\\' statement.", "3201740415"]
     ]
   }\`
 };
 "
 `;
 
-exports[`betterer should report the status of a new eslint rule 2`] = `
-Array [
+exports[`betterer > should report the status of a new eslint rule 2`] = `
+[
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" got checked for the first time! (1 issue) 🎉
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! (1 issue) 🎉
+✅ test: "test" got checked for the first time! (1 issue) 🎉
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! (1 issue) 🎉
+✅ test: "test" got checked for the first time! (1 issue) 🎉
 
 1 test got checked. 🤔
 1 test got checked for the first time! 🎉
@@ -38,16 +35,13 @@ Array [
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" stayed the same. (1 issue) 😐
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" stayed the same. (1 issue) 😐
+✅ test: "test" stayed the same. (1 issue) 😐
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" stayed the same. (1 issue) 😐
+✅ test: "test" stayed the same. (1 issue) 😐
 
 1 test got checked. 🤔
 1 test stayed the same. 😐
@@ -55,41 +49,25 @@ Array [
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-🔥 test: \\"test\\" got worse. (1 new issue, 2 total) 😔
-",
-  "🌟 Betterer (0ms): 1 test running...
-🔥 test: \\"test\\" got worse. (1 new issue, 2 total) 😔
-
-Error: \\"test\\" got worse. (1 new issue, 2 total) 😔
+🤔 test: running "test"!
 ",
   "💥 Betterer (0ms): 1 test done! 1 test errored!
-🔥 test: \\"test\\" got worse. (1 new issue, 2 total) 😔
-・ 1 existing issue in \\"<project>/fixtures/eslint/src/index.ts\\".
-・ New issue in \\"<project>/fixtures/eslint/src/index.ts\\"!
+🔥 test: "test" got worse. (1 new issue, 1 existing, 2 total) 😔
+・ 1 existing, 1 new issues in "fixtures/eslint/src/index.ts".
 ・
-・   <project>/fixtures/eslint/src/index.ts
 ・   1 | debugger;
 ・ > 2 | debugger;
-・     | ^^^^^^^^^ Unexpected 'debugger' statement.
+・     | ^^^^^^^^^ eslint(no-debugger): Unexpected 'debugger' statement.
 ・
-
-Error: \\"test\\" got worse. (1 new issue, 2 total) 😔
 ",
   "💥 Betterer (0ms): 1 test done! 1 test errored!
-🔥 test: \\"test\\" got worse. (1 new issue, 2 total) 😔
-・ 1 existing issue in \\"<project>/fixtures/eslint/src/index.ts\\".
-・ New issue in \\"<project>/fixtures/eslint/src/index.ts\\"!
+🔥 test: "test" got worse. (1 new issue, 1 existing, 2 total) 😔
+・ 1 existing, 1 new issues in "fixtures/eslint/src/index.ts".
 ・
-・   <project>/fixtures/eslint/src/index.ts
 ・   1 | debugger;
 ・ > 2 | debugger;
-・     | ^^^^^^^^^ Unexpected 'debugger' statement.
+・     | ^^^^^^^^^ eslint(no-debugger): Unexpected 'debugger' statement.
 ・
-
-Error: \\"test\\" got worse. (1 new issue, 2 total) 😔
 
 1 test got checked. 🤔
 1 test got worse. 😔
@@ -99,16 +77,15 @@ You should try to fix the new issues! As a last resort, you can run \`betterer -
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" met its goal! 🎉
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" met its goal! 🎉
+✅ test: "test" met its goal! 🎉
+・ 1 fixed issue in "fixtures/eslint/src/index.ts".
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" met its goal! 🎉
+✅ test: "test" met its goal! 🎉
+・ 1 fixed issue in "fixtures/eslint/src/index.ts".
 
 1 test got checked. 🤔
 1 test got better! 😍
@@ -117,16 +94,13 @@ You should try to fix the new issues! As a last resort, you can run \`betterer -
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" has already met its goal! ✨
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" has already met its goal! ✨
+✅ test: "test" has already met its goal! ✨
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" has already met its goal! ✨
+✅ test: "test" has already met its goal! ✨
 
 1 test got checked. 🤔
 1 test met its goal! 🎉

@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer upgrade > should doesn't change things it doesn't need to change 1`] = `
+[
+  "🎉 Upgrading Betterer (0ms): 1 task done!
+✅ Upgrading "./.betterer.ts": done!",
+  "🎉 Upgrading Betterer (0ms): 1 task done!
+✅ Upgrading "./.betterer.ts": done!
+・ Nothing to upgrade!",
+]
+`;

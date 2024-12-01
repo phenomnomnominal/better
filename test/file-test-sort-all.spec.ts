@@ -1,5 +1,6 @@
-// eslint-disable-next-line require-extensions/require-extensions -- tests not ESM ready yet
-import { createFixture } from './fixture';
+import { describe, expect, it } from 'vitest';
+
+import { createFixture } from './fixture.js';
 
 describe('betterer', () => {
   it('should sort files by their file path', async () => {
@@ -9,40 +10,43 @@ describe('betterer', () => {
       'file-test-sort-all',
       {
         '.betterer.js': `
-const { eslint } = require('@betterer/eslint');
+import { eslint } from '@betterer/eslint';
 
-module.exports = {
-  test: () => eslint({ 'no-debugger': 'error' }).include('./src/**/*.ts')
+export default {
+  test: () => eslint({ 
+      rules: { 
+        'no-debugger': 'error'
+      }
+    })
+    .include('./src/**/*.ts')
 };
       `,
-        '.eslintrc.js': `
-const path = require('path');
+        'eslint.config.js': `
+import eslint from '@eslint/js';
+import tslint from 'typescript-eslint';
 
-module.exports = {
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaVersion: 2018,
-    project: path.resolve(__dirname, './tsconfig.json'),
-    sourceType: 'module'
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+export default tslint.config(
+  eslint.configs.recommended,
+  ...tslint.configs.recommended,
+  {
+    languageOptions: {
+      parserOptions: {
+        project: "./tsconfig.json",
+        tsconfigRootDir: path.dirname(fileURLToPath(import.meta.url))
+      },
+    },
   },
-  plugins: ['@typescript-eslint'],
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking'
-  ],
-  rules: {
-    'no-debugger': 1
-  }
-};
-    `,
+  { rules: { 'no-debugger': 'off' } }
+);
+      `,
         'tsconfig.json': `
 {
-  "extends": "../../tsconfig.json",
-  "include": ["./src/**/*", "./.betterer.js", "./.eslintrc.js"]
+  "include": ["./src/**/*"]
 }
-    `
+        `
       }
     );
 

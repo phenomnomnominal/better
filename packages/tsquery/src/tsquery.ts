@@ -8,8 +8,8 @@ import { promises as fs } from 'node:fs';
  * for more details about the query syntax.
  *
  * @remarks {@link @betterer/tsquery#tsquery | `tsquery`} is a {@link @betterer/betterer#BettererFileTest | `BettererFileTest`},
- * so you can use {@link @betterer/betterer#BettererFileTest.include | `include()`}, {@link @betterer/betterer#BettererFileTest.exclude | `exclude()`},
- * {@link @betterer/betterer#BettererFileTest.only | `only()`}, and {@link @betterer/betterer#BettererFileTest.skip | `skip()`}.
+ * so you can use {@link @betterer/betterer#BettererResolverTest.include | `include()`}, {@link @betterer/betterer#BettererResolverTest.exclude | `exclude()`},
+ * {@link @betterer/betterer#BettererTest.only | `only()`}, and {@link @betterer/betterer#BettererTest.skip | `skip()`}.
  *
  * @example
  * ```typescript
@@ -32,7 +32,11 @@ import { promises as fs } from 'node:fs';
  * Will throw if the user doesn't pass `query`.
  */
 export function tsquery(query: string, issueMessage = 'TSQuery match'): BettererFileTest {
-  if (!query) {
+  // The `tsquery` function could be called from JS code, without type-checking.
+  // We *could* change the parameter to be `query?: string`,
+  // but that would imply that it was optional, and it isn't.
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- see above!
+  if (query == null || !query) {
     throw new BettererError(
       "for `@betterer/tsquery` to work, you need to provide a query, e.g. `'CallExpression > PropertyAccessExpression'`. ❌"
     );
@@ -46,8 +50,7 @@ export function tsquery(query: string, issueMessage = 'TSQuery match'): Betterer
     await Promise.all(
       filePaths.map(async (filePath) => {
         const fileText = await fs.readFile(filePath, 'utf8');
-        const sourceFile = tsq.ast(fileText);
-        const matches = tsq.query(sourceFile, query, { visitAllChildren: true });
+        const matches = tsq.query(fileText, query);
         if (matches.length === 0) {
           return;
         }
@@ -57,5 +60,5 @@ export function tsquery(query: string, issueMessage = 'TSQuery match'): Betterer
         });
       })
     );
-  });
+  }).cache();
 }

@@ -1,5 +1,6 @@
-// eslint-disable-next-line require-extensions/require-extensions -- tests not ESM ready yet
-import { createFixture } from './fixture';
+import { describe, expect, it } from 'vitest';
+
+import { createFixture } from './fixture.js';
 
 describe('betterer', () => {
   it('should stay the same when an issue is moved', async () => {
@@ -24,13 +25,13 @@ export default {
 {
   "compilerOptions": {
     "noEmit": true,
-    "lib": ["esnext"],
+    "lib": ["esnext", "dom"],
     "moduleResolution": "node",
     "target": "ES5",
-    "typeRoots": ["../../node_modules/@types/"],
+    "typeRoots": [],
     "resolveJsonModule": true
   },
-  "include": ["./src/**/*", ".betterer.ts"]
+  "include": ["./src/**/*"]
 }
       `
     });

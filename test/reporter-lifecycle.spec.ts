@@ -7,8 +7,9 @@ import type {
   BettererSuiteSummary
 } from '@betterer/betterer';
 
-// eslint-disable-next-line require-extensions/require-extensions -- tests not ESM ready yet
-import { createFixture } from './fixture';
+import { describe, expect, it } from 'vitest';
+
+import { createFixture } from './fixture.js';
 
 describe('betterer --reporter', () => {
   it('should work with a lifecycle based reporter', async () => {
@@ -20,7 +21,7 @@ import { BettererTest } from '@betterer/betterer';
 import { bigger } from '@betterer/constraints';
 import { persist } from '@betterer/fixture';
 
-const grows = persist(__dirname, 'grows', 0);
+const grows = persist(import.meta.url, 'grows', 0);
 
 export const test = () => new BettererTest({
   test: () => grows.increment(),
@@ -39,21 +40,21 @@ export const test = () => new BettererTest({
         async contextStart(_: BettererContext, lifecycle: Promise<BettererContextSummary>) {
           try {
             await lifecycle;
-          } catch (e) {
+          } catch {
             return;
           }
         },
         async suiteStart(_: BettererSuite, lifecycle: Promise<BettererSuiteSummary>) {
           try {
             await lifecycle;
-          } catch (e) {
+          } catch {
             return;
           }
         },
         async runStart(_: BettererRun, lifecycle: Promise<BettererRunSummary>) {
           try {
             await lifecycle;
-          } catch (e) {
+          } catch {
             return;
           }
         }

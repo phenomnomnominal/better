@@ -1,4 +1,14 @@
 {
   "extends": "../../api-extractor.json",
-  "mainEntryPointFilePath": "./dist/index.d.ts"
+  "mainEntryPointFilePath": "./dist/index.d.ts",
+
+  "messages": {
+    "extractorMessageReporting": {
+      // We add a suffix Δ instead
+      "ae-internal-missing-underscore": {
+        "logLevel": "none",
+        "addToApiReportFile": false
+      }
+    }
+  }
 }

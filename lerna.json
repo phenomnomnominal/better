@@ -8,6 +8,7 @@
     "packages/errors",
     "packages/eslint",
     "packages/fixture",
+    "packages/knip",
     "packages/logger",
     "packages/regexp",
     "packages/render",
@@ -19,9 +20,8 @@
     "packages/typescript",
     "packages/worker"
   ],
-  "npmClient": "yarn",
-  "useWorkspaces": true,
-  "version": "5.4.0",
+  "npmClient": "npm",
+  "version": "6.0.0-alpha.1",
   "command": {
     "publish": {
       "conventionalCommits": true

@@ -1,4 +1,6 @@
-import { BettererCoverageTest } from './coverage-test.js';
+import type { BettererCoverageTest } from './types.js';
+
+import { BettererCoverageTestΩ } from './coverage-test.js';
 import { test, testTotal } from './test.js';
 
 /**
@@ -6,10 +8,10 @@ import { test, testTotal } from './test.js';
  * Use this test to track your per-file test coverage. Reads a {@link https://github.com/istanbuljs/istanbuljs/blob/master/packages/istanbul-reports/lib/json-summary/index.js | json-summary format}
  * coverage summary. Make sure to run your tests separately before running Betterer.
  *
- * @param coverageSummaryPath - relative path to the coverage summary. Defaults to './coverage/coverage-summary.json'.
+ * @param coverageSummaryPath - relative path to the coverage summary. Defaults to `'./coverage/coverage-summary.json'`.
  */
 export function coverage(coverageSummaryPath?: string): BettererCoverageTest {
-  return new BettererCoverageTest(test, coverageSummaryPath);
+  return new BettererCoverageTestΩ(test, coverageSummaryPath);
 }
 
 /**
@@ -17,8 +19,8 @@ export function coverage(coverageSummaryPath?: string): BettererCoverageTest {
  * Use this test to track your total test coverage. Reads a {@link https://github.com/istanbuljs/istanbuljs/blob/master/packages/istanbul-reports/lib/json-summary/index.js | json-summary format}
  * coverage summary. Make sure to run your tests separately before running Betterer.
  *
- * @param coverageSummaryPath - relative path to the coverage summary. Defaults to './coverage/coverage-summary.json'.
+ * @param coverageSummaryPath - relative path to the coverage summary. Defaults to `'./coverage/coverage-summary.json'`.
  */
 export function coverageTotal(coverageSummaryPath?: string): BettererCoverageTest {
-  return new BettererCoverageTest(testTotal, coverageSummaryPath);
+  return new BettererCoverageTestΩ(testTotal, coverageSummaryPath);
 }

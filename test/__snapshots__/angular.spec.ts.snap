@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should report the status of the Angular compiler in strict mode 1`] = `
+exports[`betterer > should report the status of the Angular compiler in strict mode 1`] = `
 "// BETTERER RESULTS V2.
 //
 // If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
@@ -8,31 +8,28 @@ exports[`betterer should report the status of the Angular compiler in strict mod
 //
 exports[\`angular\`] = {
   value: \`{
-    \\"src/app/app.component.ts:3728100455\\": [
-      [10, 8, 5, \\"Property \\\\'title\\\\' does not exist on type \\\\'AppComponent\\\\'.\\", \\"183222373\\"],
-      [12, 34, 7, \\"Type \\\\'(hero: Hero) => number\\\\' is not assignable to type \\\\'TrackByFunction<Hero>\\\\'.\\", \\"926731729\\"],
-      [13, 17, 2, \\"Property \\\\'Id\\\\' does not exist on type \\\\'Hero\\\\'. Did you mean \\\\'id\\\\'?\\", \\"5862152\\"]
+    "src/app/app.component.ts:3728100455": [
+      [10, 8, 5, "ngtsc: Property \\'title\\' does not exist on type \\'AppComponent\\'.", "183222373"],
+      [12, 34, 7, "ngtsc: Type \\'(hero: Hero) => number\\' is not assignable to type \\'TrackByFunction<Hero>\\'.", "926731729"],
+      [13, 17, 2, "ngtsc: Property \\'Id\\' does not exist on type \\'Hero\\'. Did you mean \\'id\\'?", "5862152"]
     ]
   }\`
 };
 "
 `;
 
-exports[`betterer should report the status of the Angular compiler in strict mode 2`] = `
-Array [
+exports[`betterer > should report the status of the Angular compiler in strict mode 2`] = `
+[
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 angular: running \\"angular\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ angular: \\"angular\\" got checked for the first time! (3 issues) 🎉
+🤔 angular: running "angular"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ angular: \\"angular\\" got checked for the first time! (3 issues) 🎉
+✅ angular: "angular" got checked for the first time! (3 issues) 🎉
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ angular: \\"angular\\" got checked for the first time! (3 issues) 🎉
+✅ angular: "angular" got checked for the first time! (3 issues) 🎉
 
 1 test got checked. 🤔
 1 test got checked for the first time! 🎉

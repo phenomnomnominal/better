@@ -1,14 +1,14 @@
-const BASE_THEME = require('prism-react-renderer/themes/dracula');
+import { themes } from 'prism-react-renderer';
 
 const THEME = {
-  ...BASE_THEME,
+  ...themes.dracula,
   plain: {
-    ...BASE_THEME.plain,
+    ...themes.dracula.plain,
     backgroundColor: '#000000'
   }
 };
 
-module.exports = {
+export default {
   title: 'Betterer',
   tagline: 'Improve, incrementally',
 

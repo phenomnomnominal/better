@@ -1,10 +1,13 @@
-// eslint-disable-next-line require-extensions/require-extensions -- tests not ESM ready yet
-import { createFixture } from '../fixture';
+import { describe, it, expect } from 'vitest';
+
+import { createFixture } from '../fixture.js';
 
 const ARGV = ['node', './bin/betterer'];
 
 describe('betterer cli', () => {
   it('should merge the given contents', async () => {
+    const { cliΔ } = await import('@betterer/cli');
+
     const { paths, cleanup, readFile } = await createFixture('merge-contents', {
       '.betterer.results': ''
     });
@@ -32,9 +35,9 @@ exports[\`test\`] = {
     const resultsPath = paths.results;
     const fixturePath = paths.cwd;
 
-    const { cli__ } = await import('@betterer/cli');
+    process.env.BETTERER_WORKER = 'false';
 
-    await cli__(fixturePath, [...ARGV, 'merge', ours, theirs]);
+    await cliΔ(fixturePath, [...ARGV, 'merge', ours, theirs]);
 
     const merged = await readFile(resultsPath);
 

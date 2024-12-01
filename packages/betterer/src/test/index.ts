@@ -1,20 +1,28 @@
-export {
-  BettererFileTest,
-  BettererFileTestResult,
-  BettererFileTestFunction,
-  BettererFileBase,
+export type {
   BettererFile,
-  BettererFilesDiff,
-  BettererFileTestDiff,
+  BettererFileBase,
   BettererFileDiff,
   BettererFileIssue,
+  BettererFileIssueSerialised,
   BettererFileIssues,
-  isBettererFileTest
+  BettererFileIssuesSerialised,
+  BettererFileTestDiff,
+  BettererFileTestFunction,
+  BettererFileTestResult,
+  BettererFileTestResultKey,
+  BettererFileTestResultSerialised,
+  BettererFileTestResultΩ,
+  BettererFilesDiff
 } from './file-test/index.js';
-export type { BettererFileTestResultΩ } from './file-test/index.js';
-export { loadTestMeta } from './loader.js';
-export { BettererTest, isBettererTest } from './test.js';
-export {
+export type {
+  BettererTestFactory,
+  BettererTestMetaLoaderWorker,
+  BettererTestMap,
+  BettererTestNames,
+  BettererTestMeta,
+  BettererTestsMeta
+} from './test-meta/index.ts';
+export type {
   BettererDeserialise,
   BettererDiff,
   BettererDiffer,
@@ -22,20 +30,14 @@ export {
   BettererProgress,
   BettererSerialise,
   BettererSerialiser,
-  BettererTestFactory,
-  BettererTestFactoryMeta,
-  BettererTestFactoryMetaMap,
-  BettererTestMap,
-  BettererTestBase,
+  BettererTestConfig,
   BettererTestConstraint,
   BettererTestDeadline,
   BettererTestFunction,
   BettererTestGoal,
-  BettererTestOptions,
-  BettererTestOptionsBasic,
-  BettererTestOptionsComplex,
-  BettererTestConfig,
-  BettererTestMeta,
-  BettererTestNames,
-  BettererTestLoaderWorker
+  BettererTestOptions
 } from './types.js';
+
+export { BettererFileTest, isBettererFileTest } from './file-test/index.js';
+export { BettererResolverTest, isBettererResolverTest } from './resolver-test/index.js';
+export { BettererTest, isBettererTest } from './test.js';

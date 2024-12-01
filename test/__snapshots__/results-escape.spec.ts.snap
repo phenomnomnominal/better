@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should escape interpolation characters in the result file 1`] = `
+exports[`betterer > should escape interpolation characters in the result file 1`] = `
 "// BETTERER RESULTS V2.
 //
 // If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
@@ -8,29 +8,26 @@ exports[`betterer should escape interpolation characters in the result file 1`] 
 //
 exports[\`test\`] = {
   value: \`{
-    \\"src/index.ts:5381\\": [
-      [0, 0, 0, \\"\\\\\`$\\\\{key}\\\\\`\\", \\"5381\\"]
+    "src/index.ts:5381": [
+      [0, 0, 0, "\\\`$\\{key}\\\`", "2284429680"]
     ]
   }\`
 };
 "
 `;
 
-exports[`betterer should escape interpolation characters in the result file 2`] = `
-Array [
+exports[`betterer > should escape interpolation characters in the result file 2`] = `
+[
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" got checked for the first time! (1 issue) 🎉
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! (1 issue) 🎉
+✅ test: "test" got checked for the first time! (1 issue) 🎉
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! (1 issue) 🎉
+✅ test: "test" got checked for the first time! (1 issue) 🎉
 
 1 test got checked. 🤔
 1 test got checked for the first time! 🎉
@@ -38,16 +35,13 @@ Array [
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" stayed the same. (1 issue) 😐
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" stayed the same. (1 issue) 😐
+✅ test: "test" stayed the same. (1 issue) 😐
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" stayed the same. (1 issue) 😐
+✅ test: "test" stayed the same. (1 issue) 😐
 
 1 test got checked. 🤔
 1 test stayed the same. 😐

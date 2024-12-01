@@ -1,0 +1,41 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer > should stabilise the number of missing properties in issue messages 1`] = `
+"// BETTERER RESULTS V2.
+//
+// If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
+// https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
+//
+exports[\`typescript\`] = {
+  value: \`{
+    "src/index.ts:3182043371": [
+      [34, 6, 1, "tsc: Property \\'a1\\' is missing in type \\'{}\\' but required in type \\'A\\'.", "177604"],
+      [35, 6, 1, "tsc: Type \\'{}\\' is missing 2 properties from type \\'B\\'", "177607"],
+      [36, 6, 1, "tsc: Type \\'{}\\' is missing 3 properties from type \\'C\\'", "177606"],
+      [37, 6, 1, "tsc: Type \\'{}\\' is missing 4 properties from type \\'D\\'", "177601"],
+      [38, 6, 1, "tsc: Type \\'{}\\' is missing 5 properties from type \\'E\\'", "177600"],
+      [39, 6, 1, "tsc: Type \\'{}\\' is missing 6 properties from type \\'F\\'", "177603"]
+    ]
+  }\`
+};
+"
+`;
+
+exports[`betterer > should stabilise the number of missing properties in issue messages 2`] = `
+[
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 typescript: running "typescript"!
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ typescript: "typescript" got checked for the first time! (6 issues) 🎉
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ typescript: "typescript" got checked for the first time! (6 issues) 🎉
+
+1 test got checked. 🤔
+1 test got checked for the first time! 🎉
+",
+]
+`;

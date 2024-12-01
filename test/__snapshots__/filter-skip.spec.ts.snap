@@ -1,16 +1,16 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should not run a specific test called with skip() 1`] = `
-Array [
+exports[`betterer > should not run a specific test called with skip() 1`] = `
+[
   "🌟 Betterer (0ms):
 ",
   "🎉 Betterer (0ms): 2 tests done!
-✅ test 1: \\"test 1\\" got checked for the first time! 🎉
-✅ test 2: \\"test 2\\" got checked for the first time! (1 issue) 🎉
+✅ test 1: "test 1" got checked for the first time! 🎉
+✅ test 2: "test 2" got checked for the first time! (1 issue) 🎉
 ",
   "🎉 Betterer (0ms): 2 tests done!
-✅ test 1: \\"test 1\\" got checked for the first time! 🎉
-✅ test 2: \\"test 2\\" got checked for the first time! (1 issue) 🎉
+✅ test 1: "test 1" got checked for the first time! 🎉
+✅ test 2: "test 2" got checked for the first time! (1 issue) 🎉
 
 2 tests got checked. 🤔
 2 tests got checked for the first time! 🎉
@@ -18,12 +18,12 @@ Array [
   "🌟 Betterer (0ms):
 ",
   "🎉 Betterer (0ms): 2 tests done!
-✅ test 1: \\"test 1\\" got skipped. 🚫
-✅ test 2: \\"test 2\\" got skipped. 🚫
+✅ test 1: "test 1" got skipped. 🚫
+✅ test 2: "test 2" got skipped. 🚫
 ",
   "🎉 Betterer (0ms): 2 tests done!
-✅ test 1: \\"test 1\\" got skipped. 🚫
-✅ test 2: \\"test 2\\" got skipped. 🚫
+✅ test 1: "test 1" got skipped. 🚫
+✅ test 2: "test 2" got skipped. 🚫
 
 0 tests got checked. 🤔
 2 tests got skipped. 🚫
@@ -31,7 +31,7 @@ Array [
 ]
 `;
 
-exports[`betterer should not run a specific test called with skip() 2`] = `
+exports[`betterer > should not run a specific test called with skip() 2`] = `
 "// BETTERER RESULTS V2.
 //
 // If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
@@ -44,8 +44,8 @@ exports[\`test 1\`] = {
 
 exports[\`test 2\`] = {
   value: \`{
-    \\"src/index.ts:4126639614\\": [
-      [0, 0, 7, \\"RegExp match\\", \\"645651780\\"]
+    "src/index.ts:4126639614": [
+      [0, 0, 7, "RegExp match", "645651780"]
     ]
   }\`
 };

@@ -9,8 +9,9 @@ export async function read(filePath: string): Promise<string | null> {
   try {
     const stat = await fs.stat(filePath);
     const modifiedTime = stat.mtime.getTime();
-    if (READ_CACHE_TIME[filePath] === modifiedTime) {
-      return READ_CACHE[filePath];
+    const cached = READ_CACHE[filePath];
+    if (READ_CACHE_TIME[filePath] === modifiedTime && cached) {
+      return cached;
     }
 
     const contents = await fs.readFile(filePath, 'utf-8');
@@ -18,6 +19,16 @@ export async function read(filePath: string): Promise<string | null> {
     READ_CACHE[filePath] = normalisedContents;
     READ_CACHE_TIME[filePath] = modifiedTime;
     return normalisedContents;
+  } catch {
+    return null;
+  }
+}
+
+export async function readdir(dirPath: string): Promise<true | null> {
+  try {
+    const stat = await fs.stat(dirPath);
+    const isDirectory = stat.isDirectory();
+    return isDirectory || null;
   } catch {
     return null;
   }

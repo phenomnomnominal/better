@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-unresolved -- vscode is an implicit dependency for extensions
 import type { ExtensionContext } from 'vscode';
 import type {
   ErrorHandler,
@@ -8,7 +7,6 @@ import type {
 } from 'vscode-languageclient/node';
 
 import path from 'node:path';
-// eslint-disable-next-line import/no-unresolved -- vscode is an implicit dependency for extensions
 import { workspace } from 'vscode';
 import { RevealOutputChannelOn, TransportKind } from 'vscode-languageclient/node';
 

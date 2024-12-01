@@ -1,8 +1,6 @@
 ---
 title: Improving accessibility with Betterer ☀️
-author: Craig Spence
-authorURL: http://twitter.com/phenomnominal
-authorTwitter: phenomnominal
+authors: craig
 ---
 
 So, yesterday I announced the new release of [☀️ **Betterer**](https://dev.to/phenomnominal/betterer-v1-0-0-301b), thanks if you've checked it out already!
@@ -14,6 +12,8 @@ I wanted to write another post describing a different example, this time with a 
 [**Betterer**](https://github.com/phenomnomnominal/betterer) is a test runner that helps make incremental improvements to your code! It is based upon [**Jest**'s snapshot testing](https://jestjs.io/docs/en/snapshot-testing), but with a twist...
 
 **Betterer** works in two stages. The first time it runs a test, it will take a snapshot of the current state. From that point on, whenever it runs it will compare against that snapshot. It will either throw an error (if the test got worse ❌), or update the snapshot (if the test got better ✅). That's pretty much it!
+
+<!-- truncate -->
 
 ## Our first **Betterer** test
 

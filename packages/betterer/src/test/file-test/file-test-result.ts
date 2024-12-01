@@ -7,11 +7,16 @@ import path from 'node:path';
 import { BettererFileΩ } from './file.js';
 
 export class BettererFileTestResultΩ implements BettererFileTestResult {
+  public isBettererFileTestResult = true;
+
   private _fileMap: Record<string, BettererFileBase> = {};
   private _files: Array<BettererFileBase> = [];
   private _filePaths: Array<string> = [];
 
-  constructor(private _resolver: BettererFileResolver, private _resultsPath: string) {}
+  constructor(
+    private _resolver: BettererFileResolver,
+    private _resultsPath: string
+  ) {}
 
   // Previously the `files` getter was just doing `Object.values(this._fileMap)`,
   // but that's pretty slow and this gets hit a lot, so instead the `this._files`

@@ -1,0 +1,110 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer > should hold onto the cache for an obsolete test until it is removed 1`] = `
+"{
+  "version": 2,
+  "testCache": {
+    "test": {
+      ".betterer.js": "a7ca2a86a297eea623c11ed135cc829fecd0f8bc01f3ab98ebf6478fc6f8546b",
+      "src/index.ts": "5458e7616c690e6baf27a785a3f14f3e6fc3737fce3fd1f1e6c8e6692c093be0"
+    }
+  }
+}"
+`;
+
+exports[`betterer > should hold onto the cache for an obsolete test until it is removed 2`] = `
+"{
+  "version": 2,
+  "testCache": {
+    "test": {
+      ".betterer.js": "a7ca2a86a297eea623c11ed135cc829fecd0f8bc01f3ab98ebf6478fc6f8546b",
+      "src/index.ts": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}"
+`;
+
+exports[`betterer > should hold onto the cache for an obsolete test until it is removed 3`] = `
+"{
+  "version": 2,
+  "testCache": {
+    "test": {
+      ".betterer.js": "a7ca2a86a297eea623c11ed135cc829fecd0f8bc01f3ab98ebf6478fc6f8546b",
+      "src/index.ts": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}"
+`;
+
+exports[`betterer > should hold onto the cache for an obsolete test until it is removed 4`] = `
+"{
+  "version": 2,
+  "testCache": {}
+}"
+`;
+
+exports[`betterer > should hold onto the cache for an obsolete test until it is removed 5`] = `
+[
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 test: running "test"!
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" got checked for the first time! (2 issues) 🎉
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" got checked for the first time! (2 issues) 🎉
+
+1 test got checked. 🤔
+1 test got checked for the first time! 🎉
+",
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 test: running "test"!
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" met its goal! 🎉
+・ 2 fixed issues in "fixtures/cache-obsolete/src/index.ts".
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" met its goal! 🎉
+・ 2 fixed issues in "fixtures/cache-obsolete/src/index.ts".
+
+1 test got checked. 🤔
+1 test got better! 😍
+1 test met its goal! 🎉
+",
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 test: running "test"!
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" is obsolete! 🗑️
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" is obsolete! 🗑️
+
+0 tests got checked. 🤔
+1 test is obsolete! 🗑️
+
+You have saved tests results that no longer have tests! If they are no longer needed, you can run \`betterer --update\` to remove the obsolete results from the results file. 🆙
+",
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 test: running "test"!
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" got removed! 👋🏻
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" got removed! 👋🏻
+
+0 tests got checked. 🤔
+1 test got removed! 👋🏻
+",
+]
+`;

@@ -13,8 +13,7 @@ export class BettererError extends Error {
    */
   public details: BettererErrorDetails;
   /**
-   * Used by {@link @betterer/errors#isBettererError | `isBettererError()`} to detect that an
-   * object is an instance of `BettererError`.
+   * Used to detect that an object is an instance of `BettererError`.
    */
   public isBettererError = true;
 
@@ -29,16 +28,18 @@ export class BettererError extends Error {
 }
 
 /**
- * @public Check if an object is a {@link BettererError | `BettererError`}.
+ * @internal This could change at any point! Please don't use!
+ *
+ * Check if an object is a {@link BettererError | `BettererError`}.
  *
  * @example
  * ```typescript
- * import { BettererError, isBettererError } from '@betterer/errors';
+ * import { BettererError, isBettererErrorΔ } from '@betterer/errors';
  *
- * isBettererError(new Error()); // false
- * isBettererError(new BettererError()); // true
+ * isBettererErrorΔ(new Error()); // false
+ * isBettererErrorΔ(new BettererError()); // true
  * ```
  */
-export function isBettererError(err: unknown): err is BettererError {
-  return !!(err as BettererError)?.isBettererError;
+export function isBettererErrorΔ(err: unknown): err is BettererError {
+  return !!err && !!(err as Partial<BettererError>).isBettererError;
 }

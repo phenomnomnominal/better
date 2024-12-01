@@ -1,5 +1,6 @@
-// eslint-disable-next-line require-extensions/require-extensions -- tests not ESM ready yet
-import { createFixture } from './fixture';
+import { describe, expect, it } from 'vitest';
+
+import { createFixture } from './fixture.js';
 
 describe('betterer', () => {
   it(`should work when a test is the same`, async () => {
@@ -9,15 +10,19 @@ describe('betterer', () => {
       'same-result',
       {
         '.betterer.js': `
-const { BettererTest } = require('@betterer/betterer');
-const { bigger } = require('@betterer/constraints');
+import { BettererTest } from '@betterer/betterer';
+import { bigger, smaller } from '@betterer/constraints';
 
 const start = 0;
 
-module.exports = {
-  test: () => new BettererTest({
+export default {
+  bigger: () => new BettererTest({
     test: () => start,
     constraint: bigger
+  }),
+  smaller: () => new BettererTest({
+    test: () => start,
+    constraint: smaller
   }),
 };
       `
@@ -32,11 +37,11 @@ module.exports = {
 
     const firstRun = await betterer({ configPaths, resultsPath, workers: false });
 
-    expect(testNames(firstRun.new)).toEqual(['test']);
+    expect(testNames(firstRun.new)).toEqual(['bigger', 'smaller']);
 
     const secondRun = await betterer({ configPaths, resultsPath, workers: false });
 
-    expect(testNames(secondRun.same)).toEqual(['test']);
+    expect(testNames(secondRun.same)).toEqual(['bigger', 'smaller']);
 
     expect(logs).toMatchSnapshot();
 

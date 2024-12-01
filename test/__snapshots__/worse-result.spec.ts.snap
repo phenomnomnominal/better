@@ -1,16 +1,16 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should work when a test gets worse 1`] = `
-Array [
+exports[`betterer > should work when a test gets worse 1`] = `
+[
   "🌟 Betterer (0ms):
 ",
   "🎉 Betterer (0ms): 2 tests done!
-✅ should shrink: \\"should shrink\\" got checked for the first time! 🎉
-✅ should grow: \\"should grow\\" got checked for the first time! 🎉
+✅ should shrink: "should shrink" got checked for the first time! 🎉
+✅ should grow: "should grow" got checked for the first time! 🎉
 ",
   "🎉 Betterer (0ms): 2 tests done!
-✅ should shrink: \\"should shrink\\" got checked for the first time! 🎉
-✅ should grow: \\"should grow\\" got checked for the first time! 🎉
+✅ should shrink: "should shrink" got checked for the first time! 🎉
+✅ should grow: "should grow" got checked for the first time! 🎉
 
 2 tests got checked. 🤔
 2 tests got checked for the first time! 🎉
@@ -18,40 +18,32 @@ Array [
   "🌟 Betterer (0ms):
 ",
   "💥 Betterer (0ms): 2 tests done! 2 tests errored!
-🔥 should shrink: \\"should shrink\\" got worse. 😔
+🔥 should shrink: "should shrink" got worse. 😔
 ・ - Expected
 ・ + Result
 ・
 ・ - 3
 ・ + 4
-
-Error: \\"should shrink\\" got worse. 😔
-🔥 should grow: \\"should grow\\" got worse. 😔
+🔥 should grow: "should grow" got worse. 😔
 ・ - Expected
 ・ + Result
 ・
 ・ - -1
 ・ + -2
-
-Error: \\"should grow\\" got worse. 😔
 ",
   "💥 Betterer (0ms): 2 tests done! 2 tests errored!
-🔥 should shrink: \\"should shrink\\" got worse. 😔
+🔥 should shrink: "should shrink" got worse. 😔
 ・ - Expected
 ・ + Result
 ・
 ・ - 3
 ・ + 4
-
-Error: \\"should shrink\\" got worse. 😔
-🔥 should grow: \\"should grow\\" got worse. 😔
+🔥 should grow: "should grow" got worse. 😔
 ・ - Expected
 ・ + Result
 ・
 ・ - -1
 ・ + -2
-
-Error: \\"should grow\\" got worse. 😔
 
 2 tests got checked. 🤔
 2 tests got worse. 😔
@@ -61,7 +53,7 @@ You should try to fix the new issues! As a last resort, you can run \`betterer -
 ]
 `;
 
-exports[`betterer should work when a test gets worse 2`] = `
+exports[`betterer > should work when a test gets worse 2`] = `
 "// BETTERER RESULTS V2.
 //
 // If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:

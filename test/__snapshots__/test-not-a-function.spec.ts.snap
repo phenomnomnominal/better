@@ -1,11 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should throw if a test is not a function 1`] = `
-Array [
+exports[`betterer > should throw if a test is not a function 1`] = `
+[
   "
-Error: could not import config from \\"<project>/fixtures/test-not-a-function/.betterer.js\\". 😔
+Error: could not create "test" from "fixtures/test-not-a-function/.betterer.js". 😔
 
-Error: \\"test\\" must be a function.
+Error: "test" must be a function.
 ",
 ]
 `;

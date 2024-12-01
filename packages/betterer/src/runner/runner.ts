@@ -1,80 +1,198 @@
-import type { BettererOptionsAll, BettererOptionsOverride } from '../config/index.js';
-import type { BettererFilePaths } from '../fs/index.js';
-import type { BettererSuiteSummary } from '../suite/index.js';
+import type { FSWatcher } from 'chokidar';
+import type { BettererOptions } from '../api/index.js';
+import type { BettererConfig, BettererOptionsOverride } from '../config/index.js';
+import type { BettererContextSummary } from '../context/index.js';
+import type { BettererFilePaths, BettererOptionsWatcher } from '../fs/index.js';
+import type { BettererReporterΩ } from '../reporters/index.js';
+import type { BettererSuiteSummary, BettererSuiteSummaryΩ, BettererSuiteΩ } from '../suite/index.js';
 import type { BettererRunner } from './types.js';
 
 import { BettererError } from '@betterer/errors';
+import minimatch from 'minimatch';
 
 import { BettererContextΩ } from '../context/index.js';
-import { createGlobals } from '../globals.js';
+import { createWatcher, isTempFilePath, WATCHER_EVENTS } from '../fs/index.js';
+import { createGlobals, destroyGlobals, getGlobals } from '../globals.js';
 import { normalisedPath } from '../utils.js';
-import { createWatcher, WATCHER_EVENTS } from './watcher.js';
 
 const DEBOUNCE_TIME = 200;
 
 export class BettererRunnerΩ implements BettererRunner {
+  public config: BettererConfig;
+  public readonly lifecycle = Promise.withResolvers<BettererContextSummary>();
+
+  private _reporterContextStart: Promise<void>;
+  private _isRunOnce = false;
+  private _isStopped = false;
   private _jobs: Array<BettererFilePaths> = [];
-  private _running: Promise<void> | null = null;
+  private _running: Promise<BettererSuiteSummary> | null = null;
 
-  private constructor(private _context: BettererContextΩ) {}
+  private constructor(
+    private readonly _context: BettererContextΩ,
+    private readonly _watcher: FSWatcher | null
+  ) {
+    const { config, reporter } = getGlobals();
 
-  public static async create(options: BettererOptionsAll): Promise<BettererRunnerΩ> {
-    const globals = await createGlobals(options);
-    const watcher = await createWatcher(globals);
+    this.config = config;
 
-    const context = new BettererContextΩ(globals, watcher);
-    const runner = new BettererRunnerΩ(context);
+    const reporterΩ = reporter as BettererReporterΩ;
+    // Don't await here! A custom reporter could be awaiting
+    // the lifecycle promise which is unresolved right now!
+    this._reporterContextStart = reporterΩ.contextStart(this, this.lifecycle.promise);
 
-    if (watcher) {
-      watcher.on('all', (event: string, filePath: string) => {
-        if (WATCHER_EVENTS.includes(event)) {
-          void runner.queue([filePath]);
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises -- SIGTERM doesn't care about Promises
+    process.on('SIGTERM', this._sigterm);
+
+    if (this._watcher) {
+      this._watcher.on('all', (event: string, filePath: string) => {
+        if (this._shouldQueue(event, filePath)) {
+          void this.queue([filePath]);
         }
       });
     }
+  }
 
-    return runner;
+  public static async create(
+    options: BettererOptions,
+    optionsWatcher: BettererOptionsWatcher = {}
+  ): Promise<BettererRunnerΩ> {
+    await createGlobals(options, optionsWatcher);
+    const watcher = await createWatcher();
+    const context = new BettererContextΩ();
+
+    return new BettererRunnerΩ(context, watcher);
   }
 
   public async options(optionsOverride: BettererOptionsOverride): Promise<void> {
     await this._context.options(optionsOverride);
+    await this._restart(optionsOverride);
   }
 
-  public run(): Promise<BettererSuiteSummary> {
-    return this._context.runOnce();
+  public async run(): Promise<BettererContextSummary> {
+    this._isRunOnce = true;
+    await this.queue([]);
+    return await this.stop();
   }
 
-  public queue(filePathOrPaths: string | BettererFilePaths = []): Promise<void> {
+  public async queue(filePathOrPaths: string | BettererFilePaths = []): Promise<void> {
     const filePaths: BettererFilePaths = Array.isArray(filePathOrPaths) ? filePathOrPaths : [filePathOrPaths as string];
-    if (this._context.isDestroyed) {
+    if (this._isStopped) {
       throw new BettererError('You cannot queue a test run after the runner has been stopped! 💥');
     }
     this._addJob(filePaths);
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        void (async () => {
-          await this._processQueue();
-          resolve();
-        })();
-      }, DEBOUNCE_TIME);
-    });
-  }
-
-  public async stop(): Promise<BettererSuiteSummary>;
-  public async stop(force: true): Promise<BettererSuiteSummary | null>;
-  public async stop(force?: true): Promise<BettererSuiteSummary | null> {
     try {
-      if (!force) {
-        await this._running;
-      }
-      return await this._context.stop();
+      await new Promise<void>((resolve, reject) => {
+        setTimeout(() => {
+          void (async () => {
+            try {
+              await this._processQueue();
+              resolve();
+            } catch (error) {
+              reject(error as BettererError);
+            }
+          })();
+        }, DEBOUNCE_TIME);
+      });
     } catch (error) {
-      if (force) {
-        return null;
-      }
+      await this.stop();
       throw error;
     }
   }
+
+  public async stop(): Promise<BettererContextSummary>;
+  public async stop(force: true): Promise<BettererContextSummary | null>;
+  public async stop(force?: true): Promise<BettererContextSummary | null> {
+    if (this._isStopped) {
+      return null;
+    }
+
+    const { reporter } = getGlobals();
+    const reporterΩ = reporter as BettererReporterΩ;
+
+    try {
+      this._isStopped = true;
+
+      if (this._watcher) {
+        await this._watcher.close();
+      }
+
+      if (force) {
+        return null;
+      }
+
+      await this._running;
+
+      const contextSummary = await this._context.stop();
+      const suiteSummaryΩ = contextSummary.lastSuite as BettererSuiteSummaryΩ;
+
+      const { config, fs, results } = getGlobals();
+
+      if (!config.ci) {
+        const didWrite = await results.api.write(suiteSummaryΩ.result);
+        if (didWrite && config.precommit) {
+          await fs.api.add(config.resultsPath);
+        }
+      }
+
+      if (config.cache) {
+        await fs.api.writeCache();
+      }
+
+      // Lifecycle promise is resolved, so it's safe to await
+      // the result of `reporter.contextStart`:
+      this.lifecycle.resolve(contextSummary);
+      await this._reporterContextStart;
+
+      await reporterΩ.contextEnd(contextSummary);
+
+      return contextSummary;
+    } catch (error) {
+      // Lifecycle promise is rejected, so it's safe to await
+      // the result of `reporter.contextStart`:
+      this.lifecycle.reject(error as BettererError);
+      await this._reporterContextStart;
+
+      await reporterΩ.contextError(this, error as BettererError);
+
+      throw error;
+    } finally {
+      await destroyGlobals();
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises -- SIGTERM doesn't care about Promises
+      process.off('SIGTERM', this._sigterm);
+    }
+  }
+
+  private _shouldQueue(event: string, itemPath: string): boolean {
+    if (!WATCHER_EVENTS.includes(event)) {
+      return false;
+    }
+
+    const { config } = getGlobals();
+    const { cachePath, cwd, resultsPath } = config;
+
+    itemPath = normalisedPath(itemPath);
+    const normalisedCwd = normalisedPath(cwd);
+    const isCwd = itemPath === normalisedPath(normalisedCwd);
+    if (isCwd) {
+      return true;
+    }
+
+    const isGitPath = itemPath.includes('.git');
+    const isResultsPath = itemPath === normalisedPath(resultsPath);
+    const isCachePath = itemPath === normalisedPath(cachePath);
+    const isTempPath = isTempFilePath(itemPath);
+    if (isGitPath || isResultsPath || isCachePath || isTempPath) {
+      return false;
+    }
+
+    // read `ignores` here so that it can be updated by watch mode:
+    const { ignores } = config;
+    const watchIgnores = ignores.map((ignore) => `${normalisedCwd}/${ignore}`);
+    const isIgnored = watchIgnores.some((ignore) => minimatch(itemPath, ignore, { matchBase: true }));
+    return !isIgnored;
+  }
+
+  private _sigterm = () => this.stop(true);
 
   private _addJob(filePaths: BettererFilePaths = []): void {
     const normalisedPaths = filePaths.map(normalisedPath);
@@ -83,7 +201,7 @@ export class BettererRunnerΩ implements BettererRunner {
 
   private async _processQueue(): Promise<void> {
     // It's possible for the queue debounce to trigger *after* `this.stop()` has been called:
-    if (this._context.isDestroyed) {
+    if (this._isStopped) {
       this._jobs = [];
       return;
     }
@@ -98,11 +216,35 @@ export class BettererRunnerΩ implements BettererRunner {
       const runPaths = Array.from(filePaths).sort();
       this._jobs = [];
 
-      this._running = this._context.run(runPaths);
+      this._running = this._context.run(runPaths, this._isRunOnce);
+      await this._running;
+    }
+  }
+
+  private async _restart(optionsOverride: BettererOptionsOverride): Promise<void> {
+    if (optionsOverride.reporters) {
+      const { reporter } = getGlobals();
+
+      const reporterΩ = reporter as BettererReporterΩ;
+      // Don't await here! A custom reporter could be awaiting
+      // the lifecycle promise which is unresolved right now!
+      this._reporterContextStart = reporterΩ.contextStart(this, this.lifecycle.promise);
+    }
+
+    if (optionsOverride.filters) {
+      // Wait for any pending run to finish, and any existing reporter to render:
+      let lastSuiteΩ: BettererSuiteΩ | null = null;
       try {
-        await this._running;
+        const lastSuite = this._context.lastSuite;
+        lastSuiteΩ = lastSuite as BettererSuiteΩ;
+        try {
+          // This might throw or reject, but we want to rerun either way:
+          await lastSuiteΩ.lifecycle.promise;
+        } finally {
+          void this._context.run(lastSuite.filePaths);
+        }
       } catch {
-        // Errors will be handled by reporters
+        // It's okay if there's not a pending suite!
       }
     }
   }

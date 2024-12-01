@@ -1,20 +1,17 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should report a worse file coverage result 1`] = `
-Array [
+exports[`betterer > should report a worse file coverage result 1`] = `
+[
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" got checked for the first time! 🎉
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! 🎉
+✅ test: "test" got checked for the first time! 🎉
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! 🎉
+✅ test: "test" got checked for the first time! 🎉
 
 1 test got checked. 🤔
 1 test got checked for the first time! 🎉
@@ -22,27 +19,17 @@ Array [
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-🔥 test: \\"test\\" got worse. 😔
-",
-  "🌟 Betterer (0ms): 1 test running...
-🔥 test: \\"test\\" got worse. 😔
-
-Error: \\"test\\" got worse. 😔
+🤔 test: running "test"!
 ",
   "💥 Betterer (0ms): 1 test done! 1 test errored!
-🔥 test: \\"test\\" got worse. 😔
-・ \\"lines\\" coverage is worse in \\"src/file-1.ts\\": 60 > 50
-
-Error: \\"test\\" got worse. 😔
+🔥 test: "test" got worse. 😔
+・ "lines" coverage is better in "src/file-1.ts": 50 < 60
+・ "lines" coverage is worse in "src/file-1.ts": 60 > 50
 ",
   "💥 Betterer (0ms): 1 test done! 1 test errored!
-🔥 test: \\"test\\" got worse. 😔
-・ \\"lines\\" coverage is worse in \\"src/file-1.ts\\": 60 > 50
-
-Error: \\"test\\" got worse. 😔
+🔥 test: "test" got worse. 😔
+・ "lines" coverage is better in "src/file-1.ts": 50 < 60
+・ "lines" coverage is worse in "src/file-1.ts": 60 > 50
 
 1 test got checked. 🤔
 1 test got worse. 😔
@@ -52,29 +39,21 @@ You should try to fix the new issues! As a last resort, you can run \`betterer -
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-🔥 test: \\"test\\" got worse. 😔
-",
-  "🌟 Betterer (0ms): 1 test running...
-🔥 test: \\"test\\" got worse. 😔
-
-Error: \\"test\\" got worse. 😔
+🤔 test: running "test"!
 ",
   "💥 Betterer (0ms): 1 test done! 1 test errored!
-🔥 test: \\"test\\" got worse. 😔
-・ \\"lines\\" coverage is better in \\"src/file-1.ts\\": 40 < 50
-・ \\"lines\\" coverage is worse in \\"src/file-2.ts\\": 90 > 60
-
-Error: \\"test\\" got worse. 😔
+🔥 test: "test" got worse. 😔
+・ "lines" coverage is worse in "src/file-1.ts": 50 > 40
+・ "lines" coverage is better in "src/file-2.ts": 60 < 90
+・ "lines" coverage is better in "src/file-1.ts": 40 < 50
+・ "lines" coverage is worse in "src/file-2.ts": 90 > 60
 ",
   "💥 Betterer (0ms): 1 test done! 1 test errored!
-🔥 test: \\"test\\" got worse. 😔
-・ \\"lines\\" coverage is better in \\"src/file-1.ts\\": 40 < 50
-・ \\"lines\\" coverage is worse in \\"src/file-2.ts\\": 90 > 60
-
-Error: \\"test\\" got worse. 😔
+🔥 test: "test" got worse. 😔
+・ "lines" coverage is worse in "src/file-1.ts": 50 > 40
+・ "lines" coverage is better in "src/file-2.ts": 60 < 90
+・ "lines" coverage is better in "src/file-1.ts": 40 < 50
+・ "lines" coverage is worse in "src/file-2.ts": 90 > 60
 
 1 test got checked. 🤔
 1 test got worse. 😔
@@ -84,31 +63,25 @@ You should try to fix the new issues! As a last resort, you can run \`betterer -
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-🔥 test: \\"test\\" got worse. 😔
-",
-  "🌟 Betterer (0ms): 1 test running...
-🔥 test: \\"test\\" got worse. 😔
-
-Error: \\"test\\" got worse. 😔
+🤔 test: running "test"!
 ",
   "💥 Betterer (0ms): 1 test done! 1 test errored!
-🔥 test: \\"test\\" got worse. 😔
-・ \\"lines\\" coverage is better in \\"src/file-1.ts\\": 40 < 50
-・ \\"lines\\" coverage is worse in \\"src/file-2.ts\\": 90 > 60
+🔥 test: "test" got worse. 😔
+・ "lines" coverage is worse in "src/file-1.ts": 50 > 40
+・ "lines" coverage is better in "src/file-2.ts": 60 < 90
+・ src/file-3.ts is gone.
+・ "lines" coverage is better in "src/file-1.ts": 40 < 50
+・ "lines" coverage is worse in "src/file-2.ts": 90 > 60
 ・ new file: src/file-3.ts
-
-Error: \\"test\\" got worse. 😔
 ",
   "💥 Betterer (0ms): 1 test done! 1 test errored!
-🔥 test: \\"test\\" got worse. 😔
-・ \\"lines\\" coverage is better in \\"src/file-1.ts\\": 40 < 50
-・ \\"lines\\" coverage is worse in \\"src/file-2.ts\\": 90 > 60
+🔥 test: "test" got worse. 😔
+・ "lines" coverage is worse in "src/file-1.ts": 50 > 40
+・ "lines" coverage is better in "src/file-2.ts": 60 < 90
+・ src/file-3.ts is gone.
+・ "lines" coverage is better in "src/file-1.ts": 40 < 50
+・ "lines" coverage is worse in "src/file-2.ts": 90 > 60
 ・ new file: src/file-3.ts
-
-Error: \\"test\\" got worse. 😔
 
 1 test got checked. 🤔
 1 test got worse. 😔

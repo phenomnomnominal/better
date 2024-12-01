@@ -1,12 +1,16 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer cli should initialise betterer in a repo with JS 1`] = `
-Array [
+exports[`betterer cli > should initialise betterer in a repo with JS 1`] = `
+[
   "🎉 Initialising Betterer (0ms): 2 tasks done!
 ✅ Create test file: done!
-・ created \\"<project>/fixtures/init-js/.betterer.js\\"!
+・ created "fixtures/init-js/.betterer.js"!
+✅ Update package.json: done!",
+  "🎉 Initialising Betterer (0ms): 2 tasks done!
+✅ Create test file: done!
+・ created "fixtures/init-js/.betterer.js"!
 ✅ Update package.json: done!
-・ added \\"betterer\\" script to package.json file.
-・ added \\"@betterer/cli\\" dependency to package.json file",
+・ added "betterer" script to package.json file
+・ added "@betterer/cli" dependency to package.json file",
 ]
 `;

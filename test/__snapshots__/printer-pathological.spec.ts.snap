@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should handle printing for pathological cases 1`] = `
+exports[`betterer > should handle printing for pathological cases 1`] = `
 "// BETTERER RESULTS V2.
 //
 // If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
@@ -8,50 +8,50 @@ exports[`betterer should handle printing for pathological cases 1`] = `
 //
 exports[\`big array\`] = {
   value: \`[
-  \\"./some/long/path/to/some/file\\",
-  \\"./some/long/path/to/some/file\\",
-  \\"./some/long/path/to/some/file\\",
-  \\"./some/long/path/to/some/file\\",
-  \\"./some/long/path/to/some/file\\",
-  \\"./some/long/path/to/some/file\\",
-  \\"./some/long/path/to/some/file\\",
-  \\"./some/long/path/to/some/file\\",
-  \\"./some/long/path/to/some/file\\",
-  \\"./some/long/path/to/some/file\\",
-  \\"./some/long/path/to/some/file\\",
-  \\"./some/long/path/to/some/file\\",
-  \\"./some/long/path/to/some/file\\",
-  \\"./some/long/path/to/some/file\\",
-  \\"./some/long/path/to/some/file\\",
-  \\"./some/long/path/to/some/file\\",
-  \\"./some/long/path/to/some/file\\",
-  \\"./some/long/path/to/some/file\\",
-  \\"./some/long/path/to/some/file\\"
+  "./some/long/path/to/some/file",
+  "./some/long/path/to/some/file",
+  "./some/long/path/to/some/file",
+  "./some/long/path/to/some/file",
+  "./some/long/path/to/some/file",
+  "./some/long/path/to/some/file",
+  "./some/long/path/to/some/file",
+  "./some/long/path/to/some/file",
+  "./some/long/path/to/some/file",
+  "./some/long/path/to/some/file",
+  "./some/long/path/to/some/file",
+  "./some/long/path/to/some/file",
+  "./some/long/path/to/some/file",
+  "./some/long/path/to/some/file",
+  "./some/long/path/to/some/file",
+  "./some/long/path/to/some/file",
+  "./some/long/path/to/some/file",
+  "./some/long/path/to/some/file",
+  "./some/long/path/to/some/file"
 ]
 \`
 };
 
 exports[\`big object\`] = {
   value: \`{
-  \\"a\\": \\"./some/long/path/to/some/file\\",
-  \\"b\\": \\"./some/long/path/to/some/file\\",
-  \\"c\\": \\"./some/long/path/to/some/file\\",
-  \\"d\\": \\"./some/long/path/to/some/file\\",
-  \\"e\\": \\"./some/long/path/to/some/file\\",
-  \\"f\\": \\"./some/long/path/to/some/file\\",
-  \\"g\\": \\"./some/long/path/to/some/file\\",
-  \\"h\\": \\"./some/long/path/to/some/file\\",
-  \\"i\\": \\"./some/long/path/to/some/file\\",
-  \\"j\\": \\"./some/long/path/to/some/file\\",
-  \\"k\\": \\"./some/long/path/to/some/file\\",
-  \\"l\\": \\"./some/long/path/to/some/file\\",
-  \\"m\\": \\"./some/long/path/to/some/file\\",
-  \\"n\\": \\"./some/long/path/to/some/file\\",
-  \\"o\\": \\"./some/long/path/to/some/file\\",
-  \\"p\\": \\"./some/long/path/to/some/file\\",
-  \\"q\\": \\"./some/long/path/to/some/file\\",
-  \\"r\\": \\"./some/long/path/to/some/file\\",
-  \\"s\\": \\"./some/long/path/to/some/file\\"
+  "a": "./some/long/path/to/some/file",
+  "b": "./some/long/path/to/some/file",
+  "c": "./some/long/path/to/some/file",
+  "d": "./some/long/path/to/some/file",
+  "e": "./some/long/path/to/some/file",
+  "f": "./some/long/path/to/some/file",
+  "g": "./some/long/path/to/some/file",
+  "h": "./some/long/path/to/some/file",
+  "i": "./some/long/path/to/some/file",
+  "j": "./some/long/path/to/some/file",
+  "k": "./some/long/path/to/some/file",
+  "l": "./some/long/path/to/some/file",
+  "m": "./some/long/path/to/some/file",
+  "n": "./some/long/path/to/some/file",
+  "o": "./some/long/path/to/some/file",
+  "p": "./some/long/path/to/some/file",
+  "q": "./some/long/path/to/some/file",
+  "r": "./some/long/path/to/some/file",
+  "s": "./some/long/path/to/some/file"
 }
 \`
 };

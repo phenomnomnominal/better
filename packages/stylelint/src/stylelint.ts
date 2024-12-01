@@ -11,8 +11,8 @@ import { lint } from 'stylelint';
  * as you like:
  *
  * @remarks {@link @betterer/stylelint#stylelint | `stylelint`} is a {@link @betterer/betterer#BettererFileTest | `BettererFileTest`},
- * so you can use {@link @betterer/betterer#BettererFileTest.include | `include()`}, {@link @betterer/betterer#BettererFileTest.exclude | `exclude()`},
- * {@link @betterer/betterer#BettererFileTest.only | `only()`}, and {@link @betterer/betterer#BettererFileTest.skip | `skip()`}.
+ * so you can use {@link @betterer/betterer#BettererResolverTest.include | `include()`}, {@link @betterer/betterer#BettererResolverTest.exclude | `exclude()`},
+ * {@link @betterer/betterer#BettererTest.only | `only()`}, and {@link @betterer/betterer#BettererTest.skip | `skip()`}.
  *
  * @example
  * ```typescript
@@ -36,6 +36,10 @@ import { lint } from 'stylelint';
  * Will throw if the user doesn't pass `configOverrides`.
  */
 export function stylelint(configOverrides: Partial<Configuration>): BettererFileTest {
+  // The `stylelint` function could be called from JS code, without type-checking.
+  // We *could* change the parameter to be `configOverrides?: Partial<Configuration>`,
+  // but that would imply that it was optional, and it isn't.
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- see above!
   if (!configOverrides) {
     throw new BettererError(
       'for `@betterer/stylelint` to work, you need to provide configuration options, e.g. `{ rules: { "unit-no-unknown": true } }`. ❌'
@@ -55,12 +59,19 @@ export function stylelint(configOverrides: Partial<Configuration>): BettererFile
     await Promise.all(
       result.results.map(async (result) => {
         const contents = await fs.readFile(result.source, 'utf8');
-        const file = fileTestResult.addFile(result.source, contents);
+        const resultFile = fileTestResult.addFile(result.source, contents);
         result.warnings.forEach((warning) => {
-          const { line, column, text } = warning;
-          file.addIssue(line - 1, column - 1, line - 1, column - 1, text, text);
+          const { line, column, text, rule } = warning;
+          resultFile.addIssue(line - 1, column - 1, line - 1, column - 1, stylelintIssueMessage(rule, text));
         });
       })
     );
-  });
+  }).cache();
+}
+
+function stylelintIssueMessage(rule: string, message: string) {
+  let issueMessage = 'stylelint';
+  issueMessage += rule ? `(${rule}): ` : ': ';
+  issueMessage += message.replace(new RegExp(`\\W\\(${rule}\\)$`, 'g'), '');
+  return issueMessage;
 }

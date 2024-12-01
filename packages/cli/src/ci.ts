@@ -1,24 +1,23 @@
-import type { BettererOptionsStart } from '@betterer/betterer';
+import type { BettererOptions } from '@betterer/betterer';
 import type { Command } from 'commander';
 
 import type { BettererCLIConfig } from './types.js';
 
 import { betterer } from '@betterer/betterer';
 
-import { cliCommand, setEnv } from './options.js';
-import { BettererCommand } from './types.js';
+import { ciCommand } from './options.js';
 
 /**
  * Run **Betterer** in `ci` mode.
  */
 export function ci(cwd: string): Command {
-  const command = cliCommand(BettererCommand.ci);
+  const command = ciCommand();
   command.description('run Betterer in CI mode');
   command.action(async (config: BettererCLIConfig, command: Command): Promise<void> => {
-    setEnv(config);
-
-    // Mark options as unknown...
-    const options: unknown = {
+    // Cast the options to BettererOptions. This is possibly invalid,
+    // but it's nicer to do the validation in @betterer/betterer
+    const { error } = await betterer({
+      basePath: config.basePath,
       cache: config.cache,
       cachePath: config.cachePath,
       ci: true,
@@ -27,22 +26,17 @@ export function ci(cwd: string): Command {
       excludes: config.exclude,
       filters: config.filter,
       includes: command.args,
+      logo: config.logo,
       reporters: config.reporter,
+      repoPath: config.repoPath,
       resultsPath: config.results,
       silent: config.silent,
-      tsconfigPath: config.tsconfig,
+      strictDeadlines: config.strictDeadlines,
       workers: config.workers
-    };
+    } as BettererOptions);
 
-    try {
-      // And then cast to BettererOptionsStart. This is possibly invalid,
-      // but it's nicer to do the options validation in @betterer/betterer
-      const suiteSummary = await betterer(options as BettererOptionsStart);
-      if (suiteSummary.changed.length > 0 || suiteSummary.failed.length > 0) {
-        process.exitCode = 1;
-      }
-    } catch {
-      process.exitCode = 1;
+    if (error) {
+      throw error;
     }
   });
 

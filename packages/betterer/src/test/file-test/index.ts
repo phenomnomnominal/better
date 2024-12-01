@@ -1,16 +1,18 @@
-export { BettererFileTest, isBettererFileTest } from './file-test.js';
-export type { BettererFileTestResultΩ } from './file-test-result.js';
-export {
-  BettererFileTestResult,
-  BettererFileTestResultSerialised,
-  BettererFileTestFunction,
-  BettererFileBase,
+export type {
   BettererFile,
+  BettererFileBase,
   BettererFileDiff,
-  BettererFilesDiff,
-  BettererFileTestDiff,
   BettererFileIssue,
   BettererFileIssueSerialised,
   BettererFileIssues,
-  BettererFileIssuesSerialised
+  BettererFileIssuesSerialised,
+  BettererFileTestDiff,
+  BettererFileTestFunction,
+  BettererFileTestResult,
+  BettererFileTestResultKey,
+  BettererFileTestResultSerialised,
+  BettererFilesDiff
 } from './types.js';
+
+export { BettererFileTestResultΩ } from './file-test-result.js';
+export { BettererFileTest, isBettererFileTest } from './file-test.js';

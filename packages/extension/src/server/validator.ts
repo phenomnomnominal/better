@@ -11,7 +11,7 @@ import type { TextDocument } from 'vscode-languageserver-textdocument';
 
 import { BettererStatus } from '../status.js';
 import { getRunner, hasBetterer } from './betterer.js';
-import { getBettererOptions, getDebug, getEnabled } from './config.js';
+import { getBettererOptions, getEnabled } from './config.js';
 import { error, info } from './console.js';
 import { BettererInvalidConfigRequest, BettererNoLibraryRequest, isNoConfigError } from './requests/index.js';
 import { BettererStatusNotification } from './status.js';
@@ -21,12 +21,13 @@ import { getFilePath } from './path.js';
 export class BettererValidator {
   private _diagnostics = new BettererDiagnostics();
 
-  constructor(private _connection: Connection, private _documents: TextDocuments<TextDocument>) {}
+  constructor(
+    private _connection: Connection,
+    private _documents: TextDocuments<TextDocument>
+  ) {}
 
   public async validate(documents: Array<TextDocument>): Promise<void> {
     const { workspace } = this._connection;
-
-    await getDebug(workspace);
 
     const folders = await workspace.getWorkspaceFolders();
     if (!folders) {
@@ -97,12 +98,14 @@ export class BettererValidator {
             .filter(Boolean) as Array<TextDocument>;
 
           const finalDocuments = validDocuments.filter((document) => {
-            const filePath = getFilePath(document) as string;
+            const filePath = getFilePath(document);
+            if (!filePath) {
+              return false;
+            }
             const isCachePath = filePath === options.cachePath;
             const isResultPath = filePath === options.resultsPath;
             const isConfigPath = !!options.configPaths?.includes(filePath);
-            const isTSConfigPath = filePath === options.tsconfigPath;
-            return !(isCachePath || isResultPath || isConfigPath || isTSConfigPath);
+            return !(isCachePath || isResultPath || isConfigPath);
           });
 
           const filePaths = finalDocuments.map((document) => getFilePath(document)) as Array<string>;
@@ -111,9 +114,9 @@ export class BettererValidator {
             info(`Validator: Running Betterer in "${cwd}".`);
             info(`Validator: Running Betterer on "${JSON.stringify(filePaths)}."`);
 
-            const runner = await getRunner(options);
+            const runner = await getRunner(cwd, options);
             let config: BettererConfig;
-            runner.options({
+            await runner.options({
               reporters: [
                 {
                   contextError: (_, e: BettererError): void => {
@@ -179,9 +182,10 @@ function load(connection: Connection): () => Promise<void> {
   }, LOADING_DELAY_TIME);
   return async (): Promise<void> => {
     if (isLoading) {
-      return await new Promise((resolve) => {
+      await new Promise((resolve) => {
         setTimeout(resolve, MINIMUM_LOADING_TIME);
       });
+      return;
     }
     clearTimeout(loading);
   };

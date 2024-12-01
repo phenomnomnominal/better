@@ -5,9 +5,9 @@
 ```ts
 
 // @internal
-export function getPreciseTime__(): number;
+export function getPreciseTimeΔ(): number;
 
 // @internal
-export function getTime__(): number;
+export function getTimeΔ(): number;
 
 ```

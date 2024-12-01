@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer.watch > should work when run from the cli 1`] = `
+[
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): No current ignore patterns
+
+Starting Betterer in watch mode! 🎉
+
+(press "ctrl+c" or "q" to quit)
+",
+]
+`;

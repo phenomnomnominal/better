@@ -1,9 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should throw when reading the results file fails 1`] = `
-Array [
+exports[`betterer > should throw when reading the results file fails 1`] = `
+[
   "
-Error: could not read results from \\"<project>/fixtures/results-read-error/.betterer.results\\". 😔
+Error: could not read results from "fixtures/results-read-error/.betterer.results". 😔
+
+Error:
 ",
 ]
 `;

@@ -1,7 +1,5 @@
-// eslint-disable-next-line import/no-unresolved -- vscode is an implicit dependency for extensions
 import type { Uri, WorkspaceConfiguration } from 'vscode';
 
-// eslint-disable-next-line import/no-unresolved -- vscode is an implicit dependency for extensions
 import { workspace } from 'vscode';
 
 export function getAlwaysShowStatus(): boolean {

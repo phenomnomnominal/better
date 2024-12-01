@@ -1,8 +1,8 @@
 import type { BettererSuiteSummary } from '@betterer/betterer';
-import assert from 'node:assert';
 
-// eslint-disable-next-line require-extensions/require-extensions -- tests not ESM ready yet
-import { createFixture } from '../fixture';
+import { describe, expect, it } from 'vitest';
+
+import { createFixture } from '../fixture.js';
 
 describe('betterer.watch', () => {
   it('should debounce runs when multiple files change', async () => {
@@ -26,7 +26,7 @@ export default {
     const filePath = resolve('./src/file.ts');
     const { cwd } = paths;
 
-    const suiteSummaryDefer = defer<BettererSuiteSummary>();
+    const suiteSummaryDefer = Promise.withResolvers<BettererSuiteSummary>();
 
     const runner = await watch({
       configPaths,
@@ -56,23 +56,3 @@ export default {
     await cleanup();
   });
 });
-
-type Resolve<T> = (value: T) => void;
-type Reject = (error: Error) => void;
-interface Defer<T> {
-  promise: Promise<T>;
-  resolve: Resolve<T>;
-  reject: Reject;
-}
-
-function defer<T>(): Defer<T> {
-  let resolve: Resolve<T> | null = null;
-  let reject: Reject | null = null;
-  const promise = new Promise<T>((res, rej) => {
-    resolve = res;
-    reject = rej;
-  });
-  assert(resolve);
-  assert(reject);
-  return { promise, resolve, reject };
-}

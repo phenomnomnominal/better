@@ -2,10 +2,10 @@ import type { BettererLogger } from '@betterer/logger';
 import type { SourceFile } from 'typescript';
 
 import { BettererError } from '@betterer/errors';
-import { exposeToMain__ } from '@betterer/worker';
+import { exposeToMainΔ } from '@betterer/worker';
 import { tsquery } from '@phenomnomnominal/tsquery';
 import { promises as fs } from 'node:fs';
-import { format, resolveConfig } from 'prettier';
+import { format } from 'prettier';
 import { createPrinter, ModuleKind } from 'typescript';
 
 import { diff } from './diff.js';
@@ -14,12 +14,14 @@ import { upgradeESM } from './upgrade-esm.js';
 
 const printer = createPrinter();
 
-// module.exports
-const EXPORT_MODULE_EXPORTS_QUERY =
-  'PropertyAccessExpression:has(Identifier[name="module"]):has(Identifier[name="exports"])';
-
-export async function run(logger: BettererLogger, configPath: string, save: boolean): Promise<void> {
-  await logger.progress(`upgrading "${configPath}"...`);
+/** @knipignore part of worker API */
+export async function run(
+  logger: BettererLogger,
+  status: BettererLogger,
+  configPath: string,
+  save: boolean
+): Promise<void> {
+  await status.progress(`upgrading "${configPath}"...`);
 
   const fileText = await fs.readFile(configPath, 'utf8');
   const replaceNewLines = fileText.split('\n\n').join('/* BLANK LINE */');
@@ -34,12 +36,13 @@ export async function run(logger: BettererLogger, configPath: string, save: bool
   const upgrade = moduleType === ModuleKind.CommonJS ? upgradeCJS : upgradeESM;
   const upgradedSourceFile = upgrade(originalSourceFile, configPath);
 
-  const config = await resolveConfig(configPath);
   const printed = printUpgraded(originalSourceFile, upgradedSourceFile);
 
-  const formatOptions = { ...config, parser: 'typescript' };
-  const formattedOriginal = format(fileText, formatOptions);
-  const formatted = format(printed, formatOptions);
+  const formatOptions = { parser: 'typescript' };
+  const [formattedOriginal, formatted] = await Promise.all([
+    format(fileText, formatOptions),
+    format(printed, formatOptions)
+  ]);
 
   if (formattedOriginal !== formatted) {
     if (!save) {
@@ -53,7 +56,7 @@ export async function run(logger: BettererLogger, configPath: string, save: bool
   }
 
   if (save) {
-    await logger.progress(`Saving upgraded config to "${configPath}"...`);
+    await status.progress(`Saving upgraded config to "${configPath}"...`);
     await fs.writeFile(configPath, formatted);
     await logger.success(`Saved upgraded config to "${configPath}"! ☀️`);
   }
@@ -65,6 +68,10 @@ const EXPORT_QUERY = 'ExportDeclaration, ExportAssignment';
 
 // export const thing = 'foo';
 const EXPORT_VARIABLE_DECLARATION_QUERY = 'VariableStatement:has(ExportKeyword)';
+
+// module.exports
+const EXPORT_MODULE_EXPORTS_QUERY =
+  'PropertyAccessExpression:has(Identifier[name="module"]):has(Identifier[name="exports"])';
 
 function getModuleType(originalSourceFile: SourceFile): ModuleKind | null {
   const [exportStatement] = tsquery(originalSourceFile, EXPORT_QUERY);
@@ -128,4 +135,4 @@ function print(upgradedSourceFile: SourceFile): string {
   return printed.replace(/\/\* BLANK LINE \*\//g, '\n\n');
 }
 
-exposeToMain__({ run });
+exposeToMainΔ({ run });

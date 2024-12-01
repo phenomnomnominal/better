@@ -1,44 +1,31 @@
-import type { BettererContext, BettererSuite, BettererSuiteSummary } from '@betterer/betterer';
+import type { BettererSuite } from '@betterer/betterer';
 import type { FC } from '@betterer/render';
-import type { BettererTasksDone, BettererTasksState } from '@betterer/tasks';
 
-import { React, Box, memo } from '@betterer/render';
-import { BettererTaskLogger, BettererTasksLogger } from '@betterer/tasks';
+import { Box, memo, React } from '@betterer/render';
+import { BettererTasksResult, useTimer } from '@betterer/tasks';
 
-import { useTask } from './tasks.js';
-import { SuiteSummary } from './SuiteSummary.js';
+import { useReporterState } from '../../state/index.js';
+import { Run } from './Run.js';
+import { update } from './update.js';
 
+/** @knipignore used by an exported function */
 export interface SuiteProps {
-  context: BettererContext;
-  suite: BettererSuite | BettererSuiteSummary;
-  suiteSummary?: BettererSuiteSummary;
-  done?: BettererTasksDone;
+  suite: BettererSuite;
 }
 
-export const Suite: FC<SuiteProps> = memo(function Runs({ context, suite, suiteSummary, done }) {
-  const { ci, precommit } = context.config;
+export const Suite: FC<SuiteProps> = memo(function Suite({ suite }) {
+  const [state] = useReporterState();
+  const time = useTimer();
+
   return (
     <>
       <Box flexDirection="column" paddingBottom={1}>
-        <BettererTasksLogger name="Betterer" update={update} exit={false} done={done} timer={!precommit && !ci}>
+        <BettererTasksResult {...state} name="Betterer" time={time} update={update}>
           {suite.runs.map((run) => (
-            <BettererTaskLogger key={run.name} name={run.name} task={useTask(run)} />
+            <Run key={run.name} run={run} />
           ))}
-        </BettererTasksLogger>
+        </BettererTasksResult>
       </Box>
-      {suiteSummary ? <SuiteSummary context={context} suiteSummary={suiteSummary} /> : null}
     </>
   );
 });
-
-function update(state: BettererTasksState): string {
-  const { done, errors, running } = state;
-  const runningStatus = running ? `${tests(running)} running... ` : '';
-  const doneStatus = done ? `${tests(done)} done! ` : '';
-  const errorStatus = errors ? `${tests(errors)} errored! ` : '';
-  return `${runningStatus}${doneStatus}${errorStatus}`;
-}
-
-function tests(n: number): string {
-  return n === 1 ? `${n} test` : `${n} tests`;
-}

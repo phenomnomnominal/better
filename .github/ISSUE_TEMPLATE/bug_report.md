@@ -23,8 +23,8 @@ If applicable, add screenshots to help explain your problem.
 **Versions (please complete the following information):**
 
 - OS: [e.g. Windows, MacOS]
-- Betterer Version [e.g. 4.*]
-- Node Version [e.g. 14.*]
+- Betterer Version [e.g. 6.*]
+- Node Version [e.g. 20.*]
 
 **Additional context**
 Add any other context about the problem here.

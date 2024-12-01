@@ -1,5 +1,6 @@
-// eslint-disable-next-line require-extensions/require-extensions -- tests not ESM ready yet
-import { createFixture } from './fixture';
+import { describe, expect, it } from 'vitest';
+
+import { createFixture } from './fixture.js';
 
 describe('betterer', () => {
   it('should report the existence of RegExp matches, with a custom issue message', async () => {
@@ -9,9 +10,9 @@ describe('betterer', () => {
       'regexp-with-issue-message',
       {
         '.betterer.js': `
-const { regexp } = require('@betterer/regexp');
+import { regexp } from '@betterer/regexp';
 
-module.exports = {
+export default {
   'regexp': () => regexp(/(\\/\\/\\s*HACK)/i, "no hacks here!").include('./src/**/*.ts')
 };
     `

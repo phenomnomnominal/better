@@ -1,5 +1,6 @@
-// eslint-disable-next-line require-extensions/require-extensions -- tests not ESM ready yet
-import { createFixture } from './fixture';
+import { describe, expect, it } from 'vitest';
+
+import { createFixture } from './fixture.js';
 
 describe('betterer', () => {
   it(`should mark a test as complete when it reaches its goal`, async () => {
@@ -9,15 +10,16 @@ describe('betterer', () => {
       'complete',
       {
         '.betterer.js': `
-const { BettererTest } = require('@betterer/betterer');
-const { bigger } = require('@betterer/constraints');
-const { persist } = require('@betterer/fixture');
+import { BettererTest } from '@betterer/betterer';
+import { bigger } from '@betterer/constraints';
+import { persist } from '@betterer/fixture';
 
-const grows = persist(__dirname, 'grows', 0);
+const shouldComplete = persist(import.meta.url, 'should-complete', 0);
+const shouldCompleteTheGetWorse = persist(import.meta.url, 'should complete then get worse', 0);
 
-module.exports = {
+export default {
   'should complete': () => new BettererTest({
-    test: () => grows.increment(),
+    test: () => shouldComplete.increment(),
     constraint: bigger,
     goal: (result) => result >= 2
   }),
@@ -25,6 +27,17 @@ module.exports = {
     test: () => 0,
     constraint: bigger,
     goal: 0
+  }),
+  'should complete then get worse': () => new BettererTest({
+    test: async () => {
+      const result = await shouldCompleteTheGetWorse.increment();
+      if (result > 2) {
+        await shouldCompleteTheGetWorse.reset();
+      }
+      return result;
+    },
+    constraint: bigger,
+    goal: (result) => result >= 2
   })
 };
       `
@@ -39,22 +52,39 @@ module.exports = {
 
     const firstRun = await betterer({ configPaths, resultsPath, workers: false });
 
-    expect(testNames(firstRun.new)).toEqual(['should complete']);
+    expect(testNames(firstRun.new)).toEqual(['should complete', 'should complete then get worse']);
     expect(testNames(firstRun.completed)).toEqual(['complete']);
+
+    const firstResult = await readFile(resultsPath);
+
+    expect(firstResult).toMatchSnapshot();
 
     const secondRun = await betterer({ configPaths, resultsPath, workers: false });
 
-    expect(testNames(secondRun.better)).toEqual(['should complete']);
+    expect(testNames(secondRun.better)).toEqual(['should complete', 'should complete then get worse']);
+
+    const secondResult = await readFile(resultsPath);
+
+    expect(secondResult).toMatchSnapshot();
 
     const thirdRun = await betterer({ configPaths, resultsPath, workers: false });
 
-    expect(testNames(thirdRun.completed)).toEqual(['should complete', 'complete']);
+    expect(testNames(thirdRun.completed)).toEqual(['should complete', 'complete', 'should complete then get worse']);
+
+    const thirdResult = await readFile(resultsPath);
+
+    expect(thirdResult).toMatchSnapshot();
+
+    const fourthRun = await betterer({ configPaths, resultsPath, workers: false });
+
+    expect(testNames(fourthRun.completed)).toEqual(['should complete', 'complete']);
+    expect(testNames(fourthRun.worse)).toEqual(['should complete then get worse']);
 
     expect(logs).toMatchSnapshot();
 
-    const result = await readFile(resultsPath);
+    const fourthResult = await readFile(resultsPath);
 
-    expect(result).toMatchSnapshot();
+    expect(fourthResult).toMatchSnapshot();
 
     await cleanup();
   });

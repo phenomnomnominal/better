@@ -1,5 +1,6 @@
-// eslint-disable-next-line require-extensions/require-extensions -- tests not ESM ready yet
-import { createFixture } from './fixture';
+import { describe, expect, it } from 'vitest';
+
+import { createFixture } from './fixture.js';
 
 describe('betterer', () => {
   it('should write a results file to a different path', async () => {
@@ -13,7 +14,7 @@ function test(): BettererFileTest {
   return new BettererFileTest((files, fileTestResult) => {
     files.forEach(filePath => {
       const file = fileTestResult.addFile(filePath, '');
-      file.addIssue(0, 0, "\`$" + "{key}\`");  
+      file.addIssue(0, 0, "issue");  
     });
   });
 }

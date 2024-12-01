@@ -59,10 +59,10 @@ function getBundleSize(): number {
 
 ```javascript
 // .betterer.js
-const { BettererTest } = require('@betterer/betterer');
-const { bigger, smaller } = require('@betterer/constraints');
+import { BettererTest } from '@betterer/betterer';
+import { bigger, smaller } from '@betterer/constraints';
 
-module.exports = {
+export default {
   'should grow': () =>
     new BettererTest({
       test: () => getNumberOfTests(),
@@ -134,10 +134,10 @@ function getBundleSize(): number {
 
 ```javascript
 // .betterer.js
-const { BettererTest } = require('@betterer/betterer');
-const { bigger, smaller } = require('@betterer/constraints');
+import { BettererTest } from '@betterer/betterer';
+import { bigger, smaller } from '@betterer/constraints';
 
-module.exports = {
+export default {
   'should grow': () =>
     new BettererTest({
       test: () => getNumberOfTests(),
@@ -211,10 +211,10 @@ function getBundleSize(): number {
 
 ```javascript
 // .betterer.js
-const { BettererTest } = require('@betterer/betterer');
-const { bigger, smaller } = require('@betterer/constraints');
+import { BettererTest } from '@betterer/betterer';
+import { bigger, smaller } from '@betterer/constraints';
 
-module.exports = {
+export default {
   'should grow': () =>
     new BettererTest({
       test: () => getNumberOfTests(),
@@ -290,10 +290,10 @@ function getBundleSize(): number {
 
 ```javascript
 // .betterer.js
-const { BettererTest } = require('@betterer/betterer');
-const { bigger, smaller } = require('@betterer/constraints');
+import { BettererTest } from '@betterer/betterer';
+import { bigger, smaller } from '@betterer/constraints';
 
-module.exports = {
+export default {
   'should grow': () =>
     new BettererTest({
       test: () => getNumberOfTests(),
@@ -360,9 +360,9 @@ function countFiles(issue: string) {
 
 ```javascript
 // .betterer.js
-const { BettererFileTest } = require('@betterer/betterer');
+import { BettererFileTest } from '@betterer/betterer';
 
-module.exports = {
+export default {
   'no more JavaScript': () => countFiles('no more JavaScript files!').include('**/*.js')
 };
 
@@ -436,10 +436,10 @@ function accessibilityConstraint(result: AccessibilityReport, expected: Accessib
 
 ```javascript
 // .betterer.js
-const { BettererTest } = require('@betterer/betterer');
-const { BettererConstraintResult } = require('@betterer/constraints');
+import { BettererTest } from '@betterer/betterer';
+import { BettererConstraintResult } from '@betterer/constraints';
 
-module.exports = {
+export default {
   'should be accessible': () =>
     new BettererTest({
       test: accessibilityTest,

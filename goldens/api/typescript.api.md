@@ -5,9 +5,9 @@
 ```ts
 
 import { BettererFileTest } from '@betterer/betterer';
-import * as ts from 'typescript';
+import type { CompilerOptions } from 'typescript';
 
 // @public
-export function typescript(configFilePath: string, extraCompilerOptions?: ts.CompilerOptions): BettererFileTest;
+export function typescript(configFilePath: string, extraCompilerOptions: CompilerOptions): BettererFileTest;
 
 ```

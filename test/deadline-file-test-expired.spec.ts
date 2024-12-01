@@ -1,16 +1,14 @@
-import { jest } from '@jest/globals';
+import { describe, expect, it, vitest } from 'vitest';
 
-// eslint-disable-next-line require-extensions/require-extensions -- tests not ESM ready yet
-import { createFixture } from './fixture';
+import { createFixture } from './fixture.js';
 
-jest.resetModules();
-jest.mock('@betterer/time', (): typeof import('@betterer/time') => {
-  const time = jest.requireActual('@betterer/time') as typeof import('@betterer/time');
-
+vitest.resetModules();
+vitest.mock('@betterer/time', async (importOriginal): Promise<typeof import('@betterer/time')> => {
+  const time: typeof import('@betterer/time') = await importOriginal();
   return {
     ...time,
-    getPreciseTime__: () => 0,
-    getTime__: () => Date.now()
+    getPreciseTimeΔ: () => 0,
+    getTimeΔ: () => Date.now()
   };
 });
 

@@ -1,0 +1,31 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer > should handle importing from local files 1`] = `
+[
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 shrinks: running "shrinks"!
+🤔 grows: running "grows"!
+",
+  "🌟 Betterer (0ms): 2 tests running...
+🤔 shrinks: running "shrinks"!
+🤔 grows: running "grows"!
+",
+  "🌟 Betterer (0ms): 1 test running... 1 test done!
+✅ shrinks: "shrinks" got checked for the first time! 🎉
+✅ grows: "grows" got checked for the first time! 🎉
+",
+  "🎉 Betterer (0ms): 2 tests done!
+✅ shrinks: "shrinks" got checked for the first time! 🎉
+✅ grows: "grows" got checked for the first time! 🎉
+",
+  "🎉 Betterer (0ms): 2 tests done!
+✅ shrinks: "shrinks" got checked for the first time! 🎉
+✅ grows: "grows" got checked for the first time! 🎉
+
+2 tests got checked. 🤔
+2 tests got checked for the first time! 🎉
+",
+]
+`;

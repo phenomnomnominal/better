@@ -1,24 +1,14 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should fail when the coverage report is invalid 1`] = `
-Array [
+exports[`betterer > should fail when the coverage report is invalid 1`] = `
+[
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-🔥 test: Could not read coverage summary
-",
-  "🌟 Betterer (0ms): 1 test running...
-🔥 test: Could not read coverage summary
-
-Error: Could not read coverage summary
+🤔 test: running "test"!
 ",
   "💥 Betterer (0ms): 1 test done! 1 test errored!
 🔥 test: Could not read coverage summary
-
-Error: Could not read coverage summary
 ",
   "💥 Betterer (0ms): 1 test done! 1 test errored!
 🔥 test: Could not read coverage summary

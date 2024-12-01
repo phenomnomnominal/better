@@ -1,5 +1,6 @@
-// eslint-disable-next-line require-extensions/require-extensions -- tests not ESM ready yet
-import { createFixture } from '../fixture';
+import { describe, it, expect } from 'vitest';
+
+import { createFixture } from '../fixture.js';
 
 const ARGV = ['node', './bin/betterer'];
 
@@ -24,13 +25,13 @@ export default {
 {
   "compilerOptions": {
     "noEmit": true,
-    "lib": ["esnext"],
+    "lib": ["esnext", "dom"],
     "moduleResolution": "node",
     "target": "ES5",
-    "typeRoots": ["../../node_modules/@types/"],
+    "typeRoots": [],
     "resolveJsonModule": true
   },
-  "include": ["./src/**/*", ".betterer.ts"]
+  "include": ["./src/**/*"]
 }
       `
     });
@@ -39,9 +40,9 @@ export default {
     const resultsPath = paths.results;
     const indexPath = resolve('./src/index.ts');
 
-    const { cli__ } = await import('@betterer/cli');
+    const { cliΔ } = await import('@betterer/cli');
 
-    await cli__(fixturePath, [...ARGV, 'start'], false);
+    await cliΔ(fixturePath, [...ARGV, 'start', '--workers=false'], false);
 
     const result = await readFile(resultsPath);
 
@@ -49,13 +50,13 @@ export default {
 
     await writeFile(indexPath, ``);
 
-    await cli__(fixturePath, [...ARGV, 'start'], false);
+    await cliΔ(fixturePath, [...ARGV, 'start', '--workers=false'], false);
 
     const completeResult = await readFile(resultsPath);
 
     expect(completeResult).toMatchSnapshot();
 
-    await cli__(fixturePath, [...ARGV, 'ci']);
+    await cliΔ(fixturePath, [...ARGV, 'ci', '--workers=false']);
 
     expect(logs).toMatchSnapshot();
 

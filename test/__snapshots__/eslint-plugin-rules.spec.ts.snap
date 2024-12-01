@@ -1,0 +1,38 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer > should handle eslint rule from other plugins 1`] = `
+"// BETTERER RESULTS V2.
+//
+// If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
+// https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
+//
+exports[\`test\`] = {
+  value: \`{
+    "src/index.ts:3387724021": [
+      [0, 0, 20, "eslint(@eslint-community/eslint-comments/disable-enable-pair): Requires \\'eslint-enable\\' directive.", "3387724021"],
+      [0, 0, 20, "eslint(@eslint-community/eslint-comments/no-unlimited-disable): Unexpected unlimited \\'eslint-disable\\' comment. Specify some rule names to disable.", "3387724021"],
+      [0, 0, 0, "eslint: Unused eslint-disable directive (no problems were reported).", "963424369"]
+    ]
+  }\`
+};
+"
+`;
+
+exports[`betterer > should handle eslint rule from other plugins 2`] = `
+[
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 test: running "test"!
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" got checked for the first time! (3 issues) 🎉
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" got checked for the first time! (3 issues) 🎉
+
+1 test got checked. 🤔
+1 test got checked for the first time! 🎉
+",
+]
+`;

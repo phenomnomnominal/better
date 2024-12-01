@@ -14,9 +14,9 @@ const EXPORT_TESTS_QUERY = 'ExportAssignment:has(PropertyAssignment)';
 export function upgradeESM(originalSourceFile: SourceFile, configPath: string): SourceFile {
   let upgraded = reparse(
     tsquery.map(originalSourceFile, EXPORT_TESTS_QUERY, (configExports) => {
-      const { expression, decorators, modifiers, isExportEquals } = configExports as ExportAssignment;
+      const { expression, modifiers, isExportEquals } = configExports as ExportAssignment;
       if (isObjectLiteralExpression(expression)) {
-        return factory.createExportAssignment(decorators, modifiers, isExportEquals, wrapTests(expression));
+        return factory.createExportAssignment(modifiers, isExportEquals, wrapTests(expression));
       }
       return configExports;
     }),

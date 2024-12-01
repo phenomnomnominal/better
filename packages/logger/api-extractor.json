@@ -4,7 +4,6 @@
 
   "messages": {
     "extractorMessageReporting": {
-      // We add a suffix __ instead
       "ae-internal-missing-underscore": {
         "logLevel": "none",
         "addToApiReportFile": false

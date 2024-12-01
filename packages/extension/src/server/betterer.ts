@@ -18,13 +18,14 @@ export async function hasBetterer(cwd: string): Promise<boolean> {
   return !!libraryPath;
 }
 
-export async function getRunner(config: BettererOptionsRunner): Promise<BettererRunner> {
-  const key = JSON.stringify(config);
-  if (RUNNERS.has(key)) {
-    return RUNNERS.get(key) as BettererRunner;
+export async function getRunner(cwd: string, options: BettererOptionsRunner): Promise<BettererRunner> {
+  const key = JSON.stringify(options);
+  const existingRunner = RUNNERS.get(key);
+  if (existingRunner) {
+    return existingRunner;
   }
-  const { runner } = await getLibrary(config.cwd as string);
-  const toCache = await runner(config);
+  const { runner } = await getLibrary(cwd);
+  const toCache = await runner(options);
   RUNNERS.set(key, toCache);
   return toCache;
 }
@@ -34,8 +35,9 @@ async function getLibraryPath(cwd: string): Promise<string> {
 }
 
 async function getLibrary(cwd: string): Promise<BettererLibrary> {
-  if (PATH_TO_LIB.has(cwd)) {
-    return PATH_TO_LIB.get(cwd) as BettererLibrary;
+  const existingLibrary = PATH_TO_LIB.get(cwd);
+  if (existingLibrary) {
+    return existingLibrary;
   }
   const libraryPath = await getLibraryPath(cwd);
   const r = nodeRequire();

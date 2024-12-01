@@ -1,11 +1,13 @@
 import type { BettererError } from '@betterer/errors';
 import type { FC } from '@betterer/render';
 
-import { isBettererError } from '@betterer/errors';
+import { isBettererErrorΔ } from '@betterer/errors';
 import { React, Box, Text } from '@betterer/render';
 
 /**
- * @public `props` type for {@link BettererErrorLog | `<BettererErrorLog/>`}.
+ * @internal This could change at any point! Please don't use!
+ *
+ * `props` type for {@link BettererErrorLog | `<BettererErrorLog/>`}.
  */
 export interface BettererErrorLogProps {
   /**
@@ -15,16 +17,20 @@ export interface BettererErrorLogProps {
 }
 
 /**
- * @public Ink component for rendering a {@link @betterer/errors#BettererError | `BettererError` }
+ * @internal This could change at any point! Please don't use!
+ *
+ * Ink component for rendering a {@link @betterer/errors#BettererError | `BettererError` }
  * and all its additional information. The `message`, `stack` and `details` of the `error` will be
- * printed. If any `detail` is an `Error` or  {@link @betterer/errors#BettererError | `BettererError`},
+ * printed.
+ *
+ * @remarks If any `detail` is an `Error` or  {@link @betterer/errors#BettererError | `BettererError`},
  * the component will be rendered recursively.
  */
 export const BettererErrorLog: FC<BettererErrorLogProps> = function BettererErrorLog({ error }) {
   let errors: Array<Error | BettererError> = [];
   let details: Array<string> = [];
-  if (isBettererError(error)) {
-    errors = error.details.filter((detail) => isError(detail)) as Array<Error | BettererError>;
+  if (isBettererErrorΔ(error)) {
+    errors = error.details.filter((detail) => isError(detail));
     details = error.details.filter((detail) => !isError(detail)) as Array<string>;
   }
 
@@ -54,7 +60,8 @@ export const BettererErrorLog: FC<BettererErrorLogProps> = function BettererErro
 };
 
 function isError(value: unknown): value is Error | BettererError {
-  return (value as Error).message != null && (value as Error).stack !== null;
+  const { message, stack } = value as Partial<Error>;
+  return message != null && stack != null;
 }
 
 function processStack(stack: string): string {

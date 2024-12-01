@@ -1,19 +1,12 @@
-import type { BettererFileGlobs, BettererFilePaths } from '@betterer/betterer';
+import type { CompilerOptions, DiagnosticWithLocation, ParseConfigHost } from 'typescript';
+import type { TypeScriptReadConfigResult } from './types.js';
 
-import { BettererFileTest } from '@betterer/betterer';
-import { BettererError } from '@betterer/errors';
+import { BettererFileTest, BettererCacheStrategy } from '@betterer/betterer';
+import { BettererError, invariantΔ } from '@betterer/errors';
 import path from 'node:path';
-import * as ts from 'typescript';
+import ts from 'typescript';
 
 const NEW_LINE = '\n';
-
-interface TypeScriptReadConfigResult {
-  config: {
-    compilerOptions: ts.CompilerOptions;
-    files: BettererFilePaths;
-    include?: BettererFileGlobs;
-  };
-}
 
 // TypeScript throws a 6307 error when it need to access type information from a file
 // that wasn't included by the tsconfig. This happens whenever we run the compiler on
@@ -25,8 +18,8 @@ const CODE_FILE_NOT_INCLUDED = 6307;
  * to your codebase.
  *
  * @remarks {@link @betterer/typescript#typescript | `typescript`} is a {@link @betterer/betterer#BettererFileTest | `BettererFileTest`},
- * so you can use {@link @betterer/betterer#BettererFileTest.include | `include()`}, {@link @betterer/betterer#BettererFileTest.exclude | `exclude()`},
- * {@link @betterer/betterer#BettererFileTest.only | `only()`}, and {@link @betterer/betterer#BettererFileTest.skip | `skip()`}.
+ * so you can use {@link @betterer/betterer#BettererResolverTest.include | `include()`}, {@link @betterer/betterer#BettererResolverTest.exclude | `exclude()`},
+ * {@link @betterer/betterer#BettererTest.only | `only()`}, and {@link @betterer/betterer#BettererTest.skip | `skip()`}.
  *
  * @example
  * ```typescript
@@ -48,10 +41,24 @@ const CODE_FILE_NOT_INCLUDED = 6307;
  * @throws {@link @betterer/errors#BettererError | `BettererError` }
  * Will throw if the user doesn't pass `configFilePath` or `extraCompilerOptions`.
  */
-export function typescript(configFilePath: string, extraCompilerOptions: ts.CompilerOptions = {}): BettererFileTest {
-  if (!configFilePath) {
+export function typescript(configFilePath: string, extraCompilerOptions: CompilerOptions): BettererFileTest {
+  // The `typescript` function could be called from JS code, without type-checking.
+  // We *could* change the parameter to be `configFilePath?: string`,
+  // but that would imply that it was optional, and it isn't.
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- see above!
+  if (configFilePath == null || !configFilePath) {
     throw new BettererError(
       "for `@betterer/typescript` to work, you need to provide the path to a tsconfig.json file, e.g. `'./tsconfig.json'`. ❌"
+    );
+  }
+
+  // The `typescript` function could be called from JS code, without type-checking.
+  // We *could* change the parameter to be `extraCompilerOptions?: CompilerOptions`,
+  // but that would imply that it was optional, and it isn't.
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- see above!
+  if (!extraCompilerOptions) {
+    throw new BettererError(
+      'For `@betterer/typescript` to work, you need to provide compiler options, e.g. `{ strict: true }`. ❌'
     );
   }
 
@@ -70,7 +77,8 @@ export function typescript(configFilePath: string, extraCompilerOptions: ts.Comp
 
     const fullCompilerOptions = {
       ...compilerOptions,
-      ...extraCompilerOptions
+      ...extraCompilerOptions,
+      noErrorTruncation: true
     };
     config.compilerOptions = fullCompilerOptions;
 
@@ -80,7 +88,7 @@ export function typescript(configFilePath: string, extraCompilerOptions: ts.Comp
     }
 
     const compilerHost = ts.createCompilerHost(fullCompilerOptions);
-    const configHost: ts.ParseConfigHost = {
+    const configHost: ParseConfigHost = {
       ...compilerHost,
       readDirectory: ts.sys.readDirectory.bind(ts.sys),
       useCaseSensitiveFileNames: compilerHost.useCaseSensitiveFileNames()
@@ -109,17 +117,83 @@ export function typescript(configFilePath: string, extraCompilerOptions: ts.Comp
     ]);
 
     allDiagnostics
-      .filter((diagnostic): diagnostic is ts.DiagnosticWithLocation => {
+      .filter((diagnostic): diagnostic is DiagnosticWithLocation => {
         const { file, start, length } = diagnostic;
         return file != null && start != null && length != null;
       })
-      .filter(({ file, code }) => {
-        return filePaths.includes(file.fileName) && code !== CODE_FILE_NOT_INCLUDED;
-      })
-      .forEach(({ start, length, file: source, messageText }) => {
-        const file = fileTestResult.addFile(source.fileName, source.getFullText());
+      .filter(({ file, code }) => filePaths.includes(file.fileName) && code !== CODE_FILE_NOT_INCLUDED)
+      .forEach(({ start, length, file, source, messageText }) => {
+        const resultFile = fileTestResult.addFile(file.fileName, file.getFullText());
         const message = ts.flattenDiagnosticMessageText(messageText, NEW_LINE);
-        file.addIssue(start, start + length, message);
+        resultFile.addIssue(start, start + length, typescriptIssueMessage(source, message));
       });
+  }).cache(BettererCacheStrategy.FilePaths);
+}
+
+function typescriptIssueMessage(source = 'tsc', message: string) {
+  let issueMessage = source ? `${source}: ` : '';
+  issueMessage = `${issueMessage}${message}`;
+  issueMessage = fixUnionOrder(issueMessage);
+  issueMessage = fixMissingProperties(issueMessage);
+  return issueMessage;
+}
+
+// TypeScript produces error messages that are unstable.
+// Trying to handle this is probably a bad idea (https://github.com/microsoft/TypeScript/issues/49996#issuecomment-1198383661)
+// But what the heck, let's give it a go.
+// And yes I know this should probably use a parser instead of a RegExp but maybe it's good enough?
+//
+// Example input:
+//   "Argument of type 'HTMLElement | null' is not assignable to parameter of type 'Document | Node | Element | Window'.\n	 Type 'null' is not assignable to type 'Document | Node | Element | Window'.",
+// Output:
+//   "Argument of type 'HTMLElement | null' is not assignable to parameter of type 'Document | Element | Node | Window'.\n	 Type 'null' is not assignable to type 'Document | Element | Node | Window'.",
+const UNION_REGEX = /'([^']*?\s+\|+\s+[^']*?)'/g;
+function fixUnionOrder(message: string): string {
+  const matches = [...message.matchAll(UNION_REGEX)];
+  matches.forEach((match) => {
+    const [, union] = match;
+    invariantΔ(union, 'RegExp has group so matches must contain union!');
+    const members = union.split('|').map((member) => member.trim());
+    const sortedMembers = members.sort();
+    const sortedUnion = sortedMembers.join(' | ');
+    message = message.replace(union, sortedUnion);
   });
+  return message;
+}
+
+// Again we will probably regret this but:
+//
+// Example input:
+//   "Type '{}' is missing the following properties from type 'D': d1, d2, d3, d4"
+//   "Type '{}' is missing the following properties from type 'F': f1, f2, f3, f4, and 2 more."
+// Output:
+//   "Type '{}' is missing 4 properties from type 'D'"
+//   "Type '{}' is missing 6 properties from type 'F'"
+const MISSING_PROPERTIES_MESSAGE = 'is missing the following properties from type';
+const MISSING_PROPERTIES_REGEXP = /from type '.*?':((?:\W+.*?,)+\W.*)/g;
+const AND_N_MORE_REGEXP = /and\W(.*)\Wmore/;
+function fixMissingProperties(message: string): string {
+  if (message.includes(MISSING_PROPERTIES_MESSAGE)) {
+    const matches = [...message.matchAll(MISSING_PROPERTIES_REGEXP)];
+    matches.forEach((match) => {
+      const [, props] = match;
+      invariantΔ(props, 'RegExp has group so matches must contain properties!');
+      const propNames = props.split(',').map((member) => member.trim());
+
+      const last = propNames[propNames.length - 1];
+      invariantΔ(last, 'RegExp has matches must contain a property!');
+
+      let nProps = propNames.length;
+      const hasNMore = AND_N_MORE_REGEXP.exec(last);
+      if (hasNMore) {
+        const [, nStr] = hasNMore;
+        invariantΔ(nStr, 'RegExp has matches must contain a property!');
+        const n = parseFloat(nStr);
+        nProps = nProps + n - 1;
+      }
+      message = message.replace('the following', String(nProps));
+      message = message.replace(`:${props}`, '');
+    });
+  }
+  return message;
 }

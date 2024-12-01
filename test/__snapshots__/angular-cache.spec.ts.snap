@@ -1,0 +1,106 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer > should still reports errors if another file effects a cached Angular file 1`] = `
+"// BETTERER RESULTS V2.
+//
+// If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
+// https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
+//
+exports[\`angular\`] = {
+  value: \`{
+    "src/app/app.component.ts:1689234207": [
+      [6, 8, 5, "ngtsc: Property \\'title\\' does not exist on type \\'AppComponent\\'.", "183222373"],
+      [8, 34, 7, "ngtsc: Type \\'(hero: Hero) => number\\' is not assignable to type \\'TrackByFunction<Hero>\\'.", "926731729"],
+      [9, 17, 2, "ngtsc: Property \\'Id\\' does not exist on type \\'Hero\\'. Did you mean \\'id\\'?", "5862152"]
+    ]
+  }\`
+};
+"
+`;
+
+exports[`betterer > should still reports errors if another file effects a cached Angular file 2`] = `
+[
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 angular: running "angular"!
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ angular: "angular" got checked for the first time! (3 issues) 🎉
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ angular: "angular" got checked for the first time! (3 issues) 🎉
+
+1 test got checked. 🤔
+1 test got checked for the first time! 🎉
+",
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 angular: running "angular"!
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ angular: "angular" stayed the same. (3 issues) 😐
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ angular: "angular" stayed the same. (3 issues) 😐
+
+1 test got checked. 🤔
+1 test stayed the same. 😐
+",
+  "Checking 1 file... 🤔
+
+・ fixtures/angular-cache/src/app/app.component.ts
+
+🌟 Betterer (0ms):
+",
+  "Checking 1 file... 🤔
+
+・ fixtures/angular-cache/src/app/app.component.ts
+
+🌟 Betterer (0ms): 1 test running...
+🤔 angular: running "angular"!
+",
+  "Checking 1 file... 🤔
+
+・ fixtures/angular-cache/src/app/app.component.ts
+
+💥 Betterer (0ms): 1 test done! 1 test errored!
+🔥 angular: "angular" got worse. (1 new issue, 3 existing, 4 total) 😔
+・ 3 fixed, 4 new issues in "fixtures/angular-cache/src/app/app.component.ts".
+・ Showing first of 4 new issues:
+・
+・   15 | export class AppComponent {
+・   16 |   public heroes: Array<Hero> = [
+・ > 17 |     { id: 10, name: "Landon" },
+・      |     ^^^^^^^^^^^^^^^^^^^^^^^^^^ ng: Property 'power' is missing in type '{ id: number; name: string; }' but required in type 'Hero'.
+・   18 |     { id: 20, name: "Ella" },
+・   19 |     { id: 30, name: "Madelyn" },
+・   20 |     { id: 40, name: "Haley" }
+・
+",
+  "Checked 1 file! 🔍
+
+・ fixtures/angular-cache/src/app/app.component.ts
+
+💥 Betterer (0ms): 1 test done! 1 test errored!
+🔥 angular: "angular" got worse. (1 new issue, 3 existing, 4 total) 😔
+・ 3 fixed, 4 new issues in "fixtures/angular-cache/src/app/app.component.ts".
+・ Showing first of 4 new issues:
+・
+・   15 | export class AppComponent {
+・   16 |   public heroes: Array<Hero> = [
+・ > 17 |     { id: 10, name: "Landon" },
+・      |     ^^^^^^^^^^^^^^^^^^^^^^^^^^ ng: Property 'power' is missing in type '{ id: number; name: string; }' but required in type 'Hero'.
+・   18 |     { id: 20, name: "Ella" },
+・   19 |     { id: 30, name: "Madelyn" },
+・   20 |     { id: 40, name: "Haley" }
+・
+
+1 test got checked. 🤔
+1 test got worse. 😔
+
+You should try to fix the new issues! As a last resort, you can run \`betterer --update\` to force an update of the results file. 🆙
+",
+]
+`;

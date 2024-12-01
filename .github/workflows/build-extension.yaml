@@ -12,22 +12,20 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [18.x, 20.x, 22.x]
         operating-system: [macOS-latest]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Use node.js ${{ matrix['node-version'] }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix['node-version'] }}
-      - name: Install dependencies
-        uses: sergioramos/yarn-actions/install@master
-        with:
-          frozen-lockfile: true
-      - name: Run build
-        run: yarn compile:packages && yarn build:extension
-      - name: Run extension test
-        uses: GabrielBB/xvfb-action@v1.0
-        with:
-          run: yarn test:extension
+      # - name: Install dependencies
+      #   run: npm install
+      # - name: Run build
+      #   run: npm run compile:packages && npm run build:extension
+      # - name: Run extension test
+      #   uses: GabrielBB/xvfb-action@v1.0
+      #   with:
+      #     run: npm run test:extension

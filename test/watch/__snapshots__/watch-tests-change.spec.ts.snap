@@ -1,0 +1,125 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer.watch > should rerun all tests if the tests file changes 1`] = `
+[
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 test: running "test"!
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" got checked for the first time! (1 issue) 🎉
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" got checked for the first time! (1 issue) 🎉
+
+1 test got checked. 🤔
+1 test got checked for the first time! 🎉
+",
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): No current ignore patterns
+
+Starting Betterer in watch mode! 🎉
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): No current ignore patterns
+
+Checking 1 file... 🤔
+
+・ fixtures/watch-tests-change/src/index.ts
+
+🌟 Betterer (0ms):
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): No current ignore patterns
+
+Checking 1 file... 🤔
+
+・ fixtures/watch-tests-change/src/index.ts
+
+🌟 Betterer (0ms): 1 test running...
+🤔 test: running "test"!
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): No current ignore patterns
+
+Checking 1 file... 🤔
+
+・ fixtures/watch-tests-change/src/index.ts
+
+🎉 Betterer (0ms): 1 test done!
+✅ test: "test" stayed the same. (1 issue) 😐
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): No current ignore patterns
+
+Checked 1 file! 🔍
+
+・ fixtures/watch-tests-change/src/index.ts
+
+🎉 Betterer (0ms): 1 test done!
+✅ test: "test" stayed the same. (1 issue) 😐
+
+1 test got checked. 🤔
+1 test stayed the same. 😐
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Your tests have changed, re-checking everything...
+This could take a sec. ⏰
+
+🌟 Betterer (0ms):
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Your tests have changed, re-checking everything...
+This could take a sec. ⏰
+
+🌟 Betterer (0ms): 1 test running...
+🤔 test: running "test"!
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Your tests have changed, re-checking everything...
+This could take a sec. ⏰
+
+💥 Betterer (0ms): 1 test done! 1 test errored!
+🔥 test: "test" got worse. (1 issue) 😔
+・ 1 fixed, 1 new issues in "fixtures/watch-tests-change/src/index.ts".
+・
+・ > 1 | console.log('foo');console.dir('foo');
+・     |                    ^^^^^^^^^^^ TSQuery match
+・
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Your tests have changed, re-checking everything...
+This could take a sec. ⏰
+
+💥 Betterer (0ms): 1 test done! 1 test errored!
+🔥 test: "test" got worse. (1 issue) 😔
+・ 1 fixed, 1 new issues in "fixtures/watch-tests-change/src/index.ts".
+・
+・ > 1 | console.log('foo');console.dir('foo');
+・     |                    ^^^^^^^^^^^ TSQuery match
+・
+
+1 test got checked. 🤔
+1 test got worse. 😔
+
+You should try to fix the new issues! As a last resort, you can run \`betterer --update\` to force an update of the results file. 🆙
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Stopping watch mode... 👋
+",
+]
+`;

@@ -1,5 +1,6 @@
-// eslint-disable-next-line require-extensions/require-extensions -- tests not ESM ready yet
-import { createFixture } from './fixture';
+import { describe, expect, it } from 'vitest';
+
+import { createFixture } from './fixture.js';
 
 describe('betterer', () => {
   it('should return only the current results for an included file', async () => {
@@ -7,9 +8,9 @@ describe('betterer', () => {
 
     const { paths, cleanup, resolve } = await createFixture('results-includes', {
       '.betterer.js': `
-const { regexp } = require('@betterer/regexp');
+import { regexp } from '@betterer/regexp';
 
-module.exports = {
+export default {
   'test': () => regexp(/(\\/\\/\\s*HACK)/i).include('./src/**/*.ts'),
 };      
     `,
@@ -35,22 +36,22 @@ module.exports = {
     const fileWithIssues = resolve('./src/file-with-issues.ts');
     const fileWithIssue = resolve('./src/file-with-issue.ts');
 
-    const fileTestResultSummary = (!!testResultSummary?.isFileTest && testResultSummary.details) || {};
+    const fileTestResultSummary = testResultSummary?.isFileTest ? testResultSummary.details : {};
 
     expect(fileTestResultSummary[fileWithIssues]).toBeDefined();
     expect(fileTestResultSummary[fileWithIssue]).not.toBeDefined();
 
-    const fileWithIssuesResult = fileTestResultSummary[fileWithIssues];
+    const fileWithIssuesResult = fileTestResultSummary[fileWithIssues] ?? [];
 
     const [issue1, issue2] = fileWithIssuesResult;
 
-    expect(issue1.message).toEqual('RegExp match');
-    expect(issue1.line).toEqual(0);
-    expect(issue1.column).toEqual(0);
+    expect(issue1?.message).toEqual('RegExp match');
+    expect(issue1?.line).toEqual(0);
+    expect(issue1?.column).toEqual(0);
 
-    expect(issue2.message).toEqual('RegExp match');
-    expect(issue2.line).toEqual(1);
-    expect(issue2.column).toEqual(0);
+    expect(issue2?.message).toEqual('RegExp match');
+    expect(issue2?.line).toEqual(1);
+    expect(issue2?.column).toEqual(0);
 
     await cleanup();
   });

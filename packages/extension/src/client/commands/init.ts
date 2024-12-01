@@ -1,9 +1,7 @@
-// eslint-disable-next-line import/no-unresolved -- vscode is an implicit dependency for extensions
 import type { WorkspaceFolder } from 'vscode';
 
 import fs from 'node:fs';
 import path from 'node:path';
-// eslint-disable-next-line import/no-unresolved -- vscode is an implicit dependency for extensions
 import { window, workspace } from 'vscode';
 
 import { EXTENSION_NAME } from '../../constants.js';

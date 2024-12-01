@@ -1,5 +1,6 @@
-// eslint-disable-next-line require-extensions/require-extensions -- tests not ESM ready yet
-import { createFixture } from './fixture';
+import { describe, expect, it } from 'vitest';
+
+import { createFixture } from './fixture.js';
 
 describe('betterer', () => {
   it('should not run a specific test called with skip()', async () => {
@@ -14,7 +15,7 @@ import { bigger } from '@betterer/constraints';
 import { regexp } from '@betterer/regexp';
 import { persist } from '@betterer/fixture';
 
-const grows = persist(__dirname, 'grows', 0);
+const grows = persist(import.meta.url, 'grows', 0);
 
 export default {
   'test 1': () => new BettererTest({
@@ -24,13 +25,13 @@ export default {
   'test 2': () => regexp(/(\\/\\/\\s*HACK)/i).include('./src/**/*.ts').skip()
 };
       `,
-        '.betterer.ts': `
+        '.betterer.js': `
 import { BettererTest } from '@betterer/betterer';
 import { bigger } from '@betterer/constraints';
 import { regexp } from '@betterer/regexp';
 import { persist } from '@betterer/fixture';
 
-const grows = persist(__dirname, 'grows', 0);
+const grows = persist(import.meta.url, 'grows', 0);
 
 export default {
   'test 1': () => new BettererTest({

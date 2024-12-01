@@ -1,5 +1,6 @@
-// eslint-disable-next-line require-extensions/require-extensions -- tests not ESM ready yet
-import { createFixture } from './fixture';
+import { describe, expect, it } from 'vitest';
+
+import { createFixture } from './fixture.js';
 
 describe('betterer --reporter', () => {
   it('should throw when there is an invalid hook name', async () => {
@@ -9,14 +10,17 @@ describe('betterer --reporter', () => {
 module.exports.reporter = {
     notAHook: ''
 };
-      `
+      `,
+      '.betterer.js': ''
     });
 
     const configPaths = [paths.config];
     const resultsPath = paths.results;
     const reporters = [resolve('reporter.js')];
 
-    await expect(async () => await betterer({ configPaths, resultsPath, reporters, workers: false })).rejects.toThrow();
+    await expect(async () => {
+      await betterer({ configPaths, resultsPath, reporters, workers: false });
+    }).rejects.toThrow();
 
     expect(logs).toMatchSnapshot();
 

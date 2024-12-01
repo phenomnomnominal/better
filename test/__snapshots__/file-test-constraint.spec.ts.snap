@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should let you override the constraint of a file test 1`] = `
+exports[`betterer > should let you override the constraint of a file test 1`] = `
 "// BETTERER RESULTS V2.
 //
 // If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
@@ -8,31 +8,28 @@ exports[`betterer should let you override the constraint of a file test 1`] = `
 //
 exports[\`test\`] = {
   value: \`{
-    \\"src/index.ts:1761844991\\": [
-      [0, 0, 9, \\"Unexpected \\\\'debugger\\\\' statement.\\", \\"3201740415\\"],
-      [1, 0, 9, \\"Unexpected \\\\'debugger\\\\' statement.\\", \\"3201740415\\"],
-      [2, 0, 9, \\"Unexpected \\\\'debugger\\\\' statement.\\", \\"3201740415\\"]
+    "src/index.ts:1761844991": [
+      [0, 0, 9, "eslint(no-debugger): Unexpected \\'debugger\\' statement.", "3201740415"],
+      [1, 0, 9, "eslint(no-debugger): Unexpected \\'debugger\\' statement.", "3201740415"],
+      [2, 0, 9, "eslint(no-debugger): Unexpected \\'debugger\\' statement.", "3201740415"]
     ]
   }\`
 };
 "
 `;
 
-exports[`betterer should let you override the constraint of a file test 2`] = `
-Array [
+exports[`betterer > should let you override the constraint of a file test 2`] = `
+[
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" got checked for the first time! (2 issues) 🎉
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! (2 issues) 🎉
+✅ test: "test" got checked for the first time! (2 issues) 🎉
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! (2 issues) 🎉
+✅ test: "test" got checked for the first time! (2 issues) 🎉
 
 1 test got checked. 🤔
 1 test got checked for the first time! 🎉
@@ -40,16 +37,13 @@ Array [
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" stayed the same. (1 new issue, 3 total) 😐
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" stayed the same. (1 new issue, 3 total) 😐
+✅ test: "test" stayed the same. (1 new issue, 2 existing, 3 total) 😐
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" stayed the same. (1 new issue, 3 total) 😐
+✅ test: "test" stayed the same. (1 new issue, 2 existing, 3 total) 😐
 
 1 test got checked. 🤔
 1 test stayed the same. 😐

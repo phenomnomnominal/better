@@ -1,55 +1,175 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should mark a test as complete when it reaches its goal 1`] = `
-Array [
-  "🌟 Betterer (0ms):
-",
-  "🎉 Betterer (0ms): 2 tests done!
-✅ should complete: \\"should complete\\" got checked for the first time! 🎉
-✅ complete: \\"complete\\" has already met its goal! ✨
-",
-  "🎉 Betterer (0ms): 2 tests done!
-✅ should complete: \\"should complete\\" got checked for the first time! 🎉
-✅ complete: \\"complete\\" has already met its goal! ✨
-
-2 tests got checked. 🤔
-1 test got checked for the first time! 🎉
-1 test met its goal! 🎉
-",
-  "🌟 Betterer (0ms):
-",
-  "🎉 Betterer (0ms): 2 tests done!
-✅ should complete: \\"should complete\\" met its goal! 🎉
-✅ complete: \\"complete\\" has already met its goal! ✨
-",
-  "🎉 Betterer (0ms): 2 tests done!
-✅ should complete: \\"should complete\\" met its goal! 🎉
-✅ complete: \\"complete\\" has already met its goal! ✨
-
-2 tests got checked. 🤔
-1 test got better! 😍
-2 tests met its goal! 🎉
-",
-  "🌟 Betterer (0ms):
-",
-  "🎉 Betterer (0ms): 2 tests done!
-✅ should complete: \\"should complete\\" has already met its goal! ✨
-✅ complete: \\"complete\\" has already met its goal! ✨
-",
-  "🎉 Betterer (0ms): 2 tests done!
-✅ should complete: \\"should complete\\" has already met its goal! ✨
-✅ complete: \\"complete\\" has already met its goal! ✨
-
-2 tests got checked. 🤔
-2 tests met its goal! 🎉
-",
-]
-`;
-
-exports[`betterer should mark a test as complete when it reaches its goal 2`] = `
+exports[`betterer > should mark a test as complete when it reaches its goal 1`] = `
 "// BETTERER RESULTS V2.
 //
 // If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
 // https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
-//"
+//
+exports[\`should complete\`] = {
+  value: \`1
+\`
+};
+
+exports[\`complete\`] = {
+  value: \`0
+\`
+};
+
+exports[\`should complete then get worse\`] = {
+  value: \`1
+\`
+};
+"
+`;
+
+exports[`betterer > should mark a test as complete when it reaches its goal 2`] = `
+"// BETTERER RESULTS V2.
+//
+// If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
+// https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
+//
+exports[\`should complete\`] = {
+  value: \`2
+\`
+};
+
+exports[\`complete\`] = {
+  value: \`0
+\`
+};
+
+exports[\`should complete then get worse\`] = {
+  value: \`2
+\`
+};
+"
+`;
+
+exports[`betterer > should mark a test as complete when it reaches its goal 3`] = `
+"// BETTERER RESULTS V2.
+//
+// If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
+// https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
+//
+exports[\`should complete\`] = {
+  value: \`3
+\`
+};
+
+exports[\`complete\`] = {
+  value: \`0
+\`
+};
+
+exports[\`should complete then get worse\`] = {
+  value: \`3
+\`
+};
+"
+`;
+
+exports[`betterer > should mark a test as complete when it reaches its goal 4`] = `
+[
+  "🌟 Betterer (0ms):
+",
+  "🎉 Betterer (0ms): 3 tests done!
+✅ should complete: "should complete" got checked for the first time! 🎉
+✅ complete: "complete" met its goal! 🎉
+✅ should complete then get worse: "should complete then get worse" got checked for the first time! 🎉
+",
+  "🎉 Betterer (0ms): 3 tests done!
+✅ should complete: "should complete" got checked for the first time! 🎉
+✅ complete: "complete" met its goal! 🎉
+✅ should complete then get worse: "should complete then get worse" got checked for the first time! 🎉
+
+3 tests got checked. 🤔
+2 tests got checked for the first time! 🎉
+1 test met its goal! 🎉
+",
+  "🌟 Betterer (0ms):
+",
+  "🎉 Betterer (0ms): 3 tests done!
+✅ should complete: "should complete" met its goal! 🎉
+✅ complete: "complete" has already met its goal! ✨
+✅ should complete then get worse: "should complete then get worse" met its goal! 🎉
+",
+  "🎉 Betterer (0ms): 3 tests done!
+✅ should complete: "should complete" met its goal! 🎉
+✅ complete: "complete" has already met its goal! ✨
+✅ should complete then get worse: "should complete then get worse" met its goal! 🎉
+
+3 tests got checked. 🤔
+2 tests got better! 😍
+3 tests met their goal! 🎉
+",
+  "🌟 Betterer (0ms):
+",
+  "🎉 Betterer (0ms): 3 tests done!
+✅ should complete: "should complete" met its goal! 🎉
+✅ complete: "complete" has already met its goal! ✨
+✅ should complete then get worse: "should complete then get worse" met its goal! 🎉
+",
+  "🎉 Betterer (0ms): 3 tests done!
+✅ should complete: "should complete" met its goal! 🎉
+✅ complete: "complete" has already met its goal! ✨
+✅ should complete then get worse: "should complete then get worse" met its goal! 🎉
+
+3 tests got checked. 🤔
+2 tests got better! 😍
+3 tests met their goal! 🎉
+",
+  "🌟 Betterer (0ms):
+",
+  "💥 Betterer (0ms): 3 tests done! 1 test errored!
+✅ should complete: "should complete" met its goal! 🎉
+✅ complete: "complete" has already met its goal! ✨
+🔥 should complete then get worse: "should complete then get worse" got worse. 😔
+・ - Expected
+・ + Result
+・
+・ - 3
+・ + 1
+",
+  "💥 Betterer (0ms): 3 tests done! 1 test errored!
+✅ should complete: "should complete" met its goal! 🎉
+✅ complete: "complete" has already met its goal! ✨
+🔥 should complete then get worse: "should complete then get worse" got worse. 😔
+・ - Expected
+・ + Result
+・
+・ - 3
+・ + 1
+
+3 tests got checked. 🤔
+1 test got better! 😍
+2 tests met their goal! 🎉
+1 test got worse. 😔
+
+You should try to fix the new issues! As a last resort, you can run \`betterer --update\` to force an update of the results file. 🆙
+",
+]
+`;
+
+exports[`betterer > should mark a test as complete when it reaches its goal 5`] = `
+"// BETTERER RESULTS V2.
+//
+// If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
+// https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
+//
+exports[\`should complete\`] = {
+  value: \`4
+\`
+};
+
+exports[\`complete\`] = {
+  value: \`0
+\`
+};
+
+exports[\`should complete then get worse\`] = {
+  value: \`3
+\`
+};
+"
 `;

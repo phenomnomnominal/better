@@ -5,7 +5,7 @@ import type { BettererCLIMergeConfig } from './types.js';
 
 import { betterer } from '@betterer/betterer';
 
-import { mergeCommand, setEnv } from './options.js';
+import { mergeCommand } from './options.js';
 
 /**
  * Run the **Betterer** `merge` command to resolve any merge conflicts in the
@@ -15,8 +15,6 @@ export function merge(cwd: string): Command {
   const command = mergeCommand();
   command.description('merge the Betterer results file');
   command.action(async (config: BettererCLIMergeConfig, command: Command): Promise<void> => {
-    setEnv(config);
-
     // Mark options as unknown...
     const options: unknown = {
       contents: command.args,
@@ -24,11 +22,7 @@ export function merge(cwd: string): Command {
       resultsPath: config.results
     };
 
-    try {
-      await betterer.merge(options as BettererOptionsMerge);
-    } catch {
-      process.exitCode = 1;
-    }
+    await betterer.merge(options as BettererOptionsMerge);
   });
 
   return command;

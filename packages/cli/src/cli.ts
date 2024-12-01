@@ -1,5 +1,7 @@
+import type { BettererErrorDetails } from '@betterer/errors';
 import type { BettererCLIArguments, BettererCommandName } from './types.js';
 
+import { isBettererErrorΔ } from '@betterer/errors';
 import { Command } from 'commander';
 
 import { ci } from './ci.js';
@@ -18,7 +20,12 @@ import { getVersion } from './version.js';
  *
  * Run the **Betterer** command-line interface.
  */
-export async function cli__(cwd: string, argv: BettererCLIArguments, isCI = process.env.CI === 'true'): Promise<void> {
+export async function cliΔ(
+  cwd: string,
+  argv: BettererCLIArguments,
+  isCI = process.env.CI === 'true',
+  isTest = process.env.TEST === 'true'
+): Promise<void> {
   const program = new Command('Betterer');
   const version = await getVersion();
   program.version(version);
@@ -49,9 +56,50 @@ export async function cli__(cwd: string, argv: BettererCLIArguments, isCI = proc
 
   const args = argv.slice(0);
   const [, , command] = args;
+  // `BettererCommand` is an enum, so this conditional *is* necessary!
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- see above!
   if (!BettererCommand[command as BettererCommandName]) {
     args.splice(2, 0, BettererCommand.start);
   }
 
-  await program.parseAsync(args);
+  try {
+    await program.parseAsync(args);
+  } catch (error) {
+    if (isBettererErrorΔ(error)) {
+      error.details = flattenErrors(error.details);
+    }
+    if (!isTest) {
+      /* v8 ignore next */
+      process.exitCode = 1;
+    }
+    throw error;
+  }
+}
+
+function flattenErrors(details: BettererErrorDetails): BettererErrorDetails {
+  return details
+    .flatMap((detail) => {
+      if (isBettererErrorΔ(detail)) {
+        const flattened = [detail, ...flattenErrors(detail.details)];
+        detail.details = [];
+        return flattened;
+      }
+      return detail;
+    })
+    .map((detail) => {
+      const error = new Error();
+      if (isError(detail)) {
+        error.message = detail.message;
+        error.name = detail.name;
+        error.stack = detail.stack;
+      } else {
+        error.message = detail;
+      }
+      return error;
+    });
+}
+
+function isError(value: unknown): value is Error {
+  const { message, stack } = value as Partial<Error>;
+  return message != null && stack != null;
 }

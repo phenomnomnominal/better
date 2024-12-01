@@ -12,7 +12,7 @@ export type BettererLoggerMessages = Array<BettererLoggerMessage>;
  * @public A function that takes an array of {@link BettererLoggerMessage | `BettererLoggerMessage`s }
  * and logs them asynchronously.
  */
-export type BettererLogMessage = (...messages: BettererLoggerMessages) => Promise<void>;
+export type BettererLogMessage = (...messages: BettererLoggerMessages) => MaybeAsync<void>;
 
 /**
  * @public The information required to log a code block with a message.
@@ -48,10 +48,10 @@ export interface BettererLoggerCodeInfo {
  * @public A function that takes a {@link BettererLoggerCodeInfo | `BettererLoggerCodeInfo` }
  * and logs it asynchronously.
  */
-export type BettererLogCode = (codeInfo: BettererLoggerCodeInfo) => Promise<void>;
+export type BettererLogCode = (codeInfo: BettererLoggerCodeInfo) => MaybeAsync<void>;
 
 /**
- * @public The logger interface for **Betterer** reporter and task logging.
+ * @public The interface for **Betterer** logging.
  */
 export interface BettererLogger {
   /**
@@ -87,7 +87,7 @@ export interface BettererLogger {
 /**
  * @internal This could change at any point! Please don't use!
  *
- * A logging instruction which can be logged at a later time using {@link @betterer/logger#log__ | `log__()`}.
+ * A logging instruction which can be logged at a later time.
  */
 export interface BettererLog {
   /**
@@ -123,6 +123,11 @@ export interface BettererLog {
 /**
  * @internal This could change at any point! Please don't use!
  *
- * A set of logging instructions which can be logged at a later time using {@link @betterer/logger#log__ | `log__()`}.
+ * A set of logging instructions which can be logged at a later time.
  */
 export type BettererLogs = Array<BettererLog>;
+
+/**
+ * @public Utility type to allow results that are async or sync.
+ */
+export type MaybeAsync<T> = T | Promise<T>;

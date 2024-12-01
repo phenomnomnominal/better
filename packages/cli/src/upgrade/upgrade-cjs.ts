@@ -29,7 +29,7 @@ export function upgradeCJS(originalSourceFile: SourceFile, configPath: string): 
   upgraded = reparse(
     tsquery.map(upgraded, EXPORT_TEST_QUERY, (configExportConst) => {
       const { left, operatorToken, right } = configExportConst as BinaryExpression;
-      const wrapped = !!right && wrapTest(right);
+      const wrapped = wrapTest(right);
       if (!wrapped) {
         return configExportConst;
       }

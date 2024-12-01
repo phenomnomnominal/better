@@ -1,15 +1,16 @@
-// eslint-disable-next-line require-extensions/require-extensions -- tests not ESM ready yet
-import { createFixture } from './fixture';
+import { describe, expect, it } from 'vitest';
+
+import { createFixture } from './fixture.js';
 
 describe('betterer', () => {
   it('should fail when the coverage report is missing', async () => {
     const { betterer } = await import('@betterer/betterer');
 
-    const fixture = await createFixture('coverage-report-missing', {
+    const { paths, logs, cleanup, testNames } = await createFixture('coverage-report-missing', {
       '.betterer.js': `
-const { coverageTotal } = require('@betterer/coverage');
+import { coverageTotal } from '@betterer/coverage';
 
-module.exports = {
+export default {
   test: () => coverageTotal()
 };    
         `,
@@ -21,15 +22,15 @@ module.exports = {
       `
     });
 
-    const configPaths = [fixture.paths.config];
-    const resultsPath = fixture.paths.results;
+    const configPaths = [paths.config];
+    const resultsPath = paths.results;
 
     const newTestRun = await betterer({ configPaths, resultsPath, workers: false });
 
-    expect(fixture.testNames(newTestRun.failed)).toEqual(['test']);
+    expect(testNames(newTestRun.failed)).toEqual(['test']);
 
-    expect(fixture.logs).toMatchSnapshot();
+    expect(logs).toMatchSnapshot();
 
-    await fixture.cleanup();
+    await cleanup();
   });
 });

@@ -1,23 +1,25 @@
 import type { BettererLogger } from '@betterer/logger';
 
 import { BettererError } from '@betterer/errors';
-import { exposeToMain__ } from '@betterer/worker';
+import { exposeToMainΔ } from '@betterer/worker';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 
-const TEMPLATE_JS = `module.exports = {
-  // Add tests here ☀️
-};
-`;
-const TEMPLATE_TS = `export default {
+const TEMPLATE = `export default {
   // Add tests here ☀️
 };
 `;
 
-export async function run(logger: BettererLogger, cwd: string, configPath: string, ts: boolean): Promise<void> {
+/** @knipignore part of worker API */
+export async function run(
+  logger: BettererLogger,
+  status: BettererLogger,
+  cwd: string,
+  configPath: string
+): Promise<void> {
   configPath = path.resolve(cwd, configPath);
 
-  await logger.progress(`creating "${configPath}" file...`);
+  await status.progress(`creating "${configPath}" file...`);
 
   let exists = false;
   try {
@@ -32,12 +34,11 @@ export async function run(logger: BettererLogger, cwd: string, configPath: strin
   }
 
   try {
-    const template = ts ? TEMPLATE_TS : TEMPLATE_JS;
-    await fs.writeFile(configPath, template, 'utf8');
+    await fs.writeFile(configPath, TEMPLATE, 'utf8');
     await logger.success(`created "${configPath}"!`);
-  } catch {
-    throw new BettererError(`could not create "${configPath}".`);
+  } catch (error) {
+    throw new BettererError(`could not create "${configPath}".`, error as Error);
   }
 }
 
-exposeToMain__({ run });
+exposeToMainΔ({ run });

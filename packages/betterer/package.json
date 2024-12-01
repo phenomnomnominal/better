@@ -1,13 +1,14 @@
 {
   "name": "@betterer/betterer",
-  "description": "Main engine for runing betterer tests",
-  "version": "5.4.0",
+  "description": "Main engine for running betterer tests",
+  "version": "6.0.0-alpha.1",
   "license": "MIT",
   "publishConfig": {
     "access": "public"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "type": "module",
   "files": [
     "dist"
   ],
@@ -25,30 +26,27 @@
     "api": "api-extractor run --local --verbose"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=16"
   },
   "dependencies": {
-    "@betterer/constraints": "^5.3.0",
-    "@betterer/errors": "^5.3.0",
-    "@betterer/logger": "^5.3.4",
-    "@betterer/reporter": "^5.4.0",
-    "@betterer/time": "^5.3.4",
-    "@betterer/worker": "^5.3.4",
-    "@phenomnomnominal/debug": "^0.2.5",
-    "chokidar": "^3.3.1",
-    "djb2a": "^1.2.0",
+    "@betterer/constraints": "^6.0.0-alpha.1",
+    "@betterer/errors": "^6.0.0-alpha.1",
+    "@betterer/logger": "^6.0.0-alpha.1",
+    "@betterer/reporter": "^6.0.0-alpha.1",
+    "@betterer/time": "^6.0.0-alpha.1",
+    "@betterer/worker": "^6.0.0-alpha.1",
+    "chokidar": "^3.6.0",
+    "core-js": "^3.38.1",
+    "djb2a": "^2.0.0",
     "fast-memoize": "^2.5.2",
+    "ignore-walk": "^7.0.0",
     "lines-and-columns": "^2.0.3",
     "minimatch": "^5.0.1",
-    "prettier": "^2.3.2",
-    "simple-git": "^3.6.0",
-    "ts-node": "^10.2.1",
-    "tslib": "^2.3.1"
+    "prettier": "^3.2.5",
+    "simple-git": "^3.6.0"
   },
   "optionalDependencies": {
-    "typescript": ">=2.7"
+    "esbuild": "*"
   },
-  "devDependencies": {
-    "@types/prettier": "^2.3.2"
-  }
+  "gitHead": "821992635c8b6a4891169dad3334203f866e5521"
 }

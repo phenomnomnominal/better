@@ -7,7 +7,7 @@
 import type { BettererReporter } from '@betterer/betterer';
 
 // @internal
-export function createReporter__(): BettererReporter;
+export function createReporterΔ(): BettererReporter;
 
 // @public
 export const reporter: BettererReporter;

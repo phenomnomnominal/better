@@ -1,28 +1,30 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should write a cache file 1`] = `
+exports[`betterer > should write a cache file 1`] = `
 "{
-  \\"version\\": 2,
-  \\"testCache\\": {
-    \\"test\\": {
-      \\"src/index.ts\\": \\"3994602698153364047\\"
+  "version": 2,
+  "testCache": {
+    "test": {
+      ".betterer.js": "37daa4917945dac116dd2f8c930525ffe11f06df4ca2b4b30d54d51430c80603",
+      "src/index.ts": "5458e7616c690e6baf27a785a3f14f3e6fc3737fce3fd1f1e6c8e6692c093be0"
     }
   }
 }"
 `;
 
-exports[`betterer should write a cache file 2`] = `
+exports[`betterer > should write a cache file 2`] = `
 "{
-  \\"version\\": 2,
-  \\"testCache\\": {
-    \\"test\\": {
-      \\"src/index.ts\\": \\"3994602698153364047\\"
+  "version": 2,
+  "testCache": {
+    "test": {
+      ".betterer.js": "37daa4917945dac116dd2f8c930525ffe11f06df4ca2b4b30d54d51430c80603",
+      "src/index.ts": "5458e7616c690e6baf27a785a3f14f3e6fc3737fce3fd1f1e6c8e6692c093be0"
     }
   }
 }"
 `;
 
-exports[`betterer should write a cache file 3`] = `
+exports[`betterer > should write a cache file 3`] = `
 "// BETTERER RESULTS V2.
 //
 // If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
@@ -30,27 +32,28 @@ exports[`betterer should write a cache file 3`] = `
 //
 exports[\`test\`] = {
   value: \`{
-    \\"src/index.ts:153364047\\": [
-      [0, 0, 7, \\"RegExp match\\", \\"645651780\\"],
-      [1, 0, 7, \\"RegExp match\\", \\"645651780\\"]
+    "src/index.ts:153364047": [
+      [0, 0, 7, "RegExp match", "645651780"],
+      [1, 0, 7, "RegExp match", "645651780"]
     ]
   }\`
 };
 "
 `;
 
-exports[`betterer should write a cache file 4`] = `
+exports[`betterer > should write a cache file 4`] = `
 "{
-  \\"version\\": 2,
-  \\"testCache\\": {
-    \\"test\\": {
-      \\"src/index.ts\\": \\"39946026984126639614\\"
+  "version": 2,
+  "testCache": {
+    "test": {
+      ".betterer.js": "37daa4917945dac116dd2f8c930525ffe11f06df4ca2b4b30d54d51430c80603",
+      "src/index.ts": "8228477b3ac0640fb6fd6402a5648cd6c737cff1716bac36d9855ddd4960e18a"
     }
   }
 }"
 `;
 
-exports[`betterer should write a cache file 5`] = `
+exports[`betterer > should write a cache file 5`] = `
 "// BETTERER RESULTS V2.
 //
 // If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
@@ -58,36 +61,38 @@ exports[`betterer should write a cache file 5`] = `
 //
 exports[\`test\`] = {
   value: \`{
-    \\"src/index.ts:4126639614\\": [
-      [0, 0, 7, \\"RegExp match\\", \\"645651780\\"]
+    "src/index.ts:4126639614": [
+      [0, 0, 7, "RegExp match", "645651780"]
     ]
   }\`
 };
 "
 `;
 
-exports[`betterer should write a cache file 6`] = `
+exports[`betterer > should write a cache file 6`] = `
 "{
-  \\"version\\": 2,
-  \\"testCache\\": {}
+  "version": 2,
+  "testCache": {
+    "test": {
+      ".betterer.js": "37daa4917945dac116dd2f8c930525ffe11f06df4ca2b4b30d54d51430c80603",
+      "src/index.ts": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
 }"
 `;
 
-exports[`betterer should write a cache file 7`] = `
-Array [
+exports[`betterer > should write a cache file 7`] = `
+[
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" got checked for the first time! (2 issues) 🎉
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! (2 issues) 🎉
+✅ test: "test" got checked for the first time! (2 issues) 🎉
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! (2 issues) 🎉
+✅ test: "test" got checked for the first time! (2 issues) 🎉
 
 1 test got checked. 🤔
 1 test got checked for the first time! 🎉
@@ -95,16 +100,13 @@ Array [
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" stayed the same. (2 issues) 😐
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" stayed the same. (2 issues) 😐
+✅ test: "test" stayed the same. (2 issues) 😐
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" stayed the same. (2 issues) 😐
+✅ test: "test" stayed the same. (2 issues) 😐
 
 1 test got checked. 🤔
 1 test stayed the same. 😐
@@ -112,43 +114,27 @@ Array [
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-🔥 test: \\"test\\" got worse. (1 new issue, 3 total) 😔
-",
-  "🌟 Betterer (0ms): 1 test running...
-🔥 test: \\"test\\" got worse. (1 new issue, 3 total) 😔
-
-Error: \\"test\\" got worse. (1 new issue, 3 total) 😔
+🤔 test: running "test"!
 ",
   "💥 Betterer (0ms): 1 test done! 1 test errored!
-🔥 test: \\"test\\" got worse. (1 new issue, 3 total) 😔
-・ 2 existing issues in \\"<project>/fixtures/cache/src/index.ts\\".
-・ New issue in \\"<project>/fixtures/cache/src/index.ts\\"!
+🔥 test: "test" got worse. (1 new issue, 2 existing, 3 total) 😔
+・ 2 existing, 1 new issues in "fixtures/cache/src/index.ts".
 ・
-・   <project>/fixtures/cache/src/index.ts
 ・   1 | // HACK:
 ・   2 | // HACK:
 ・ > 3 | // HACK:
 ・     | ^^^^^^^ RegExp match
 ・
-
-Error: \\"test\\" got worse. (1 new issue, 3 total) 😔
 ",
   "💥 Betterer (0ms): 1 test done! 1 test errored!
-🔥 test: \\"test\\" got worse. (1 new issue, 3 total) 😔
-・ 2 existing issues in \\"<project>/fixtures/cache/src/index.ts\\".
-・ New issue in \\"<project>/fixtures/cache/src/index.ts\\"!
+🔥 test: "test" got worse. (1 new issue, 2 existing, 3 total) 😔
+・ 2 existing, 1 new issues in "fixtures/cache/src/index.ts".
 ・
-・   <project>/fixtures/cache/src/index.ts
 ・   1 | // HACK:
 ・   2 | // HACK:
 ・ > 3 | // HACK:
 ・     | ^^^^^^^ RegExp match
 ・
-
-Error: \\"test\\" got worse. (1 new issue, 3 total) 😔
 
 1 test got checked. 🤔
 1 test got worse. 😔
@@ -158,16 +144,15 @@ You should try to fix the new issues! As a last resort, you can run \`betterer -
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" got better! (1 fixed issue, 1 remaining) 😍
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got better! (1 fixed issue, 1 remaining) 😍
+✅ test: "test" got better! (1 fixed issue, 1 remaining) 😍
+・ 1 fixed, 1 existing issues in "fixtures/cache/src/index.ts".
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got better! (1 fixed issue, 1 remaining) 😍
+✅ test: "test" got better! (1 fixed issue, 1 remaining) 😍
+・ 1 fixed, 1 existing issues in "fixtures/cache/src/index.ts".
 
 1 test got checked. 🤔
 1 test got better! 😍
@@ -175,16 +160,15 @@ You should try to fix the new issues! As a last resort, you can run \`betterer -
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" met its goal! 🎉
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" met its goal! 🎉
+✅ test: "test" met its goal! 🎉
+・ 1 fixed issue in "fixtures/cache/src/index.ts".
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" met its goal! 🎉
+✅ test: "test" met its goal! 🎉
+・ 1 fixed issue in "fixtures/cache/src/index.ts".
 
 1 test got checked. 🤔
 1 test got better! 😍

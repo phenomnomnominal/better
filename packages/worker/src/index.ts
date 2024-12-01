@@ -6,5 +6,5 @@
 
 export type { BettererWorkerAPI, BettererWorkerHandle, BettererWorkerFactory, BettererWorkerPool } from './types.js';
 
-export { exposeToMain__, exposeToWorker__, importWorker__ } from './worker.js';
-export { createWorkerPool__ } from './worker-pool.js';
+export { exposeToMainΔ, exposeToWorkerΔ, importWorkerΔ } from './worker.js';
+export { createWorkerPoolΔ } from './worker-pool.js';

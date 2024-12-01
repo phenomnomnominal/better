@@ -1,5 +1,6 @@
-// eslint-disable-next-line require-extensions/require-extensions -- tests not ESM ready yet
-import { createFixture } from '../fixture';
+import { describe, it, expect } from 'vitest';
+
+import { createFixture } from '../fixture.js';
 
 const ARGV = ['node', './bin/betterer'];
 
@@ -24,13 +25,13 @@ export default {
 {
   "compilerOptions": {
     "noEmit": true,
-    "lib": ["esnext"],
+    "lib": ["esnext", "dom"],
     "moduleResolution": "node",
     "target": "ES5",
-    "typeRoots": ["../../node_modules/@types/"],
+    "typeRoots": [],
     "resolveJsonModule": true
   },
-  "include": ["./src/**/*", ".betterer.ts"]
+  "include": ["./src/**/*"]
 }
       `
     });
@@ -38,13 +39,15 @@ export default {
     const fixturePath = paths.cwd;
     const indexPath = resolve('./src/index.ts');
 
-    const { cli__ } = await import('@betterer/cli');
+    const { cliΔ } = await import('@betterer/cli');
 
-    await cli__(fixturePath, [...ARGV, 'start'], false);
+    await cliΔ(fixturePath, [...ARGV, 'start', '--workers=false'], false);
 
     await writeFile(indexPath, `const a = 'a';\nconst one = 1;\nconsole.log(one + one);\nconsole.log(a * one);`);
 
-    await cli__(fixturePath, [...ARGV, 'ci']);
+    await expect(async () => {
+      await cliΔ(fixturePath, [...ARGV, 'ci', '--workers=false']);
+    }).rejects.toThrow('Unexpected changes detected while running in CI mode. ❌');
 
     expect(logs).toMatchSnapshot();
 

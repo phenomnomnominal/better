@@ -1,20 +1,23 @@
 import type { BettererLogger } from '@betterer/logger';
 
 import { BettererError } from '@betterer/errors';
-import { diffStrings__ } from '@betterer/logger';
-import { exposeToMain__ } from '@betterer/worker';
+import { diffStringsΔ } from '@betterer/logger';
+import { exposeToMainΔ } from '@betterer/worker';
 import { Extractor, ExtractorConfig } from '@microsoft/api-extractor';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const EXCLUDED_PACKAGES = ['docgen', 'extension', 'fixture', 'render', 'time'];
 const EXTRACTION_EXTENSION = '.api.md';
 const EXTRACTION_CONFIG_FILE = 'api-extractor.json';
+
+const INTERNAL_TOKENS = ['Ω'];
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PACKAGES_DIR = path.resolve(__dirname, '../../../packages');
 const GOLDENS_DIR = path.resolve(__dirname, '../../../goldens/api');
 const TEMP_DIR = path.resolve(__dirname, '../../../goldens/temp');
-
-const INTERNAL_TOKENS = ['Ω'];
 
 export async function getPackages(): Promise<Array<string>> {
   const items = await fs.readdir(PACKAGES_DIR);
@@ -32,8 +35,8 @@ export async function getPackages(): Promise<Array<string>> {
   });
 }
 
-export async function run(logger: BettererLogger, packageName: string): Promise<string> {
-  await logger.progress(`Validating API for "@betterer/${packageName}" ...`);
+export async function run(status: BettererLogger, packageName: string): Promise<string> {
+  await status.progress(`Validating API for "@betterer/${packageName}" ...`);
 
   const packageGoldenPath = path.join(GOLDENS_DIR, `${packageName}${EXTRACTION_EXTENSION}`);
   const packageGeneratedPath = path.join(TEMP_DIR, `${packageName}${EXTRACTION_EXTENSION}`);
@@ -62,7 +65,7 @@ export async function run(logger: BettererLogger, packageName: string): Promise<
     return `No Breaking API changes found in "@betterer/${packageName}".`;
   }
 
-  const diff = diffStrings__(packageGolden, packageGenerated, { aAnnotation: 'Golden', bAnnotation: 'Current' });
+  const diff = diffStringsΔ(packageGolden, packageGenerated, { aAnnotation: 'Golden', bAnnotation: 'Current' });
   throw new BettererError(`API changes found in "@betterer/${packageName.toString()}"`, diff);
 }
 
@@ -70,4 +73,4 @@ function checkForBannedTokens(types: string, token: string): boolean {
   return types.includes(token);
 }
 
-exposeToMain__({ getPackages, run });
+exposeToMainΔ({ getPackages, run });

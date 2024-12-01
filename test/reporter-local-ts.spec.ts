@@ -1,5 +1,6 @@
-// eslint-disable-next-line require-extensions/require-extensions -- tests not ESM ready yet
-import { createFixture } from './fixture';
+import { describe, expect, it } from 'vitest';
+
+import { createFixture } from './fixture.js';
 
 describe('betterer --reporter', () => {
   it('should work with a local TypeScript module', async () => {
@@ -7,7 +8,15 @@ describe('betterer --reporter', () => {
 
     const { paths, cleanup, resolve } = await createFixture('reporter-local-ts', {
       'reporter.ts': `
-        export const reporter = {};
+        import { BettererReporter } from '@betterer/betterer';
+        import { reporter as actual } from './actual-reporter.ts';
+
+        export const reporter: BettererReporter = actual;
+      `,
+      'actual-reporter.ts': `
+        import type { BettererReporter } from '@betterer/betterer';
+
+        export const reporter: BettererReporter = {};
       `,
       '.betterer.js': ``
     });

@@ -1,0 +1,33 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer > should merge the results file 1`] = `
+"// BETTERER RESULTS V2.
+//
+// If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
+// https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
+//
+exports[\`test\`] = {
+  value: \`{
+    "src/index.ts:913095150": [
+      [0, 0, 11, "TSQuery match", "3870399096"]
+    ]
+  }\`
+};
+"
+`;
+
+exports[`betterer > should merge the results file 2`] = `
+"// BETTERER RESULTS V2.
+//
+// If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
+// https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
+//
+exports[\`test\`] = {
+  value: \`{
+    "src/index.ts:913095150": [
+      [0, 0, 11, "TSQuery match", "3870399096"]
+    ]
+  }\`
+};
+"
+`;

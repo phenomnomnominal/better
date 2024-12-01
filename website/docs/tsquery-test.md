@@ -21,4 +21,4 @@ export default {
 };
 ```
 
-[`@betterer/tsquery`](https://www.npmjs.com/package/@betterer/tsquery) is a [BettererFileTest](./betterer.bettererfiletest), so you can use [`include`](./betterer.bettererfiletest.include), [`exclude`](./betterer.bettererfiletest.exclude), [`only`](betterer.bettererfiletest.only), and [`skip`](betterer.bettererfiletest.skip).
+[`@betterer/tsquery`](https://www.npmjs.com/package/@betterer/tsquery) is a [BettererFileTest](./betterer.bettererfiletest), so you can use [`include`](./betterer.bettererresolvertest.include), [`exclude`](./betterer.bettererresolvertest.exclude), [`only`](betterer.bettererresolvertest.only), and [`skip`](betterer.bettererresolvertest.skip).

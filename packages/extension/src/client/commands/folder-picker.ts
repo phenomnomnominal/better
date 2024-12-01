@@ -1,7 +1,5 @@
-// eslint-disable-next-line import/no-unresolved -- vscode is an implicit dependency for extensions
 import type { WorkspaceFolder } from 'vscode';
 
-// eslint-disable-next-line import/no-unresolved -- vscode is an implicit dependency for extensions
 import { window } from 'vscode';
 
 export async function pickFolder(

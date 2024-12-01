@@ -22,7 +22,7 @@
     "Linters"
   ],
   "activationEvents": [
-    "*"
+    "onStartupFinished"
   ],
   "icon": "images/logo.png",
   "galleryBanner": {
@@ -63,24 +63,6 @@
           "type": "string",
           "default": "./.betterer.results",
           "description": "Path to test results file relative to working directory"
-        },
-        "betterer.tsconfigPath": {
-          "scope": "resource",
-          "type": "string",
-          "default": "",
-          "description": "Path to TypeScript config file relative to working directory"
-        },
-        "betterer.debug": {
-          "scope": "resource",
-          "type": "boolean",
-          "default": false,
-          "description": "Controls whether Betterer debug logging is enabled or not. You'll need to restart VS Code after you change this!"
-        },
-        "betterer.debugLogPath": {
-          "scope": "resource",
-          "type": "string",
-          "default": "./.betterer-debug.log",
-          "description": "Path to Betterer debug log output relative to working directory. You'll need to restart VS Code after you change this!"
         },
         "betterer.filters": {
           "scope": "resource",
@@ -127,17 +109,17 @@
     ]
   },
   "scripts": {
-    "build:extension": "yarn bundle && yarn compile:test",
-    "bundle": "yarn webpack:client && yarn webpack:server",
+    "build:extension": "npm run bundle && npm run compile:test",
+    "bundle": "npm run webpack:client && npm run webpack:server",
     "compile:test": "tsc --project ./tsconfig.e2e.json",
     "watch": "run-p webpack:client:watch webpack:server:watch",
     "webpack:client": "webpack --config webpack.client.config.js",
     "webpack:client:watch": "webpack --config webpack.client.config.js --watch",
     "webpack:server": "webpack --config webpack.server.config.js",
     "webpack:server:watch": "webpack --config webpack.server.config.js --watch",
-    "package": "vsce package --yarn",
+    "package": "vsce package --npm",
     "test:extension": "node ./dist/test/runner/index.js",
-    "vscode:prepublish": "yarn build:extension"
+    "vscode:prepublish": "npm run build:extension"
   },
   "dependencies": {
     "lodash.debounce": "^4.0.8",

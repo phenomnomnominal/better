@@ -1,5 +1,6 @@
-// eslint-disable-next-line require-extensions/require-extensions -- tests not ESM ready yet
-import { createFixture } from './fixture';
+import { describe, expect, it } from 'vitest';
+
+import { createFixture } from './fixture.js';
 
 describe('betterer', () => {
   it('should work when a test changes and makes the result better', async () => {
@@ -32,11 +33,11 @@ console.log('foo');
     });
     const resultsPath = paths.results;
 
-    const firstRun = await betterer({ configPaths: [resolve('.betterer.ts')], resultsPath, workers: false });
+    const firstRun = await betterer({ configPaths: [resolve('.betterer.js')], resultsPath, workers: false });
 
     expect(testNames(firstRun.new)).toEqual(['test']);
 
-    const secondRun = await betterer({ configPaths: [resolve('.betterer.changed.ts')], resultsPath, workers: false });
+    const secondRun = await betterer({ configPaths: [resolve('.betterer.changed.js')], resultsPath, workers: false });
 
     expect(testNames(secondRun.better)).toEqual(['test']);
 

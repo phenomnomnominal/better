@@ -9,6 +9,7 @@ import { watchStart } from '../../messages.js';
 import { Config } from '../config/index.js';
 import { WatchInstructions } from './WatchInstructions.js';
 
+/** @knipignore used by an exported function */
 export interface WatchStartingProps {
   context: BettererContext;
   editField: ConfigEditField;
@@ -23,7 +24,7 @@ export const WatchStarting: FC<WatchStartingProps> = memo(function WatchStarting
       <Box paddingBottom={1}>
         <Text>{watchStart()}</Text>
       </Box>
-      <WatchInstructions />
+      <WatchInstructions editField={editField} />
     </Box>
   );
 });

@@ -1,9 +1,12 @@
-import type { BettererOptionsResults } from '../config/index.js';
-import { BettererFileResolverΩ } from '../fs/index.js';
-import { createGlobals } from '../globals.js';
+import type { BettererError } from '@betterer/errors';
+
 import type { BettererFileTestResultΩ } from '../test/index.js';
-import { isBettererFileTest, loadTestMeta } from '../test/index.js';
+import type { BettererFileResolverΩ } from '../fs/index.js';
 import type { BettererFileTestResultSummaryDetails, BettererResultsSummary, BettererResultSummaries } from './types.js';
+
+import { destroyGlobals, getGlobals } from '../globals.js';
+import { loadTest } from '../run/index.js';
+import { isBettererFileTest } from '../test/index.js';
 
 export class BettererResultsSummaryΩ implements BettererResultsSummary {
   public readonly resultSummaries: BettererResultSummaries;
@@ -14,58 +17,58 @@ export class BettererResultsSummaryΩ implements BettererResultsSummary {
       : resultSummaries;
   }
 
-  public static async create(options: BettererOptionsResults): Promise<BettererResultsSummary> {
-    const { config, resultsFile, versionControl } = await createGlobals({
-      configPaths: options.configPaths,
-      cwd: options.cwd,
-      excludes: options.excludes,
-      filters: options.filters,
-      includes: options.includes,
-      resultsPath: options.resultsPath
-    });
+  public static async create(): Promise<BettererResultsSummary> {
+    const { config, reporter, resolvers, results, testMetaLoader } = getGlobals();
+    const { configPaths, filters, includes, excludes, resultsPath } = config;
 
-    const testFactories = loadTestMeta(config.configPaths);
+    try {
+      let testsMeta = await testMetaLoader.api.loadTestsMeta(configPaths);
+      if (filters.length) {
+        testsMeta = testsMeta.filter((testMeta) => filters.some((filter) => filter.test(testMeta.name)));
+      }
 
-    let testNames = Object.keys(testFactories);
-    if (config.filters.length) {
-      testNames = testNames.filter((name) => config.filters.some((filter) => filter.test(name)));
+      const resolverΩ = resolvers.base as BettererFileResolverΩ;
+      resolverΩ.include(...includes);
+      resolverΩ.exclude(...excludes);
+
+      const filePaths = await resolverΩ.files();
+
+      const onlyFileTests = includes.length > 0 || excludes.length > 0;
+
+      const testStatuses = await Promise.all(
+        testsMeta.map(async (testMeta) => {
+          const { name } = testMeta;
+
+          const test = await loadTest(testMeta);
+
+          const isFileTest = isBettererFileTest(test);
+
+          const expectedJSON = await results.api.getExpected(name);
+          const serialised = JSON.parse(expectedJSON) as unknown;
+          const deserialised = test.config.serialiser.deserialise(serialised, resultsPath);
+
+          if (isFileTest) {
+            const resultΩ = deserialised as BettererFileTestResultΩ;
+            const details = resultΩ.files
+              .filter((file) => !onlyFileTests || filePaths.includes(file.absolutePath))
+              .reduce<BettererFileTestResultSummaryDetails>((summary, file) => {
+                summary[file.absolutePath] = file.issues;
+                return summary;
+              }, {});
+            return { name, isFileTest, details };
+          } else {
+            const details = await test.config.printer(deserialised);
+            return { name, isFileTest, details };
+          }
+        })
+      );
+
+      return new BettererResultsSummaryΩ(testStatuses, onlyFileTests);
+    } catch (error) {
+      await reporter.configError?.(config, error as BettererError);
+      throw error;
+    } finally {
+      await destroyGlobals();
     }
-
-    const { cwd, includes, excludes, resultsPath } = config;
-
-    const resolver = new BettererFileResolverΩ(cwd, versionControl);
-    resolver.include(...includes);
-    resolver.exclude(...excludes);
-
-    const filePaths = await resolver.files();
-
-    const onlyFileTests = includes.length > 0 || excludes.length > 0;
-
-    const testStatuses = await Promise.all(
-      testNames.map(async (name) => {
-        const test = await testFactories[name].factory();
-        const isFileTest = isBettererFileTest(test);
-        const [expectedJSON] = resultsFile.getExpected(name);
-        const serialised = JSON.parse(expectedJSON) as unknown;
-        const deserialised = test.config.serialiser.deserialise(serialised, resultsPath);
-        if (isFileTest) {
-          const resultΩ = deserialised as BettererFileTestResultΩ;
-          const details = resultΩ.files
-            .filter((file) => !onlyFileTests || filePaths.includes(file.absolutePath))
-            .reduce((summary, file) => {
-              summary[file.absolutePath] = file.issues;
-              return summary;
-            }, {} as BettererFileTestResultSummaryDetails);
-          return { name, isFileTest, details };
-        } else {
-          const details = await test.config.printer(deserialised);
-          return { name, isFileTest, details };
-        }
-      })
-    );
-
-    const status = new BettererResultsSummaryΩ(testStatuses, onlyFileTests);
-    await versionControl.destroy();
-    return status;
   }
 }

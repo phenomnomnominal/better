@@ -1,6 +1,6 @@
 {
   "extends": "../../api-extractor.json",
-  "mainEntryPointFilePath": "./dist/ts/index.d.ts",
+  "mainEntryPointFilePath": "./dist/src/index.d.ts",
 
   "messages": {
     "extractorMessageReporting": {

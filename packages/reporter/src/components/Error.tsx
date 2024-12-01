@@ -4,6 +4,7 @@ import type { FC } from '@betterer/render';
 import { React, Box } from '@betterer/render';
 import { BettererErrorLog, BettererLogo } from '@betterer/tasks';
 
+/** @knipignore used by an exported function */
 export interface ErrorProps {
   error: BettererError;
   logo: boolean;

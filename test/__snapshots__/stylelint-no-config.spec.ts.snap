@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should throw if there is no config 1`] = `
-Array [
+exports[`betterer > should throw if there is no config 1`] = `
+[
   "
-Error: for \`@betterer/stylelint\` to work, you need to provide configuration options, e.g. \`{ rules: { \\"unit-no-unknown\\": true } }\`. ❌
+Error: for \`@betterer/stylelint\` to work, you need to provide configuration options, e.g. \`{ rules: { "unit-no-unknown": true } }\`. ❌
 ",
 ]
 `;

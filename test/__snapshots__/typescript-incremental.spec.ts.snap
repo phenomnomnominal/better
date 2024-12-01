@@ -1,20 +1,17 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should work with an incremental build 1`] = `
-Array [
+exports[`betterer > should work with an incremental build 1`] = `
+[
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 typescript: running \\"typescript\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ typescript: \\"typescript\\" got checked for the first time! (1 issue) 🎉
+🤔 typescript: running "typescript"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ typescript: \\"typescript\\" got checked for the first time! (1 issue) 🎉
+✅ typescript: "typescript" got checked for the first time! (1 issue) 🎉
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ typescript: \\"typescript\\" got checked for the first time! (1 issue) 🎉
+✅ typescript: "typescript" got checked for the first time! (1 issue) 🎉
 
 1 test got checked. 🤔
 1 test got checked for the first time! 🎉
@@ -22,16 +19,13 @@ Array [
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 typescript: running \\"typescript\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ typescript: \\"typescript\\" stayed the same. (1 issue) 😐
+🤔 typescript: running "typescript"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ typescript: \\"typescript\\" stayed the same. (1 issue) 😐
+✅ typescript: "typescript" stayed the same. (1 issue) 😐
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ typescript: \\"typescript\\" stayed the same. (1 issue) 😐
+✅ typescript: "typescript" stayed the same. (1 issue) 😐
 
 1 test got checked. 🤔
 1 test stayed the same. 😐

@@ -1,20 +1,17 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should work when including specific files 1`] = `
-Array [
+exports[`betterer > should work when including specific files 1`] = `
+[
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" got checked for the first time! 🎉
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! 🎉
+✅ test: "test" got checked for the first time! 🎉
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! 🎉
+✅ test: "test" got checked for the first time! 🎉
 
 1 test got checked. 🤔
 1 test got checked for the first time! 🎉
@@ -22,16 +19,17 @@ Array [
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" got better! 😍
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got better! 😍
+✅ test: "test" got better! 😍
+・ "lines" coverage is worse in "src/file-1.ts": 50 > 40
+・ "lines" coverage is better in "src/file-1.ts": 40 < 50
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got better! 😍
+✅ test: "test" got better! 😍
+・ "lines" coverage is worse in "src/file-1.ts": 50 > 40
+・ "lines" coverage is better in "src/file-1.ts": 40 < 50
 
 1 test got checked. 🤔
 1 test got better! 😍
@@ -39,16 +37,13 @@ Array [
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" stayed the same. 😐
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" stayed the same. 😐
+✅ test: "test" stayed the same. 😐
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" stayed the same. 😐
+✅ test: "test" stayed the same. 😐
 
 1 test got checked. 🤔
 1 test stayed the same. 😐

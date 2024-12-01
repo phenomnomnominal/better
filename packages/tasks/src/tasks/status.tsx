@@ -4,6 +4,7 @@ import type { BettererTaskLog } from './types.js';
 
 import { React, Text } from '@betterer/render';
 
+/** @knipignore used by an exported function */
 export interface BettererTaskStatusProps {
   name: string;
   status: BettererTaskLog;

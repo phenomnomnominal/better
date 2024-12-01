@@ -1,39 +1,48 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should work when a test is the same 1`] = `
-Array [
+exports[`betterer > should work when a test is the same 1`] = `
+[
   "🌟 Betterer (0ms):
 ",
-  "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! 🎉
+  "🎉 Betterer (0ms): 2 tests done!
+✅ bigger: "bigger" got checked for the first time! 🎉
+✅ smaller: "smaller" got checked for the first time! 🎉
 ",
-  "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! 🎉
+  "🎉 Betterer (0ms): 2 tests done!
+✅ bigger: "bigger" got checked for the first time! 🎉
+✅ smaller: "smaller" got checked for the first time! 🎉
 
-1 test got checked. 🤔
-1 test got checked for the first time! 🎉
+2 tests got checked. 🤔
+2 tests got checked for the first time! 🎉
 ",
   "🌟 Betterer (0ms):
 ",
-  "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" stayed the same. 😐
+  "🎉 Betterer (0ms): 2 tests done!
+✅ bigger: "bigger" stayed the same. 😐
+✅ smaller: "smaller" stayed the same. 😐
 ",
-  "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" stayed the same. 😐
+  "🎉 Betterer (0ms): 2 tests done!
+✅ bigger: "bigger" stayed the same. 😐
+✅ smaller: "smaller" stayed the same. 😐
 
-1 test got checked. 🤔
-1 test stayed the same. 😐
+2 tests got checked. 🤔
+2 tests stayed the same. 😐
 ",
 ]
 `;
 
-exports[`betterer should work when a test is the same 2`] = `
+exports[`betterer > should work when a test is the same 2`] = `
 "// BETTERER RESULTS V2.
 //
 // If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
 // https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
 //
-exports[\`test\`] = {
+exports[\`bigger\`] = {
+  value: \`0
+\`
+};
+
+exports[\`smaller\`] = {
   value: \`0
 \`
 };

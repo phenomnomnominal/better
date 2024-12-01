@@ -7,14 +7,14 @@ import { isString } from '../utils.js';
 const BettererExitCalled = new NotificationType<[number, string]>('betterer/exitCalled');
 
 export function createErrorHandler(connection: Connection): void {
-  const nodeExit = process.exit;
+  const nodeExit = process.exit.bind(process);
   process.exit = ((code?: number): void => {
     const stack = new Error('stack');
-    connection.sendNotification(BettererExitCalled, [code || 0, stack.stack]);
+    connection.sendNotification(BettererExitCalled, [code ?? 0, stack.stack]);
     setTimeout(() => nodeExit(code), 1000);
   }) as typeof process.exit;
 
-  process.on('uncaughtException', (error: Error) => {
+  process.on('uncaughtException', (error: Error | null) => {
     try {
       let message: string | null = null;
       if (error) {
@@ -38,7 +38,7 @@ export function createErrorHandler(connection: Connection): void {
       }
       /* eslint-enable no-console */
     } catch {
-      // Error handle died, uh oh.
+      // Error handler died, uh oh.
     }
   });
 }

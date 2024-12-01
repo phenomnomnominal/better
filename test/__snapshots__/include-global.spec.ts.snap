@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should handle a global include 1`] = `
+exports[`betterer > should handle a global include 1`] = `
 "// BETTERER RESULTS V2.
 //
 // If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
@@ -8,15 +8,15 @@ exports[`betterer should handle a global include 1`] = `
 //
 exports[\`test\`] = {
   value: \`{
-    \\"src/index.ts:645618020\\": [
-      [0, 0, 7, \\"RegExp match\\", \\"645618020\\"]
+    "src/index.ts:645618020": [
+      [0, 0, 7, "RegExp match", "645618020"]
     ]
   }\`
 };
 "
 `;
 
-exports[`betterer should handle a global include 2`] = `
+exports[`betterer > should handle a global include 2`] = `
 "// BETTERER RESULTS V2.
 //
 // If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
@@ -24,83 +24,70 @@ exports[`betterer should handle a global include 2`] = `
 //
 exports[\`test\`] = {
   value: \`{
-    \\"src/global.ts:645618020\\": [
-      [0, 0, 7, \\"RegExp match\\", \\"645618020\\"]
+    "src/global.ts:645618020": [
+      [0, 0, 7, "RegExp match", "645618020"]
     ],
-    \\"src/index.ts:645618020\\": [
-      [0, 0, 7, \\"RegExp match\\", \\"645618020\\"]
+    "src/index.ts:645618020": [
+      [0, 0, 7, "RegExp match", "645618020"]
     ]
   }\`
 };
 "
 `;
 
-exports[`betterer should handle a global include 3`] = `
-Array [
+exports[`betterer > should handle a global include 3`] = `
+[
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" got checked for the first time! (1 issue) 🎉
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! (1 issue) 🎉
+✅ test: "test" got checked for the first time! (1 issue) 🎉
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! (1 issue) 🎉
+✅ test: "test" got checked for the first time! (1 issue) 🎉
 
 1 test got checked. 🤔
 1 test got checked for the first time! 🎉
 ",
   "Checking 2 files... 🤔
 
-・ <project>/fixtures/include-global/global.ts
-・ <project>/fixtures/include-global/src/global.ts
+・ fixtures/include-global/global.ts
+・ fixtures/include-global/src/global.ts
 
 🌟 Betterer (0ms):
 ",
   "Checking 2 files... 🤔
 
-・ <project>/fixtures/include-global/global.ts
-・ <project>/fixtures/include-global/src/global.ts
+・ fixtures/include-global/global.ts
+・ fixtures/include-global/src/global.ts
 
 🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
+🤔 test: running "test"!
 ",
   "Checking 2 files... 🤔
 
-・ <project>/fixtures/include-global/global.ts
-・ <project>/fixtures/include-global/src/global.ts
-
-🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" got force updated. (1 new issue, 2 total) 🆙
-",
-  "Checking 2 files... 🤔
-
-・ <project>/fixtures/include-global/global.ts
-・ <project>/fixtures/include-global/src/global.ts
+・ fixtures/include-global/global.ts
+・ fixtures/include-global/src/global.ts
 
 🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got force updated. (1 new issue, 2 total) 🆙
-・ New issue in \\"<project>/fixtures/include-global/src/global.ts\\"!
+✅ test: "test" got force updated. (1 new issue, 1 existing, 2 total) 🆙
+・ 1 new issue in "fixtures/include-global/src/global.ts".
 ・
-・   <project>/fixtures/include-global/src/global.ts
 ・ > 1 | // Hack
 ・     | ^^^^^^^ RegExp match
 ・
 ",
   "Checked 2 files! 🔍
 
-・ <project>/fixtures/include-global/global.ts
-・ <project>/fixtures/include-global/src/global.ts
+・ fixtures/include-global/global.ts
+・ fixtures/include-global/src/global.ts
 
 🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got force updated. (1 new issue, 2 total) 🆙
-・ New issue in \\"<project>/fixtures/include-global/src/global.ts\\"!
+✅ test: "test" got force updated. (1 new issue, 1 existing, 2 total) 🆙
+・ 1 new issue in "fixtures/include-global/src/global.ts".
 ・
-・   <project>/fixtures/include-global/src/global.ts
 ・ > 1 | // Hack
 ・     | ^^^^^^^ RegExp match
 ・

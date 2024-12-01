@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer > should throw when trying to run Angular with no config file path 1`] = `
+[
+  "
+Error: For \`@betterer/angular\` to work, you need to provide the path to a tsconfig.json file, e.g. \`'./tsconfig.json'\`. ❌
+",
+]
+`;

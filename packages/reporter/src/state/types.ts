@@ -1,14 +1,9 @@
-import type { BettererContext, BettererSuite, BettererSuiteSummary, BettererContextSummary } from '@betterer/betterer';
-import type { BettererTasksDone } from '@betterer/tasks';
+import type { BettererContext, BettererContextSummary, BettererSuite, BettererSuiteSummary } from '@betterer/betterer';
+import type { BettererTasksState } from '@betterer/tasks';
 
-import type { BettererReporterAction } from './actions.js';
-
-export interface BettererReporterState {
+export interface BettererReporterState extends BettererTasksState {
   context: BettererContext;
   contextSummary?: BettererContextSummary;
-  done?: BettererTasksDone;
   suite?: BettererSuite;
   suiteSummary?: BettererSuiteSummary;
 }
-
-export type BettererReporterDispatch = (action?: BettererReporterAction) => BettererReporterState;

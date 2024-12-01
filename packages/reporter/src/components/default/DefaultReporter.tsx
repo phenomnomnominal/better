@@ -1,24 +1,27 @@
 import type { FC } from '@betterer/render';
 
-import type { BettererReporterState } from '../../state/index.js';
-
 import { React, memo } from '@betterer/render';
 
-import { Suite } from '../suite/index.js';
+import { useReporterState } from '../../state/index.js';
+import { Suite, SuiteSummary } from '../suite/index.js';
 import { DefaultFiles } from './DefaultFiles.js';
 
-export const DefaultReporter: FC<BettererReporterState> = memo(function DefaultReporter(props: BettererReporterState) {
-  const { context, done, suiteSummary } = props;
-  const suite = props.suite || props.suiteSummary;
+export const DefaultReporter: FC = memo(function DefaultReporter() {
+  const [{ context, contextSummary, suite, suiteSummary }] = useReporterState();
 
   if (!suite) {
     return null;
   }
 
+  if (context.config.ci && !contextSummary) {
+    return null;
+  }
+
   return (
     <>
-      <DefaultFiles suite={suite} running={!suiteSummary} />
-      <Suite context={context} suite={suite} suiteSummary={suiteSummary} done={done} />
+      {<DefaultFiles filePaths={suite.filePaths} running={!suiteSummary} />}
+      {!suiteSummary && <Suite suite={suite} />}
+      {suiteSummary && <SuiteSummary context={context} suiteSummary={suiteSummary} />}
     </>
   );
 });

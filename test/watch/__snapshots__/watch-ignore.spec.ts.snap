@@ -1,0 +1,255 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer.watch > should ignore based on input in watch mode 1`] = `
+[
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 test: running "test"!
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" met its goal! 🎉
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" met its goal! 🎉
+
+1 test got checked. 🤔
+1 test met its goal! 🎉
+",
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): No current ignore patterns
+
+Starting Betterer in watch mode! 🎉
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): No current ignore patterns
+
+Checking 2 files... 🤔
+
+・ fixtures/watch-ignore/src/ignored.ts
+・ fixtures/watch-ignore/src/index.ts
+
+🌟 Betterer (0ms):
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): No current ignore patterns
+
+Checking 2 files... 🤔
+
+・ fixtures/watch-ignore/src/ignored.ts
+・ fixtures/watch-ignore/src/index.ts
+
+🌟 Betterer (0ms): 1 test running...
+🤔 test: running "test"!
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): No current ignore patterns
+
+Checking 2 files... 🤔
+
+・ fixtures/watch-ignore/src/ignored.ts
+・ fixtures/watch-ignore/src/index.ts
+
+💥 Betterer (0ms): 1 test done! 1 test errored!
+🔥 test: "test" got worse. (2 new issues, 0 existing, 2 total) 😔
+・ 1 new issue in "fixtures/watch-ignore/src/ignored.ts".
+・ 1 new issue in "fixtures/watch-ignore/src/index.ts".
+・
+・ > 1 | console.log('foo');
+・     | ^^^^^^^^^^^ TSQuery match
+・
+・
+・ > 1 | console.log('foo');
+・     | ^^^^^^^^^^^ TSQuery match
+・
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): No current ignore patterns
+
+Checked 2 files! 🔍
+
+・ fixtures/watch-ignore/src/ignored.ts
+・ fixtures/watch-ignore/src/index.ts
+
+💥 Betterer (0ms): 1 test done! 1 test errored!
+🔥 test: "test" got worse. (2 new issues, 0 existing, 2 total) 😔
+・ 1 new issue in "fixtures/watch-ignore/src/ignored.ts".
+・ 1 new issue in "fixtures/watch-ignore/src/index.ts".
+・
+・ > 1 | console.log('foo');
+・     | ^^^^^^^^^^^ TSQuery match
+・
+・
+・ > 1 | console.log('foo');
+・     | ^^^^^^^^^^^ TSQuery match
+・
+
+1 test got checked. 🤔
+1 test got worse. 😔
+
+You should try to fix the new issues! As a last resort, you can run \`betterer --update\` to force an update of the results file. 🆙
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Press "enter" to confirm, or "esc" to cancel.
+Use glob patterns starting from CWD e.g. **/*.ts. Use "," to separate multiple ignores.
+Ignores:
+
+Checked 2 files! 🔍
+
+・ fixtures/watch-ignore/src/ignored.ts
+・ fixtures/watch-ignore/src/index.ts
+
+💥 Betterer (0ms): 1 test done! 1 test errored!
+🔥 test: "test" got worse. (2 new issues, 0 existing, 2 total) 😔
+・ 1 new issue in "fixtures/watch-ignore/src/ignored.ts".
+・ 1 new issue in "fixtures/watch-ignore/src/index.ts".
+・
+・ > 1 | console.log('foo');
+・     | ^^^^^^^^^^^ TSQuery match
+・
+・
+・ > 1 | console.log('foo');
+・     | ^^^^^^^^^^^ TSQuery match
+・
+
+1 test got checked. 🤔
+1 test got worse. 😔
+
+You should try to fix the new issues! As a last resort, you can run \`betterer --update\` to force an update of the results file. 🆙
+
+(press "ctrl+c" to quit)
+",
+  "Press "enter" to confirm, or "esc" to cancel.
+Use glob patterns starting from CWD e.g. **/*.ts. Use "," to separate multiple ignores.
+Ignores: **/ignored.*
+
+Checked 2 files! 🔍
+
+・ fixtures/watch-ignore/src/ignored.ts
+・ fixtures/watch-ignore/src/index.ts
+
+💥 Betterer (0ms): 1 test done! 1 test errored!
+🔥 test: "test" got worse. (2 new issues, 0 existing, 2 total) 😔
+・ 1 new issue in "fixtures/watch-ignore/src/ignored.ts".
+・ 1 new issue in "fixtures/watch-ignore/src/index.ts".
+・
+・ > 1 | console.log('foo');
+・     | ^^^^^^^^^^^ TSQuery match
+・
+・
+・ > 1 | console.log('foo');
+・     | ^^^^^^^^^^^ TSQuery match
+・
+
+1 test got checked. 🤔
+1 test got worse. 😔
+
+You should try to fix the new issues! As a last resort, you can run \`betterer --update\` to force an update of the results file. 🆙
+
+(press "ctrl+c" to quit)
+",
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): **/ignored.*
+
+Checked 2 files! 🔍
+
+・ fixtures/watch-ignore/src/ignored.ts
+・ fixtures/watch-ignore/src/index.ts
+
+💥 Betterer (0ms): 1 test done! 1 test errored!
+🔥 test: "test" got worse. (2 new issues, 0 existing, 2 total) 😔
+・ 1 new issue in "fixtures/watch-ignore/src/ignored.ts".
+・ 1 new issue in "fixtures/watch-ignore/src/index.ts".
+・
+・ > 1 | console.log('foo');
+・     | ^^^^^^^^^^^ TSQuery match
+・
+・
+・ > 1 | console.log('foo');
+・     | ^^^^^^^^^^^ TSQuery match
+・
+
+1 test got checked. 🤔
+1 test got worse. 😔
+
+You should try to fix the new issues! As a last resort, you can run \`betterer --update\` to force an update of the results file. 🆙
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): **/ignored.*
+
+Checking 1 file... 🤔
+
+・ fixtures/watch-ignore/src/index.ts
+
+🌟 Betterer (0ms):
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): **/ignored.*
+
+Checking 1 file... 🤔
+
+・ fixtures/watch-ignore/src/index.ts
+
+🌟 Betterer (0ms): 1 test running...
+🤔 test: running "test"!
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): **/ignored.*
+
+Checking 1 file... 🤔
+
+・ fixtures/watch-ignore/src/index.ts
+
+💥 Betterer (0ms): 1 test done! 1 test errored!
+🔥 test: "test" got worse. (2 new issues, 0 existing, 2 total) 😔
+・ 2 new issues in "fixtures/watch-ignore/src/index.ts".
+・ Showing first of 2 new issues:
+・
+・ > 1 | console.log('foo');console.log('foo');
+・     | ^^^^^^^^^^^ TSQuery match
+・
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): **/ignored.*
+
+Checked 1 file! 🔍
+
+・ fixtures/watch-ignore/src/index.ts
+
+💥 Betterer (0ms): 1 test done! 1 test errored!
+🔥 test: "test" got worse. (2 new issues, 0 existing, 2 total) 😔
+・ 2 new issues in "fixtures/watch-ignore/src/index.ts".
+・ Showing first of 2 new issues:
+・
+・ > 1 | console.log('foo');console.log('foo');
+・     | ^^^^^^^^^^^ TSQuery match
+・
+
+1 test got checked. 🤔
+1 test got worse. 😔
+
+You should try to fix the new issues! As a last resort, you can run \`betterer --update\` to force an update of the results file. 🆙
+
+(press "ctrl+c" or "q" to quit)
+",
+  "Stopping watch mode... 👋
+",
+]
+`;

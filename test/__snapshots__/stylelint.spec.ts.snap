@@ -1,0 +1,106 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer > should report the status of a new stylelint rule 1`] = `
+"// BETTERER RESULTS V2.
+//
+// If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
+// https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
+//
+exports[\`stylelint\`] = {
+  value: \`{
+    "src/styles.scss:3896471814": [
+      [3, 2, 0, "stylelint(order/order): Expected rule with selector matching \\\\"/^&:\\\\\\\\w/\\\\" to come before rule with selector matching \\\\"/^&/\\\\"", "1075804560"],
+      [7, 9, 0, "stylelint(unit-no-unknown): Unexpected unknown unit \\\\"borks\\\\"", "3713529269"]
+    ]
+  }\`
+};
+"
+`;
+
+exports[`betterer > should report the status of a new stylelint rule 2`] = `
+[
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 stylelint: running "stylelint"!
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ stylelint: "stylelint" got checked for the first time! (2 issues) 🎉
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ stylelint: "stylelint" got checked for the first time! (2 issues) 🎉
+
+1 test got checked. 🤔
+1 test got checked for the first time! 🎉
+",
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 stylelint: running "stylelint"!
+",
+  "💥 Betterer (0ms): 1 test done! 1 test errored!
+🔥 stylelint: "stylelint" got worse. (2 new issues, 2 existing, 4 total) 😔
+・ 2 existing, 2 new issues in "fixtures/stylelint/src/styles.scss".
+・ Showing first of 2 new issues:
+・
+・   12 |   b & {}
+・   13 |   & b {}
+・ > 14 |   &:hover {}
+・      |   ^ stylelint(order/order): Expected rule with selector matching "/^&:/w/" to come before rule with selector matching "/^&/"
+・   15 | }
+・   16 |
+・   17 | .foo {
+・
+",
+  "💥 Betterer (0ms): 1 test done! 1 test errored!
+🔥 stylelint: "stylelint" got worse. (2 new issues, 2 existing, 4 total) 😔
+・ 2 existing, 2 new issues in "fixtures/stylelint/src/styles.scss".
+・ Showing first of 2 new issues:
+・
+・   12 |   b & {}
+・   13 |   & b {}
+・ > 14 |   &:hover {}
+・      |   ^ stylelint(order/order): Expected rule with selector matching "/^&:/w/" to come before rule with selector matching "/^&/"
+・   15 | }
+・   16 |
+・   17 | .foo {
+・
+
+1 test got checked. 🤔
+1 test got worse. 😔
+
+You should try to fix the new issues! As a last resort, you can run \`betterer --update\` to force an update of the results file. 🆙
+",
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 stylelint: running "stylelint"!
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ stylelint: "stylelint" met its goal! 🎉
+・ 2 fixed issues in "fixtures/stylelint/src/styles.scss".
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ stylelint: "stylelint" met its goal! 🎉
+・ 2 fixed issues in "fixtures/stylelint/src/styles.scss".
+
+1 test got checked. 🤔
+1 test got better! 😍
+1 test met its goal! 🎉
+",
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 stylelint: running "stylelint"!
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ stylelint: "stylelint" has already met its goal! ✨
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ stylelint: "stylelint" has already met its goal! ✨
+
+1 test got checked. 🤔
+1 test met its goal! 🎉
+",
+]
+`;

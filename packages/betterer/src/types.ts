@@ -1,11 +1,10 @@
-import type { BettererConfig } from './config/index.js';
-import type { BettererVersionControlWorker } from './fs/index.js';
-import type { BettererResultsFileΩ } from './results/index.js';
-
+/**
+ * @public Utility type to allow results that are async or sync.
+ */
 export type MaybeAsync<T> = T | Promise<T>;
 
-export interface BettererGlobals {
-  config: BettererConfig;
-  resultsFile: BettererResultsFileΩ;
-  versionControl: BettererVersionControlWorker;
-}
+/**
+ * @public Utility type for Function-like things:
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- it izz what it izz
+export type Func = (...args: Array<any>) => any;

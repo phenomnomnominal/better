@@ -1,0 +1,44 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer ci > should throw an error when a test changes 1`] = `
+[
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 test: running "test"!
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" got checked for the first time! (1 issue) 🎉
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" got checked for the first time! (1 issue) 🎉
+
+1 test got checked. 🤔
+1 test got checked for the first time! 🎉
+",
+  "💥 Betterer (0ms): 1 test done! 1 test errored!
+🔥 test: "test" got worse. (1 new issue, 1 existing, 2 total) 😔
+・ 1 existing, 1 new issues in "fixtures/ci-worse/src/index.ts".
+・
+・   2 | const one = 1;
+・   3 | console.log(one * a);
+・ > 4 | console.log(a * one);
+・     |             ^ tsc: The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+・
+
+1 test got checked. 🤔
+1 test got worse. 😔
+
+
+Unexpected changes detected in these tests while running in CI mode:
+
+ "test"
+
+You should make sure the results file is up-to-date before committing!
+
+Check out some suggestions to improve your workflow in the docs:
+
+    Workflow Documentation
+",
+]
+`;

@@ -1,1 +1,4 @@
-export { Suite, SuiteProps } from './Suite.js';
+export type { SuiteSummaryProps } from './SuiteSummary.js';
+
+export { Suite } from './Suite.js';
+export { SuiteSummary } from './SuiteSummary.js';

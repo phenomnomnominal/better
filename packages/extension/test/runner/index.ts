@@ -15,7 +15,7 @@ async function main() {
   } catch (e) {
     process.stderr.write((e as Error).name || '');
     process.stderr.write((e as Error).message || '');
-    process.stderr.write((e as Error).stack || '');
+    process.stderr.write((e as Error).stack ?? '');
     process.exitCode = 1;
   }
 
@@ -28,5 +28,5 @@ async function main() {
 
 void main();
 
-export { vscode } from './vscode';
-export { createFixture } from './fixture';
+export { vscode } from './vscode.js';
+export { createFixture } from './fixture.js';

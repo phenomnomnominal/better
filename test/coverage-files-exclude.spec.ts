@@ -1,15 +1,16 @@
-// eslint-disable-next-line require-extensions/require-extensions -- tests not ESM ready yet
-import { createFixture } from './fixture';
+import { describe, expect, it } from 'vitest';
+
+import { createFixture } from './fixture.js';
 
 describe('betterer', () => {
   it('should work when excluding specific files', async () => {
     const { betterer } = await import('@betterer/betterer');
 
-    const fixture = await createFixture('coverage-files-exclude', {
+    const { paths, logs, cleanup, resolve, testNames, writeFile } = await createFixture('coverage-files-exclude', {
       '.betterer.js': `
-const { coverage } = require('@betterer/coverage');
+import { coverage } from '@betterer/coverage';
 
-module.exports = {
+export default {
   test: () => coverage().exclude(/file-2\\.ts/)
 };    
         `,
@@ -18,13 +19,16 @@ module.exports = {
   "extends": "../../tsconfig.json",
   "include": ["./src/**/*", "./.betterer.js"]
 }
-      `
+      `,
+      'src/file-1.ts': '', // Empty on purpose, coverage data below is fake
+      'src/file-2.ts': '' // Empty on purpose, coverage data below is fake
     });
 
-    const file1Path = fixture.resolve('./src/file-1.ts');
-    const file2Path = fixture.resolve('./src/file-2.ts');
+    const file1Path = resolve('./src/file-1.ts');
+    const file2Path = resolve('./src/file-2.ts');
 
-    const coverage = `{  
+    const coverage = `
+{
   "total": {
     "lines": { "total": 220, "covered": 110, "skipped": 0, "pct": 50 },
     "statements": { "total": 410, "covered": 140, "skipped": 0, "pct": 34.1 },
@@ -43,18 +47,20 @@ module.exports = {
     "functions": { "total": 10, "covered": 6, "skipped": 0, "pct": 60 },
     "branches": { "total": 150, "covered": 50, "skipped": 0, "pct": 33.3 }
   }
-}`;
+}
+    `;
 
-    const configPaths = [fixture.paths.config];
-    const resultsPath = fixture.paths.results;
-    const coveragePath = fixture.resolve('./coverage/coverage-summary.json');
+    const configPaths = [paths.config];
+    const resultsPath = paths.results;
+    const coveragePath = resolve('./coverage/coverage-summary.json');
 
-    await fixture.writeFile(coveragePath, coverage);
+    await writeFile(coveragePath, coverage);
 
     await betterer({ configPaths, resultsPath, workers: false });
 
     // file-1 is better
-    const betterCoverage = `{
+    const betterCoverage = `
+{
   "total": {
     "lines": { "total": 220, "covered": 120, "skipped": 0, "pct": 54.54 },
     "statements": { "total": 410, "covered": 140, "skipped": 0, "pct": 34.1 },
@@ -73,16 +79,18 @@ module.exports = {
     "functions": { "total": 10, "covered": 6, "skipped": 0, "pct": 60 },
     "branches": { "total": 150, "covered": 50, "skipped": 0, "pct": 33.3 }
   }
-}`;
+}
+    `;
 
-    await fixture.writeFile(coveragePath, betterCoverage);
+    await writeFile(coveragePath, betterCoverage);
 
     const betterTestRun = await betterer({ configPaths, resultsPath, workers: false });
 
-    expect(fixture.testNames(betterTestRun.better)).toEqual(['test']);
+    expect(testNames(betterTestRun.better)).toEqual(['test']);
 
     // file-2 is worse (but result is the same because it's excluded)
-    const sameCoverage = `{
+    const sameCoverage = `
+{
   "total": {
     "lines": { "total": 220, "covered": 100, "skipped": 0, "pct": 45.4 },
     "statements": { "total": 410, "covered": 140, "skipped": 0, "pct": 34.1 },
@@ -101,16 +109,17 @@ module.exports = {
     "functions": { "total": 10, "covered": 6, "skipped": 0, "pct": 60 },
     "branches": { "total": 150, "covered": 50, "skipped": 0, "pct": 33.3 }
   }
-}`;
+}
+    `;
 
-    await fixture.writeFile(coveragePath, sameCoverage);
+    await writeFile(coveragePath, sameCoverage);
 
     const sameTestRun = await betterer({ configPaths, resultsPath, workers: false });
 
-    expect(fixture.testNames(sameTestRun.same)).toEqual(['test']);
+    expect(testNames(sameTestRun.same)).toEqual(['test']);
 
-    expect(fixture.logs).toMatchSnapshot();
+    expect(logs).toMatchSnapshot();
 
-    await fixture.cleanup();
+    await cleanup();
   });
 });

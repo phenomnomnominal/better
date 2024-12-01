@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer > should throw if there is no config file path 1`] = `
+[
+  "
+Error: For \`@betterer/knip\` to work, you need to provide the path to a knip.json file, e.g. \`'./knip.json'\`. ❌
+",
+]
+`;

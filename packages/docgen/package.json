@@ -6,6 +6,7 @@
   "private": true,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "type": "commonjs",
   "files": [
     "dist"
   ],
@@ -22,11 +23,12 @@
     "compile": "tsc -b ."
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=16"
   },
   "dependencies": {
+    "@microsoft/api-documenter": "^7.25.12",
     "dedent": "^0.7.0",
-    "tslib": "^2.3.1"
+    "tslib": "^2.7.0"
   },
   "devDependencies": {
     "@types/dedent": "^0.7.0"

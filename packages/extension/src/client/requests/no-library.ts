@@ -1,10 +1,8 @@
-// eslint-disable-next-line import/no-unresolved -- vscode is an implicit dependency for extensions
 import type { ExtensionContext } from 'vscode';
 import type { LanguageClient } from 'vscode-languageclient/node';
 
 import type { BettererRequestParams } from './types.js';
 
-// eslint-disable-next-line import/no-unresolved -- vscode is an implicit dependency for extensions
 import { Uri, workspace } from 'vscode';
 import { RequestType } from 'vscode-languageclient/node';
 

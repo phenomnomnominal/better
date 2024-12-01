@@ -1,12 +1,12 @@
-import path from 'node:path';
+import type { FixturePersist } from './types.js';
+
 import { promises as fs } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-export interface FixturePersist {
-  increment(): Promise<number>;
-  decrement(): Promise<number>;
-}
+export function persist(fixtureMetaUrl: string, name: string, start: number): FixturePersist {
+  const fixtureDir = path.dirname(fileURLToPath(fixtureMetaUrl));
 
-export function persist(fixtureDir: string, name: string, start: number): FixturePersist {
   const persistPath = path.join(fixtureDir, `persist.${name}.json`);
 
   async function read(): Promise<number> {
@@ -33,6 +33,10 @@ export function persist(fixtureDir: string, name: string, start: number): Fixtur
       const result = val - 1;
       await write(result);
       return result;
+    },
+    async reset(): Promise<number> {
+      await write(start);
+      return start;
     }
   };
 }

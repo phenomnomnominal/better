@@ -17,10 +17,10 @@ import { EXTENSION_NAME } from '../constants.js';
 import { info } from './console.js';
 import { getFilePath } from './path.js';
 
-type BettererFileDiagnostics = Record<string, Array<Diagnostic>>;
+type BettererFileDiagnostics = Record<string, Array<Diagnostic> | null>;
 
 export class BettererDiagnostics {
-  private _diagnosticsMap: Record<string, BettererFileDiagnostics> = {};
+  private _diagnosticsMap: Record<string, BettererFileDiagnostics | null> = {};
 
   public getDiagnostics(
     config: BettererConfig,
@@ -39,7 +39,7 @@ export class BettererDiagnostics {
       return currentFileDiagnostics;
     }
 
-    const result = runSummary.result?.value as BettererFileTestResultSerialised;
+    const result = runSummary.result?.value as BettererFileTestResultSerialised | null;
     if (!result) {
       return currentFileDiagnostics;
     }
@@ -70,12 +70,12 @@ export class BettererDiagnostics {
     } else {
       const fileDiff = (runSummary.diff as unknown as BettererFileTestDiff).diff[filePath];
       info(`Validator: "${runSummary.name}" got diff from Betterer for "${filePath}"`);
-      existingIssues = fileDiff.existing || [];
-      newIssues = fileDiff.new || [];
+      existingIssues = fileDiff?.existing ?? [];
+      newIssues = fileDiff?.new ?? [];
     }
 
-    info(`Validator: "${runSummary.name}" got "${existingIssues.length}" existing issues for "${filePath}"`);
-    info(`Validator: "${runSummary.name}" got "${newIssues.length}" new issues for "${filePath}"`);
+    info(`Validator: "${runSummary.name}" got "${String(existingIssues.length)}" existing issues for "${filePath}"`);
+    info(`Validator: "${runSummary.name}" got "${String(newIssues.length)}" new issues for "${filePath}"`);
 
     const diagnostics: Array<Diagnostic> = [];
     existingIssues.forEach((issue) => {
@@ -90,10 +90,10 @@ export class BettererDiagnostics {
 
   public prepare(suite: BettererSuite): void {
     Object.keys(this._diagnosticsMap).forEach((filePath) => {
-      const fileDiagnostics = this._diagnosticsMap[filePath] || {};
+      const fileDiagnostics = this._diagnosticsMap[filePath] ?? {};
       const updatedDiagnostics: BettererFileDiagnostics = {};
       suite.runs.forEach((run) => {
-        updatedDiagnostics[run.name] = fileDiagnostics[run.name] || [];
+        updatedDiagnostics[run.name] = fileDiagnostics[run.name] ?? [];
       });
       this._diagnosticsMap[filePath] = updatedDiagnostics;
     });
@@ -104,29 +104,30 @@ export class BettererDiagnostics {
     testName: string,
     diagnostics: Array<Diagnostic>
   ): Array<Diagnostic> {
-    this._diagnosticsMap[filePath] = this._diagnosticsMap[filePath] || {};
+    this._diagnosticsMap[filePath] = this._diagnosticsMap[filePath] ?? {};
     const fileDiagnostics = this._diagnosticsMap[filePath];
     fileDiagnostics[testName] = diagnostics;
     return this._getAllDiagnosticsForFile(filePath);
   }
 
   private _resetDiagnosticsForFile(filePath: string, testName: string): void {
-    const fileDiagnostics = this._diagnosticsMap[filePath] || {};
+    const fileDiagnostics = this._diagnosticsMap[filePath] ?? {};
     fileDiagnostics[testName] = [];
     this._diagnosticsMap[filePath] = fileDiagnostics;
   }
 
   private _getAllDiagnosticsForFile(filePath: string): Array<Diagnostic> {
-    const fileDiagnostics = this._diagnosticsMap[filePath] || {};
-    return Object.keys(fileDiagnostics).flatMap((testName) => fileDiagnostics[testName]);
+    const fileDiagnostics = this._diagnosticsMap[filePath] ?? {};
+    return Object.keys(fileDiagnostics).flatMap((testName) => fileDiagnostics[testName] ?? []);
   }
 
   private _getFileIssues(result: BettererFileTestResultSerialised, filePath: string): BettererFileIssuesSerialised {
-    const key = Object.keys(result).find((fileKey) => fileKey.startsWith(filePath));
-    if (!key) {
+    const entry = Object.entries(result).find(([fileKey]) => fileKey.startsWith(filePath));
+    if (!entry) {
       return [];
     }
-    return result[key];
+    const [, issues] = entry;
+    return issues;
   }
 }
 
@@ -147,7 +148,7 @@ function createDiagnostic(
   // so if the issue contains CRLF endings, increment the length by 1 for each new line:
   let text = document.getText({ start, end });
   while (text.replace(/\r\n/g, '\n').length < length) {
-    const crlfs = text.match(/\r\n/g) || [];
+    const crlfs = text.match(/\r\n/g) ?? [];
     end = document.positionAt(document.offsetAt(start) + length + crlfs.length);
     text = document.getText({ start, end });
   }

@@ -1,19 +1,18 @@
-import type { BettererLoggerCodeInfo } from '@betterer/logger';
 import type { FC } from '@betterer/render';
 
-import type { BettererTaskLog, BettererTask } from './types.js';
+import type { BettererTask } from './types.js';
 
-import { code__ } from '@betterer/logger';
-import { React, Box, Text, memo, useEffect } from '@betterer/render';
-import chalk from 'chalk';
+import { React, memo, useEffect } from '@betterer/render';
 
-import { BettererErrorLog } from '../error-log.js';
-import { BettererTaskStatus } from './status.js';
-import { useTaskState } from './useTaskState.js';
-import { useTasks } from './useTasksState.js';
+import { useTaskStatus } from './useTaskStatus.js';
+import { useTaskLogs } from './useTaskLogs.js';
+import { BettererTaskResult } from './TaskResult.js';
+import { useTaskState } from './useTasksState.js';
 
 /**
- * @public `props` type for {@link BettererTaskLogger | `<BettererTaskLogger/>`}.
+ * @internal This could change at any point! Please don't use!
+ *
+ * `props` type for {@link BettererTaskLogger | `<BettererTaskLogger/>`}.
  */
 export interface BettererTaskLoggerProps {
   /**
@@ -27,101 +26,44 @@ export interface BettererTaskLoggerProps {
 }
 
 /**
- * @public Ink component for rendering the output of a single {@link BettererTask | `BettererTask`}.
- * The output will update based on the status of the task. Once the task is finished, it will
- * output any logging and any errors (if the task failed).
+ * @internal This could change at any point! Please don't use!
+ *
+ * Ink component for rendering the output of a single {@link BettererTask | `BettererTask`}.
+ * The output will update based on the status of the task.
+ *
+ * Once the task is finished, it will output any logging and any errors (if the task failed).
  */
 export const BettererTaskLogger: FC<BettererTaskLoggerProps> = memo(function BettererTaskLogger(props) {
   const { name, task } = props;
-  const [tasksState] = useTasks();
-  const [taskState, taskApi] = useTaskState();
+  const [taskState, taskApi] = useTaskState(name);
 
-  const { error, logs, status } = taskState;
+  const [status, statusLogger] = useTaskStatus();
+  const [logs, logger] = useTaskLogs();
 
   useEffect(() => {
     void (async () => {
-      taskApi.reset();
-
-      async function statusError(status: string): Promise<void> {
-        await taskApi.status(['🔥', 'redBright', status]);
-      }
-      async function statusProgress(status: string): Promise<void> {
-        await taskApi.status(['🤔', 'whiteBright', status]);
-      }
-      async function statusSuccess(status: string): Promise<void> {
-        await taskApi.status(['✅', 'greenBright', status]);
-      }
-
-      async function logCode(codeInfo: BettererLoggerCodeInfo): Promise<void> {
-        const codeFrame = code__(codeInfo);
-        await taskApi.log(['💻', 'whiteBright', codeFrame]);
-      }
-      async function logDebug(log: string): Promise<void> {
-        await taskApi.log(['🤯', 'blueBright', log]);
-      }
-      async function logError(log: string): Promise<void> {
-        await taskApi.log(['🔥', 'redBright', log]);
-      }
-      async function logInfo(log: string): Promise<void> {
-        await taskApi.log(['💭', 'gray', log]);
-      }
-      async function logSuccess(log: string): Promise<void> {
-        await taskApi.log(['✅', 'greenBright', log]);
-      }
-      async function logWarning(log: string): Promise<void> {
-        await taskApi.log(['🚨', 'yellowBright', log]);
-      }
-
       taskApi.start();
       try {
-        const result = await task({
-          progress: statusProgress,
-          code: logCode,
-          debug: logDebug,
-          error: logError,
-          info: logInfo,
-          success: logSuccess,
-          warn: logWarning
-        });
+        const result = await task(logger, statusLogger);
 
         if (typeof result === 'string') {
-          await statusSuccess(result);
+          await statusLogger.success(result);
         } else {
-          await statusSuccess('done!');
+          await statusLogger.success('done!');
         }
         taskApi.stop();
       } catch (error) {
-        await statusError((error as Error).message);
         taskApi.error(error as Error);
-        process.exitCode = 1;
+        await statusLogger.error((error as Error).message);
       }
     })();
-  }, [name, task, taskApi]);
+  }, [task, logger, statusLogger]);
 
-  return (
-    <Box flexDirection="column">
-      {status && <BettererTaskStatus name={name} status={status} />}
-      {tasksState.endTime != null && logs.length ? (
-        <Box flexDirection="column">
-          {logs.map((log, index) => (
-            <Text key={index}>{prependLogBlock(log)}</Text>
-          ))}
-        </Box>
-      ) : null}
-      {error && <BettererErrorLog error={error} />}
-    </Box>
-  );
+  if (!taskState) {
+    return null;
+  }
+
+  const { done, error } = taskState;
+
+  return <BettererTaskResult error={done ? error : null} name={name} status={status} logs={done ? logs : []} />;
 });
-
-function prependLogBlock(log: BettererTaskLog): string {
-  const [, colour, message] = log;
-  return prependBlock(message, chalk[colour]('・'));
-}
-
-function prependBlock(message: string, block: string): string {
-  return message
-    .toString()
-    .split('\n')
-    .map((line) => `${block} ${line}`)
-    .join('\n');
-}

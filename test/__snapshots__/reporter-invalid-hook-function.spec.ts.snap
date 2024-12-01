@@ -1,11 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer --reporter should throw when a hook is not a function 1`] = `
-Array [
+exports[`betterer --reporter > should throw when a hook is not a function 1`] = `
+[
   "
-Error: could not require \\"<project>/fixtures/reporter-invalid-hook-function/reporter.js\\". 😔
+Error: could not import "fixtures/reporter-invalid-hook-function/reporter.js". 😔
 
-Error: \\"contextStart\\" is not a function. 😔
+Error: "contextStart" is not a function. 😔
 ",
 ]
 `;

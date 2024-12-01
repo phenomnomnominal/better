@@ -1,13 +1,14 @@
 {
   "name": "@betterer/tasks",
   "description": "task runner and loggerr for @betterer/betterer",
-  "version": "5.3.6",
+  "version": "6.0.0-alpha.1",
   "license": "MIT",
   "publishConfig": {
     "access": "public"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "type": "module",
   "files": [
     "dist"
   ],
@@ -25,14 +26,14 @@
     "api": "api-extractor run --local --verbose"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=16"
   },
   "dependencies": {
-    "@betterer/errors": "^5.3.0",
-    "@betterer/logger": "^5.3.4",
-    "@betterer/render": "^5.3.4",
-    "@betterer/time": "^5.3.4",
-    "chalk": "^4.1.2",
-    "tslib": "^2.3.1"
-  }
+    "@betterer/errors": "^6.0.0-alpha.1",
+    "@betterer/logger": "^6.0.0-alpha.1",
+    "@betterer/render": "^6.0.0-alpha.1",
+    "@betterer/time": "^6.0.0-alpha.1",
+    "chalk": "^5.3.0"
+  },
+  "gitHead": "821992635c8b6a4891169dad3334203f866e5521"
 }

@@ -1,46 +1,33 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer ci should work with \`start\` and the CI env variable 1`] = `
-Array [
+exports[`betterer ci > should work with \`start\` and the CI env variable 1`] = `
+[
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" got checked for the first time! (1 issue) 🎉
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! (1 issue) 🎉
+✅ test: "test" got checked for the first time! (1 issue) 🎉
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! (1 issue) 🎉
+✅ test: "test" got checked for the first time! (1 issue) 🎉
 
 1 test got checked. 🤔
 1 test got checked for the first time! 🎉
 ",
-  "🌟 Betterer:
-",
-  "🌟 Betterer: 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer: 1 test running...
-✅ test: \\"test\\" stayed the same. (1 issue) 😐
-",
-  "🎉 Betterer: 1 test done!
-✅ test: \\"test\\" stayed the same. (1 issue) 😐
-",
-  "🎉 Betterer: 1 test done!
-✅ test: \\"test\\" stayed the same. (1 issue) 😐
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" stayed the same. (1 issue) 😐
 
 1 test got checked. 🤔
 1 test stayed the same. 😐
 
-Unexpected changes detected in these tests while running in CI mode:
+All test results stayed the same, but your code has changed in other ways!
+You should make sure the results file is up-to-date before committing, and also after a rebase! 🔃
 
- \\"test\\"
+Check out some suggestions to improve your workflow in the docs:
 
-You should make sure the results file is up-to-date before committing! You might want to run \`betterer precommit\` in a commit hook. 💍
+    Workflow Documentation
 ",
 ]
 `;

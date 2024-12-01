@@ -1,11 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer cli should report the current results for a file test 1`] = `
-Array [
+exports[`betterer cli > should report the current results for a file test 1`] = `
+[
   "test:
 
-  RegExp match - <project>/fixtures/results-file-test/src/file-with-issue.ts:1:0
-  RegExp match - <project>/fixtures/results-file-test/src/file-with-issues.ts:1:0
-  RegExp match - <project>/fixtures/results-file-test/src/file-with-issues.ts:2:0",
+  RegExp match - fixtures/results-file-test/src/file-with-issue.ts:1:0
+  RegExp match - fixtures/results-file-test/src/file-with-issues.ts:1:0
+  RegExp match - fixtures/results-file-test/src/file-with-issues.ts:2:0",
 ]
 `;

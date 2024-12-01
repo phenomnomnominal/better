@@ -1,5 +1,6 @@
-// eslint-disable-next-line require-extensions/require-extensions -- tests not ESM ready yet
-import { createFixture } from '../fixture';
+import { describe, it, expect } from 'vitest';
+
+import { createFixture } from '../fixture.js';
 
 const ARGV = ['node', './bin/betterer'];
 
@@ -9,10 +10,10 @@ describe('betterer cli', () => {
       'filter',
       {
         '.betterer.js': `
-const { BettererTest } = require('@betterer/betterer');
-const { bigger, smaller } = require('@betterer/constraints');
+import { BettererTest } from '@betterer/betterer';
+import { bigger, smaller } from '@betterer/constraints';
 
-module.exports = {
+export default {
   'test 1': () => new BettererTest({
     test: () => 0,
     constraint: bigger
@@ -35,13 +36,13 @@ module.exports = {
 
     const fixturePath = paths.cwd;
 
-    const { cli__ } = await import('@betterer/cli');
+    const { cliΔ } = await import('@betterer/cli');
 
-    await cli__(fixturePath, [...ARGV, 'start'], false);
+    await cliΔ(fixturePath, [...ARGV, 'start', '--workers=false'], false);
 
-    await cli__(fixturePath, [...ARGV, 'start', '--filter', '1'], false);
+    await cliΔ(fixturePath, [...ARGV, 'start', '--workers=false', '--filter', '1'], false);
 
-    await cli__(fixturePath, [...ARGV, 'start', '--filter', '1', '--filter', '3'], false);
+    await cliΔ(fixturePath, [...ARGV, 'start', '--workers=false', '--filter', '1', '--filter', '3'], false);
 
     expect(logs).toMatchSnapshot();
 

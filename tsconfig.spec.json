@@ -1,0 +1,27 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "paths": {
+      "@betterer/angular": ["./packages/angular/src/index"],
+      "@betterer/betterer": ["./packages/betterer/src/index"],
+      "@betterer/cli": ["./packages/cli/src/index"],
+      "@betterer/constraints": ["./packages/constraints/src/index"],
+      "@betterer/coverage": ["./packages/coverage/src/index"],
+      "@betterer/errors": ["./packages/errors/src/index"],
+      "@betterer/eslint": ["./packages/eslint/src/index"],
+      "@betterer/fixture": ["./packages/fixture/src/index"],
+      "@betterer/knip": ["./packages/knip/src/index"],
+      "@betterer/logger": ["./packages/logger/src/index"],
+      "@betterer/regexp": ["./packages/regexp/src/index"],
+      "@betterer/render": ["./packages/render/src/index"],
+      "@betterer/reporter": ["./packages/reporter/src/index"],
+      "@betterer/stylelint": ["./packages/stylelint/src/index"],
+      "@betterer/tasks": ["./packages/tasks/src/index"],
+      "@betterer/time": ["./packages/time/src/index"],
+      "@betterer/tsquery": ["./packages/tsquery/src/index"],
+      "@betterer/typescript": ["./packages/typescript/src/index"],
+      "@betterer/worker": ["./packages/worker/src/index"]
+    }
+  }
+}

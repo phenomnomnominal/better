@@ -1,8 +1,6 @@
-// eslint-disable-next-line import/no-unresolved -- vscode is an implicit dependency for extensions
 import type { StatusBarItem } from 'vscode';
 import type { LanguageClient } from 'vscode-languageclient/node';
 
-// eslint-disable-next-line import/no-unresolved -- vscode is an implicit dependency for extensions
 import { StatusBarAlignment, window } from 'vscode';
 import { NotificationType, State } from 'vscode-languageclient/node';
 import { EXTENSION_NAME } from '../constants.js';
@@ -71,7 +69,9 @@ export class BettererStatusBar {
 
     await client.onReady();
 
-    client.onNotification(BettererStatusNotification, (status) => this.update(status));
+    client.onNotification(BettererStatusNotification, (status) => {
+      this.update(status);
+    });
     client.onNotification(BettererExitCalled, (params) => {
       this._exit();
       const [code, message] = params;

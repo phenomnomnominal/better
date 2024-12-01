@@ -1,11 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer --reporter should throw when there is nothing exported 1`] = `
-Array [
+exports[`betterer --reporter > should throw when there is nothing exported 1`] = `
+[
   "
-Error: could not require \\"<project>/fixtures/reporter-no-export/reporter.js\\". 😔
+Error: could not import "fixtures/reporter-no-export/reporter.js". 😔
 
-Error: \\"<project>/fixtures/reporter-no-export/reporter.js\\" didn't create a reporter. 😔
+Error: "fixtures/reporter-no-export/reporter.js" didn't create a reporter. 😔
 ",
 ]
 `;

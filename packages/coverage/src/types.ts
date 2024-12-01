@@ -1,41 +1,42 @@
-import type { BettererRun } from '@betterer/betterer';
+import type { BettererFileResolver, BettererResolverTest } from '@betterer/betterer';
 import type { CoverageSummaryData, Totals } from 'istanbul-lib-coverage';
 
 export type IstanbulCoverage = Totals;
 export type IstanbulFileCoverage = CoverageSummaryData;
-export type IstanbulCoverageSummary = {
-  [filePath: string]: IstanbulFileCoverage;
-};
+export type IstanbulCoverageSummary = Record<string, IstanbulFileCoverage>;
+
+/**
+ * @public A {@link @betterer/betterer#BettererTest | `BettererTest`} to incrementally improve test coverage.
+ */
+export type BettererCoverageTest = BettererResolverTest<
+  BettererCoverageIssues,
+  BettererCoverageIssues,
+  BettererCoverageDiff
+>;
 
 export type BettererCoverageTestFunction = (
-  run: BettererRun,
-  coverageReportPath: string,
-  included: Array<string>,
-  excluded: Array<RegExp>
+  relativeCoverageReportPath: string,
+  resolver: BettererFileResolver
 ) => Promise<BettererCoverageIssues>;
 
 /**
- * The different types of coverage which are checked
- * @public
+ * @public The different types of coverage which are checked.
  */
 export type BettererCoverageTypes = 'lines' | 'statements' | 'functions' | 'branches';
 
 /**
- * The lines, statements, functions and branches coverage for a file (or the total project)
- * @public
+ * @public The lines, statements, functions and branches coverage for a file (or the total project).
+ *
+ * @remarks Each value indicates how many of each type remain uncovered in the file.
  */
 export type BettererCoverageIssue = Record<BettererCoverageTypes, number>;
 
 /**
- * The coverage for a project
- * @public
+ * @public The coverage for all the files in a project.
  */
-export type BettererCoverageIssues = {
-  [filePath: string]: BettererCoverageIssue;
-};
+export type BettererCoverageIssues = Record<string, BettererCoverageIssue>;
 
 /**
- * The difference in coverage for a project between two test runs
- * @public
+ * @public The difference in coverage for a project between two test runs.
  */
 export type BettererCoverageDiff = BettererCoverageIssues;

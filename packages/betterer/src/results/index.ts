@@ -1,14 +1,22 @@
-export { BettererMergerΩ } from './merger.js';
-export { BettererResultsSummaryΩ } from './results-summary.js';
-export { BettererResultΩ } from './result.js';
-export { BettererResultsFileΩ } from './results-file.js';
-export {
+export type {
+  BettererConfigMerge,
+  BettererFileTestResultSummary,
+  BettererFileTestResultSummaryDetails,
+  BettererOptionsMerge,
   BettererResult,
   BettererResultSerialised,
-  BettererResultsSerialised,
-  BettererFileTestResultSummaryDetails,
-  BettererTestResultSummaryDetails,
-  BettererResultSummary,
   BettererResultSummaries,
-  BettererResultsSummary
+  BettererResultSummary,
+  BettererResultsSerialised,
+  BettererResultsSummary,
+  BettererResultsWorker,
+  BettererTestResultSummary,
+  BettererTestResultSummaryDetails
 } from './types.js';
+
+export { BettererResultΩ } from './result.js';
+export { BettererResultsMergerΩ } from './results-merger.js';
+export { BettererResultsSummaryΩ } from './results-summary.js';
+export { BettererResultsΩ } from './results.js';
+
+export { printResults } from './print.js';

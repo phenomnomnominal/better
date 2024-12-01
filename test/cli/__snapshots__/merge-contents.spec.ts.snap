@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer cli should merge the given contents 1`] = `
+exports[`betterer cli > should merge the given contents 1`] = `
 "// BETTERER RESULTS V2.
 //
 // If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
@@ -8,8 +8,8 @@ exports[`betterer cli should merge the given contents 1`] = `
 //
 exports[\`test\`] = {
   value: \`{
-    \\"src/index.ts:913095150\\": [
-      [0, 0, 11, \\"TSQuery match\\", \\"3870399096\\"]
+    "src/index.ts:913095150": [
+      [0, 0, 11, "TSQuery match", "3870399096"]
     ]
   }\`
 };

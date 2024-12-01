@@ -1,20 +1,17 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should report an improved file coverage result 1`] = `
-Array [
+exports[`betterer > should report an improved file coverage result 1`] = `
+[
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" got checked for the first time! 🎉
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! 🎉
+✅ test: "test" got checked for the first time! 🎉
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! 🎉
+✅ test: "test" got checked for the first time! 🎉
 
 1 test got checked. 🤔
 1 test got checked for the first time! 🎉
@@ -22,16 +19,17 @@ Array [
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" got better! 😍
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got better! 😍
+✅ test: "test" got better! 😍
+・ "lines" coverage is worse in "src/file-1.ts": 50 > 40
+・ "lines" coverage is better in "src/file-1.ts": 40 < 50
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got better! 😍
+✅ test: "test" got better! 😍
+・ "lines" coverage is worse in "src/file-1.ts": 50 > 40
+・ "lines" coverage is better in "src/file-1.ts": 40 < 50
 
 1 test got checked. 🤔
 1 test got better! 😍
@@ -39,16 +37,17 @@ Array [
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" got better! 😍
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got better! 😍
+✅ test: "test" got better! 😍
+・ new file: src/file-1.ts
+・ src/file-1.ts is gone.
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got better! 😍
+✅ test: "test" got better! 😍
+・ new file: src/file-1.ts
+・ src/file-1.ts is gone.
 
 1 test got checked. 🤔
 1 test got better! 😍
@@ -56,16 +55,29 @@ Array [
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" met its goal! 🎉
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" met its goal! 🎉
+✅ test: "test" met its goal! 🎉
+・ "branches" coverage is worse in "src/file-2.ts": 100 > 0
+・ "functions" coverage is worse in "src/file-2.ts": 4 > 0
+・ "lines" coverage is worse in "src/file-2.ts": 60 > 0
+・ "statements" coverage is worse in "src/file-2.ts": 140 > 0
+・ "branches" coverage is better in "src/file-2.ts": 0 < 100
+・ "functions" coverage is better in "src/file-2.ts": 0 < 4
+・ "lines" coverage is better in "src/file-2.ts": 0 < 60
+・ "statements" coverage is better in "src/file-2.ts": 0 < 140
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" met its goal! 🎉
+✅ test: "test" met its goal! 🎉
+・ "branches" coverage is worse in "src/file-2.ts": 100 > 0
+・ "functions" coverage is worse in "src/file-2.ts": 4 > 0
+・ "lines" coverage is worse in "src/file-2.ts": 60 > 0
+・ "statements" coverage is worse in "src/file-2.ts": 140 > 0
+・ "branches" coverage is better in "src/file-2.ts": 0 < 100
+・ "functions" coverage is better in "src/file-2.ts": 0 < 4
+・ "lines" coverage is better in "src/file-2.ts": 0 < 60
+・ "statements" coverage is better in "src/file-2.ts": 0 < 140
 
 1 test got checked. 🤔
 1 test got better! 😍

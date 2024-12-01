@@ -52,7 +52,9 @@ function init(): void {
 
   const environmentChanged = debounce(function environmentChanged(): void {
     info('Server: Environment changed, revalidating all documents:');
-    documents.all().forEach((document) => queueValidate({ document }));
+    documents.all().forEach((document) => {
+      queueValidate({ document });
+    });
   }, ENVIRONMENT_CHANGE_TIMEOUT);
 
   connection.onInitialize(() => {

@@ -1,5 +1,4 @@
 import type {
-  BettererTestBase,
   BettererTestConfig,
   BettererTestConstraint,
   BettererTestDeadline,
@@ -7,7 +6,8 @@ import type {
   BettererTestOptions
 } from './types.js';
 
-import { createDeadline, createGoal, createTestConfig } from './config.js';
+import { BettererTestConfigΩ, createDeadline, createGoal } from './config.js';
+import { checkBaseName } from './utils.js';
 
 /**
  * @public The main interface to the **Betterer** {@link https://phenomnomnominal.github.io/betterer/docs/tests | test system}.
@@ -26,19 +26,20 @@ import { createDeadline, createGoal, createTestConfig } from './config.js';
  *
  * @param options - The options that define the test.
  */
-export class BettererTest<DeserialisedType, SerialisedType = DeserialisedType, DiffType = null>
-  implements BettererTestBase<DeserialisedType, SerialisedType, DiffType>
-{
-  /**
-   * The complete configuration for the test.
-   */
-  public readonly config: BettererTestConfig<DeserialisedType, SerialisedType, DiffType>;
-
+export class BettererTest<DeserialisedType = unknown, SerialisedType = DeserialisedType, DiffType = null> {
+  private _config: BettererTestConfigΩ<DeserialisedType, SerialisedType, DiffType>;
   private _isOnly = false;
   private _isSkipped = false;
 
   constructor(options: BettererTestOptions<DeserialisedType, SerialisedType, DiffType>) {
-    this.config = createTestConfig(options) as BettererTestConfig<DeserialisedType, SerialisedType, DiffType>;
+    this._config = new BettererTestConfigΩ(options);
+  }
+
+  /**
+   * The complete configuration for the test.
+   */
+  public get config(): BettererTestConfig<DeserialisedType, SerialisedType, DiffType> {
+    return this._config;
   }
 
   /**
@@ -62,7 +63,7 @@ export class BettererTest<DeserialisedType, SerialisedType = DeserialisedType, D
    * @returns This {@link @betterer/betterer#BettererTest | `BettererTest`}, so it is chainable.
    */
   public constraint(constraintOverride: BettererTestConstraint<DeserialisedType>): this {
-    this.config.constraint = constraintOverride;
+    this._config.constraint = constraintOverride;
     return this;
   }
 
@@ -73,7 +74,7 @@ export class BettererTest<DeserialisedType, SerialisedType = DeserialisedType, D
    * @returns This {@link @betterer/betterer#BettererTest | `BettererTest`}, so it is chainable.
    */
   public deadline(deadlineOverride: BettererTestDeadline): this {
-    this.config.deadline = createDeadline({ ...this.config, deadline: deadlineOverride });
+    this._config.deadline = createDeadline({ ...this.config, deadline: deadlineOverride });
     return this;
   }
 
@@ -84,7 +85,7 @@ export class BettererTest<DeserialisedType, SerialisedType = DeserialisedType, D
    * @returns This {@link @betterer/betterer#BettererTest | `BettererTest`}, so it is chainable.
    */
   public goal(goalOverride: BettererTestGoal<DeserialisedType>): this {
-    this.config.goal = createGoal({ ...this.config, goal: goalOverride });
+    this._config.goal = createGoal({ ...this.config, goal: goalOverride });
     return this;
   }
 
@@ -109,17 +110,6 @@ export class BettererTest<DeserialisedType, SerialisedType = DeserialisedType, D
   }
 }
 
-export function isBettererTest(test: unknown): test is BettererTestBase {
-  if (!test) {
-    return false;
-  }
-  return getBaseName((test as ObjectConstructor).constructor) === BettererTest.name;
-}
-
-function getBaseName(input: unknown): string | null {
-  const proto: unknown = Object.getPrototypeOf(input);
-  if (proto === Function.prototype) {
-    return (input as ObjectConstructor)?.name || null;
-  }
-  return getBaseName(proto);
+export function isBettererTest(test: unknown): test is BettererTest {
+  return !!test && checkBaseName(test.constructor, BettererTest.name);
 }

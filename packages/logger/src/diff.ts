@@ -7,7 +7,7 @@ import { diff, diffLinesUnified, diffStringsUnified } from 'jest-diff';
  *
  * Logs the diff between two objects.
  */
-export function diff__<T>(a: T, b: T, diffOptions: DiffOptions): string | null {
+export function diffΔ<T>(a: T, b: T, diffOptions: DiffOptions): string | null {
   return diff(a, b, diffOptions);
 }
 
@@ -16,7 +16,7 @@ export function diff__<T>(a: T, b: T, diffOptions: DiffOptions): string | null {
  *
  * Logs the diff between two strings.
  */
-export function diffStrings__(a: string, b: string, diffOptions: DiffOptions): string {
+export function diffStringsΔ(a: string, b: string, diffOptions: DiffOptions): string {
   // jest-diff recommends using `diffLinesUnified` if string lengths are above 20,000 for performance
   if (a.length > 20_000 || b.length > 20_000) {
     return diffLinesUnified(a.split('\n'), b.split('\n'), diffOptions);

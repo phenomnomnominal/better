@@ -1,0 +1,132 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer > should report the status of a new knip config 1`] = `
+"// BETTERER RESULTS V2.
+//
+// If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
+// https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
+//
+exports[\`knip\`] = {
+  value: \`{
+    "package.json:4234438035": [
+      [0, 0, 0, "Unused dependencies: fuck-shit-up", "3192981842"]
+    ],
+    "src/index.ts:1955377078": [
+      [0, 0, 0, "Unlisted dependencies: thanos-glove", "1179044059"]
+    ]
+  }\`
+};
+"
+`;
+
+exports[`betterer > should report the status of a new knip config 2`] = `
+[
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 knip: running "knip"!
+",
+  "🌟 Betterer (0ms): 1 test running...
+✅ knip: "knip" got checked for the first time! (2 issues) 🎉
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ knip: "knip" got checked for the first time! (2 issues) 🎉
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ knip: "knip" got checked for the first time! (2 issues) 🎉
+
+1 test got checked. 🤔
+1 test got checked for the first time! 🎉
+",
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 knip: running "knip"!
+",
+  "🌟 Betterer (0ms): 1 test running...
+✅ knip: "knip" stayed the same. (2 issues) 😐
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ knip: "knip" stayed the same. (2 issues) 😐
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ knip: "knip" stayed the same. (2 issues) 😐
+
+1 test got checked. 🤔
+1 test stayed the same. 😐
+",
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 knip: running "knip"!
+",
+  "🌟 Betterer (0ms): 1 test running...
+🔥 knip: "knip" got worse. (1 new issue, 2 existing, 3 total) 😔
+",
+  "🌟 Betterer (0ms): 1 test running...
+🔥 knip: "knip" got worse. (1 new issue, 2 existing, 3 total) 😔
+
+Error: "knip" got worse. (1 new issue, 2 existing, 3 total) 😔
+",
+  "💥 Betterer (0ms): 1 test done! 1 test errored!
+🔥 knip: "knip" got worse. (1 new issue, 2 existing, 3 total) 😔
+・ 1 existing, 1 new issues in "fixtures/knip/src/index.ts".
+・
+・ > 1 | import 'thanos-glove'; import 'console.fuck';
+・     | ^ Unlisted dependencies: console.fuck
+・
+
+Error: "knip" got worse. (1 new issue, 2 existing, 3 total) 😔
+",
+  "💥 Betterer (0ms): 1 test done! 1 test errored!
+🔥 knip: "knip" got worse. (1 new issue, 2 existing, 3 total) 😔
+・ 1 existing, 1 new issues in "fixtures/knip/src/index.ts".
+・
+・ > 1 | import 'thanos-glove'; import 'console.fuck';
+・     | ^ Unlisted dependencies: console.fuck
+・
+
+Error: "knip" got worse. (1 new issue, 2 existing, 3 total) 😔
+
+1 test got checked. 🤔
+1 test got worse. 😔
+
+You should try to fix the new issues! As a last resort, you can run \`betterer --update\` to force an update of the results file. 🆙
+",
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 knip: running "knip"!
+",
+  "🌟 Betterer (0ms): 1 test running...
+✅ knip: "knip" met its goal! 🎉
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ knip: "knip" met its goal! 🎉
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ knip: "knip" met its goal! 🎉
+
+1 test got checked. 🤔
+1 test got better! 😍
+1 test met its goal! 🎉
+",
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 knip: running "knip"!
+",
+  "🌟 Betterer (0ms): 1 test running...
+✅ knip: "knip" has already met its goal! ✨
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ knip: "knip" has already met its goal! ✨
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ knip: "knip" has already met its goal! ✨
+
+1 test got checked. 🤔
+1 test met its goal! 🎉
+",
+]
+`;

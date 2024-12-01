@@ -1,21 +1,26 @@
-import type { BettererLogs } from '@betterer/logger';
+import type { BettererLogger } from '@betterer/logger';
 
-import type { BettererFileΩ } from './file.js';
+import type { BettererRun } from '../../run/index.js';
 import type { BettererFileTestResultΩ } from './file-test-result.js';
+import type { BettererFileΩ } from './file.js';
 import type {
-  BettererFileTestDiff,
+  BettererFileBase,
   BettererFileIssue,
   BettererFileIssueSerialised,
   BettererFilesDiff,
-  BettererFileTestResult,
-  BettererFileBase
+  BettererFileTestDiff,
+  BettererFileTestResult
 } from './types.js';
 
-import assert from 'node:assert';
+import { invariantΔ } from '@betterer/errors';
 
 const FORMATTER = Intl.NumberFormat();
 
-export function differ(expected: BettererFileTestResult, result: BettererFileTestResult): BettererFileTestDiff {
+export async function differ(this: BettererRun, expected: BettererFileTestResult, result: BettererFileTestResult) {
+  return await differLog.call(this, expected, result);
+}
+
+export function diff(expected: BettererFileTestResult, result: BettererFileTestResult): BettererFileTestDiff {
   const diff: BettererFilesDiff = {};
   const expectedΩ = expected as BettererFileTestResultΩ;
   const resultΩ = result as BettererFileTestResultΩ;
@@ -45,6 +50,7 @@ export function differ(expected: BettererFileTestResult, result: BettererFileTes
     // Multiple possibilities means that the same content has been moved into multiple new files.
     // So just count the first one as a move, the rest will be new files:
     const [moved] = possibilities;
+    invariantΔ(moved, `\`possibilities.length\` should be at least \`1\`!`, possibilities.length);
     movedFiles.set(moved, fixedOrMovedFile);
 
     // Remove the moved file from the fixedOrMovedFiles array:
@@ -71,7 +77,7 @@ export function differ(expected: BettererFileTestResult, result: BettererFileTes
 
   const existingFiles = [...unchangedResultFiles, ...changedResultFiles, ...Array.from(movedFiles.keys())];
   existingFiles.forEach((resultFile) => {
-    const expectedFile = movedFiles.get(resultFile) || expectedΩ.getFile(resultFile.absolutePath);
+    const expectedFile = movedFiles.get(resultFile) ?? expectedΩ.getFile(resultFile.absolutePath);
 
     // Convert all issues to their deserialised form for easier diffing:
     const resultIssues = [...resultFile.issues];
@@ -108,10 +114,11 @@ export function differ(expected: BettererFileTestResult, result: BettererFileTes
       }
       // Start by marking the first possibility as best:
       let best = possibilities.shift();
+      invariantΔ(best, `\`best\` should be set!`, best);
 
       // And then search through all the possibilities to find the closest issue:
       possibilities.forEach((possibility) => {
-        assert(best);
+        invariantΔ(best, `\`possibilities.length\` should be at least \`1\`!`, possibilities.length);
         if (Math.abs(line - possibility.line) >= Math.abs(line - best.line)) {
           return;
         }
@@ -126,8 +133,6 @@ export function differ(expected: BettererFileTestResult, result: BettererFileTes
         }
       });
 
-      assert(best);
-
       // Remove the moved issue from the newOrMovedIssues array:
       newOrMovedIssues.splice(newOrMovedIssues.indexOf(best), 1);
 
@@ -135,7 +140,13 @@ export function differ(expected: BettererFileTestResult, result: BettererFileTes
     });
 
     // Find the raw issue data so that diffs can be logged:
-    const newIssues = newOrMovedIssues.map((newIssue) => resultFile.issues[resultIssues.indexOf(newIssue)]);
+    const newIssues = newOrMovedIssues.map((newIssue) => {
+      const issue = resultFile.issues[resultIssues.indexOf(newIssue)];
+      // `newOrMovedIssues` comes from a filter on `resultIssues`,
+      // which comes from `[...resultFile.issues]`, so this should always be valid.
+      invariantΔ(issue, `\`issue\` should definitely exist within \`resultFile.issues\`!`, issue, resultFile.issues);
+      return issue;
+    });
 
     // If there's no change, move on:
     if (!newIssues.length && !fixedIssues.length) {
@@ -150,38 +161,58 @@ export function differ(expected: BettererFileTestResult, result: BettererFileTes
     };
   });
 
-  const filePaths = Object.keys(diff);
-
-  const logs: BettererLogs = [];
-  filePaths.forEach((filePath) => {
-    const existing = diff[filePath].existing || [];
-    const fixed = diff[filePath].fixed || [];
-    if (fixed?.length) {
-      logs.push({ success: `${fixed.length} fixed ${getIssues(fixed.length)} in "${filePath}".` });
-    }
-    if (existing?.length) {
-      logs.push({ warn: `${existing.length} existing ${getIssues(existing.length)} in "${filePath}".` });
-    }
-    const newIssues = diff[filePath].new || [];
-    const nIssues = newIssues.length;
-    if (nIssues) {
-      logs.push({ error: `New ${getIssues(nIssues)} in "${filePath}"!` });
-      if (nIssues > 1) {
-        logs.push({ error: `Showing first of ${FORMATTER.format(nIssues)} new issues:` });
-      }
-
-      const [firstIssue] = newIssues;
-      const fileΩ = resultΩ.getFile(filePath) as BettererFileΩ;
-      const { fileText } = fileΩ;
-      const [line, column, length, message] = firstIssue;
-      logs.push({ code: { message, filePath, fileText, line, column, length } });
-    }
-  });
-
   return {
-    diff,
-    logs
+    diff
   };
+}
+
+async function differLog(this: BettererRun, expected: BettererFileTestResult, result: BettererFileTestResult) {
+  const fileDiff = diff(expected, result);
+  const resultΩ = result as BettererFileTestResultΩ;
+
+  // Sort by file path:
+  const diffEntries = Object.entries(fileDiff.diff).sort(([aPath], [bPath]) => (aPath < bPath ? -1 : 1));
+
+  await Promise.all(
+    diffEntries.map(async ([filePath, diff]) => {
+      const existing = diff.existing ?? [];
+      const fixed = diff.fixed ?? [];
+      const newIssues = diff.new ?? [];
+      const nExisting = existing.length;
+      const nFixed = fixed.length;
+      const nIssues = newIssues.length;
+
+      let type: keyof BettererLogger = 'success';
+      const messages: Array<string> = [];
+      if (nFixed > 0) {
+        messages.push(`${FORMATTER.format(nFixed)} fixed`);
+      }
+      if (nExisting > 0) {
+        type = 'warn';
+        messages.push(`${FORMATTER.format(nExisting)} existing`);
+      }
+      if (nIssues > 0) {
+        type = 'error';
+        messages.push(`${FORMATTER.format(nIssues)} new`);
+      }
+      await this.logger[type](`${messages.join(', ')} ${getIssues(nFixed + nExisting + nIssues)} in "${filePath}".`);
+
+      if (nIssues) {
+        if (nIssues > 1) {
+          await this.logger.error(`Showing first of ${FORMATTER.format(nIssues)} new issues:`);
+        }
+
+        const [firstIssue] = newIssues;
+        invariantΔ(firstIssue, `\`nIssues\` should be at least \`1\`!`, nIssues);
+        const fileΩ = resultΩ.getFile(filePath) as BettererFileΩ;
+        const { fileText } = fileΩ;
+        const [line, column, length, message] = firstIssue;
+        await this.logger.code({ message, filePath, fileText, line, column, length });
+      }
+    })
+  );
+
+  return fileDiff;
 }
 
 function getIssues(count: number): string {

@@ -4,8 +4,9 @@ import type { GetResultsSummaryWorker } from './types.js';
 
 import { React, Box, Text, useApp, useEffect, useState } from '@betterer/render';
 import { BettererLogo } from '@betterer/tasks';
-import { importWorker__ } from '@betterer/worker';
+import { importWorkerΔ } from '@betterer/worker';
 
+/** @knipignore used by an exported function */
 export interface ResultsProps {
   options: BettererOptionsResults;
   logo: boolean;
@@ -15,7 +16,7 @@ export const Results: FC<ResultsProps> = function Results({ options, logo }) {
   const [resultsSummary, setResultsSummary] = useState<BettererResultsSummary | null>(null);
   useEffect(() => {
     void (async () => {
-      const getResultsSummary: GetResultsSummaryWorker = importWorker__('./get-results-summary.worker.js');
+      const getResultsSummary: GetResultsSummaryWorker = await importWorkerΔ('./get-results-summary.worker.js');
       try {
         setResultsSummary(await getResultsSummary.api.run(options));
       } finally {
@@ -27,7 +28,9 @@ export const Results: FC<ResultsProps> = function Results({ options, logo }) {
   const app = useApp();
   useEffect(() => {
     if (resultsSummary) {
-      setImmediate(() => app.exit());
+      setImmediate(() => {
+        app.exit();
+      });
     }
   }, [resultsSummary]);
 
@@ -42,8 +45,7 @@ export const Results: FC<ResultsProps> = function Results({ options, logo }) {
                 <Box key={resultSummary.name} flexDirection="column">
                   <Text color="yellowBright">{`${resultSummary.name}: `}</Text>
                   <Box flexDirection="column" paddingTop={1} paddingLeft={2}>
-                    {Object.keys(resultSummary.details).map((filePath) => {
-                      const issues = resultSummary.details[filePath];
+                    {Object.entries(resultSummary.details).map(([filePath, issues]) => {
                       return issues.map((issue, index) => (
                         <Box key={index}>
                           <Text>{issue.message}</Text>

@@ -13,7 +13,7 @@ export async function write(toWrite: string, filePath: string): Promise<void> {
   try {
     await fs.mkdir(path.dirname(filePath), { recursive: true });
     await fs.writeFile(filePath, toWrite, 'utf8');
-  } catch {
-    throw new BettererError(`could not write to "${filePath}". 😔`);
+  } catch (error) {
+    throw new BettererError(`could not write to "${filePath}". 😔`, error as Error);
   }
 }

@@ -1,0 +1,40 @@
+{
+  "name": "@betterer/knip",
+  "description": "Knip test for @betterer/betterer",
+  "version": "6.0.0-alpha.1",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "author": "Craig Spence <craigspence0@gmail.com>",
+  "homepage": "https://phenomnomnominal.github.io/betterer",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phenomnomnominal/betterer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/phenomnomnominal/betterer/issues"
+  },
+  "scripts": {
+    "compile": "tsc -b .",
+    "api": "api-extractor run --local --verbose"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "dependencies": {
+    "@betterer/betterer": "^6.0.0-alpha.1",
+    "@betterer/errors": "^6.0.0-alpha.1",
+    "change-case": "^5.4.4"
+  },
+  "peerDependencies": {
+    "knip": "^5"
+  },
+  "gitHead": "821992635c8b6a4891169dad3334203f866e5521"
+}

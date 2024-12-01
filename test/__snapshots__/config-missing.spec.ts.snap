@@ -1,11 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should throw when there is not a config file 1`] = `
-Array [
+exports[`betterer > should throw when there is not a config file 1`] = `
+[
   "
-Error: could not find config file at \\"<project>/fixtures/config-missing/.betterer\\". 😔
+Error: could not find config file at "fixtures/config-missing/.betterer.ts". 😔
 
-Error: Cannot find module '<project>/fixtures/config-missing/.betterer' from 'packages/betterer/dist/config/config.js'
+Error: All promises were rejected
 ",
 ]
 `;

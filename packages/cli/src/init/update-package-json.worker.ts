@@ -3,14 +3,15 @@ import type { BettererLogger } from '@betterer/logger';
 import type { BettererPackageJSON } from '../types.js';
 
 import { BettererError } from '@betterer/errors';
-import { exposeToMain__ } from '@betterer/worker';
-import findUp from 'find-up';
+import { exposeToMainΔ } from '@betterer/worker';
+import { findUp } from 'find-up';
 import { promises as fs } from 'node:fs';
 
 import { getVersion } from '../version.js';
 
-export async function run(logger: BettererLogger, cwd: string, ts: boolean): Promise<void> {
-  await logger.progress('adding "betterer" to package.json file...');
+/** @knipignore part of worker API */
+export async function run(logger: BettererLogger, status: BettererLogger, cwd: string, ts: boolean): Promise<void> {
+  await status.progress('adding "betterer" to package.json file...');
 
   let packageJSON;
   let packageJSONPath;
@@ -20,19 +21,21 @@ export async function run(logger: BettererLogger, cwd: string, ts: boolean): Pro
       throw new BettererError('could not find "package.json".');
     }
     packageJSON = JSON.parse(await fs.readFile(packageJSONPath, 'utf-8')) as BettererPackageJSON;
-  } catch {
-    throw new BettererError('could not read "package.json".');
+  } catch (error) {
+    throw new BettererError('could not read "package.json".', error as Error);
   }
 
-  packageJSON.scripts = packageJSON.scripts || {};
-  if (packageJSON.scripts.betterer) {
+  packageJSON.scripts = packageJSON.scripts ?? { betterer: '' };
+  // eslint-disable-next-line @typescript-eslint/dot-notation -- prefer computed key
+  if (packageJSON.scripts['betterer']) {
     await logger.warn('"betterer" script already exists, moving on...');
   } else {
-    packageJSON.scripts.betterer = 'betterer';
-    await logger.success('added "betterer" script to package.json file.');
+    // eslint-disable-next-line @typescript-eslint/dot-notation -- prefer computed key
+    packageJSON.scripts['betterer'] = 'betterer';
+    await logger.success('added "betterer" script to package.json file');
   }
 
-  packageJSON.devDependencies = packageJSON.devDependencies || {};
+  packageJSON.devDependencies = packageJSON.devDependencies ?? {};
   if (packageJSON.devDependencies['@betterer/cli']) {
     await logger.warn('"@betterer/cli" dependency already exists, moving on...');
   } else {
@@ -42,19 +45,21 @@ export async function run(logger: BettererLogger, cwd: string, ts: boolean): Pro
   }
 
   if (ts) {
+    // eslint-disable-next-line @typescript-eslint/dot-notation -- prefer computed key
     if (packageJSON.devDependencies['typescript']) {
       await logger.warn('"typescript" dependency already exists, moving on...');
     } else {
-      packageJSON.devDependencies['typescript'] = `^4`;
+      // eslint-disable-next-line @typescript-eslint/dot-notation -- prefer computed key
+      packageJSON.devDependencies['typescript'] = `^5`;
       await logger.success('added "typescript" dependency to package.json file');
     }
   }
 
   try {
     await fs.writeFile(packageJSONPath, `${JSON.stringify(packageJSON, null, 2)}\n`, 'utf-8');
-  } catch {
-    throw new BettererError('could not write "package.json".');
+  } catch (error) {
+    throw new BettererError('could not write "package.json".', error as Error);
   }
 }
 
-exposeToMain__({ run });
+exposeToMainΔ({ run });

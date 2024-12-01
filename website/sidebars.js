@@ -15,6 +15,7 @@ module.exports = {
       'angular-test',
       'coverage-test',
       'eslint-test',
+      'knip-test',
       'regexp-test',
       'stylelint-test',
       'tsquery-test',

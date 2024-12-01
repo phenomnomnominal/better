@@ -1,0 +1,39 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "webpack": {
+    "config": ["webpack.*.config.js"]
+  },
+  "entry": [".betterer.ts"],
+  "ignore": ["**/dist/**/*.{ts,js}"],
+  "workspaces": {
+    "packages/betterer": {
+      "ignoreDependencies": ["@betterer/reporter", "simple-git", "esbuild"]
+    },
+    "packages/extension": {
+      "entry": ["packages/extension/client/extension.ts", "packages/extension/server/server.ts"],
+      "project": ["packages/extension/client/**/*.ts", "packages/extension/server/**/*.ts"]
+    },
+    "packages/fixture": {
+      "entry": ["packages/fixture/src/index.ts"],
+      "project": "packages/fixture/src/**/*.ts"
+    },
+    "packages/render": {
+      "entry": ["packages/render/src/index.ts"],
+      "project": "packages/render/src/**/*.ts"
+    },
+    "test": {
+      "entry": ["test/api/src/index.tsx", "test/dependencies/src/index.tsx"],
+      "project": ["test/api/src/**/*.{ts,tsx}", "test/dependencies/src/**/*.{ts,tsx}"]
+    },
+
+    "website": {
+      "entry": [
+        "website/babel.config.js",
+        "website/docusaurus.config.js",
+        "website/sidebars.js",
+        "website/src/pages/index.js"
+      ],
+      "project": ["website/**/*.{ts,tsx}"]
+    }
+  }
+}

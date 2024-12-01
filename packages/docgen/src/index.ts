@@ -25,7 +25,11 @@ class BettererMarkdownDocumenter extends MarkdownDocumenterFeature {
     });
 
     const id = path.basename(eventArgs.outputFilename, '.md');
-    const [, title] = TITLE_REGEXP.exec(eventArgs.pageContent) || [];
+    const [, title] = TITLE_REGEXP.exec(eventArgs.pageContent) ?? [];
+
+    if (title == null) {
+      throw new Error(`No title match found in "${eventArgs.pageContent}"`);
+    }
 
     const metadata = dedent(`
       ---

@@ -1,13 +1,14 @@
 {
   "name": "@betterer/tsquery",
   "description": "TSQuery test for @betterer/betterer",
-  "version": "5.4.0",
+  "version": "6.0.0-alpha.1",
   "license": "MIT",
   "publishConfig": {
     "access": "public"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "type": "module",
   "files": [
     "dist"
   ],
@@ -25,12 +26,12 @@
     "api": "api-extractor run --local --verbose"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=16"
   },
   "dependencies": {
-    "@betterer/betterer": "^5.4.0",
-    "@betterer/errors": "^5.3.0",
-    "@phenomnomnominal/tsquery": "^4.1.1",
-    "tslib": "^2.3.1"
-  }
+    "@betterer/betterer": "^6.0.0-alpha.1",
+    "@betterer/errors": "^6.0.0-alpha.1",
+    "@phenomnomnominal/tsquery": "^6.1.3"
+  },
+  "gitHead": "821992635c8b6a4891169dad3334203f866e5521"
 }

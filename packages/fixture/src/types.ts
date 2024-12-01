@@ -10,26 +10,36 @@ export interface Paths {
 export interface FixtureFileSystem {
   paths: Paths;
 
-  deleteDirectory(filePath: string): Promise<void>;
-  deleteFile(filePath: string): Promise<void>;
-  readFile(filePath: string): Promise<string>;
-  resolve(filePath: string): string;
-  writeFile(filePath: string, text: string): Promise<void>;
-  cleanup(): Promise<void>;
+  deleteDirectory: (filePath: string) => Promise<void>;
+  deleteFile: (filePath: string) => Promise<void>;
+  readFile: (filePath: string) => Promise<string>;
+  resolve: (filePath: string) => string;
+  writeFile: (filePath: string, text: string) => Promise<void>;
+  cleanup: () => Promise<void>;
+}
+
+export interface FixtureStdout {
+  sendKeys: (keys: string) => Promise<void>;
 }
 
 export type FixtureFileSystemFiles = Record<string, string>;
 
-export type Fixture = FixtureFileSystem & {
-  logs: ReadonlyArray<string>;
-  testNames(runs: BettererRunSummaries): BettererTestNames;
-};
+export interface FixtureLogging {
+  logs: FixtureLogs;
+}
+
+export type Fixture = FixtureFileSystem &
+  FixtureStdout &
+  FixtureLogging & {
+    testNames: (runs: BettererRunSummaries) => BettererTestNames;
+  };
 
 // Readonly externally:
 export type FixtureLogs = ReadonlyArray<string>;
 
-// Writable internally:
-export type FixtureLogsMap = Record<string, Array<string>>;
+export type FixtureLogger = (testName: string, ...messages: Array<string>) => void;
+
+export type FixtureLogsMap = Record<string, FixtureLogger>;
 
 export interface FixtureOptions {
   logFilters?: Array<RegExp>;
@@ -40,3 +50,9 @@ export type FixtureFactory = (
   files?: FixtureFileSystemFiles,
   options?: FixtureOptions
 ) => Promise<Fixture>;
+
+export interface FixturePersist {
+  increment(): Promise<number>;
+  decrement(): Promise<number>;
+  reset(): Promise<number>;
+}

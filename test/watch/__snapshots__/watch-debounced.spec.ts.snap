@@ -1,80 +1,67 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer.watch should debounce runs when multiple files change 1`] = `
-Array [
-  "Filters (press \\"f\\" to edit): No current filter patterns
-Ignores (press \\"i\\" to edit): No current ignore patterns
+exports[`betterer.watch > should debounce runs when multiple files change 1`] = `
+[
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): No current ignore patterns
 
 Starting Betterer in watch mode! 🎉
 
-(press \\"q\\" to quit)
+(press "ctrl+c" or "q" to quit)
 ",
-  "Filters (press \\"f\\" to edit): No current filter patterns
-Ignores (press \\"i\\" to edit): No current ignore patterns
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): No current ignore patterns
 
 Checking 2 files... 🤔
 
-・ <project>/fixtures/watch-debounce/src/file.ts
-・ <project>/fixtures/watch-debounce/src/index.ts
+・ fixtures/watch-debounce/src/file.ts
+・ fixtures/watch-debounce/src/index.ts
 
 🌟 Betterer (0ms):
 
-(press \\"q\\" to quit)
+(press "ctrl+c" or "q" to quit)
 ",
-  "Filters (press \\"f\\" to edit): No current filter patterns
-Ignores (press \\"i\\" to edit): No current ignore patterns
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): No current ignore patterns
 
 Checking 2 files... 🤔
 
-・ <project>/fixtures/watch-debounce/src/file.ts
-・ <project>/fixtures/watch-debounce/src/index.ts
+・ fixtures/watch-debounce/src/file.ts
+・ fixtures/watch-debounce/src/index.ts
 
 🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
+🤔 test: running "test"!
 
-(press \\"q\\" to quit)
+(press "ctrl+c" or "q" to quit)
 ",
-  "Filters (press \\"f\\" to edit): No current filter patterns
-Ignores (press \\"i\\" to edit): No current ignore patterns
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): No current ignore patterns
 
 Checking 2 files... 🤔
 
-・ <project>/fixtures/watch-debounce/src/file.ts
-・ <project>/fixtures/watch-debounce/src/index.ts
-
-🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" got checked for the first time! (3 issues) 🎉
-
-(press \\"q\\" to quit)
-",
-  "Filters (press \\"f\\" to edit): No current filter patterns
-Ignores (press \\"i\\" to edit): No current ignore patterns
-
-Checking 2 files... 🤔
-
-・ <project>/fixtures/watch-debounce/src/file.ts
-・ <project>/fixtures/watch-debounce/src/index.ts
+・ fixtures/watch-debounce/src/file.ts
+・ fixtures/watch-debounce/src/index.ts
 
 🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! (3 issues) 🎉
+✅ test: "test" got checked for the first time! (3 issues) 🎉
 
-(press \\"q\\" to quit)
+(press "ctrl+c" or "q" to quit)
 ",
-  "Filters (press \\"f\\" to edit): No current filter patterns
-Ignores (press \\"i\\" to edit): No current ignore patterns
+  "Filters (press "f" to edit): No current filter patterns
+Ignores (press "i" to edit): No current ignore patterns
 
 Checked 2 files! 🔍
 
-・ <project>/fixtures/watch-debounce/src/file.ts
-・ <project>/fixtures/watch-debounce/src/index.ts
+・ fixtures/watch-debounce/src/file.ts
+・ fixtures/watch-debounce/src/index.ts
 
 🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! (3 issues) 🎉
+✅ test: "test" got checked for the first time! (3 issues) 🎉
 
 1 test got checked. 🤔
 1 test got checked for the first time! 🎉
 
-(press \\"q\\" to quit)
+(press "ctrl+c" or "q" to quit)
 ",
   "Stopping watch mode... 👋
 ",

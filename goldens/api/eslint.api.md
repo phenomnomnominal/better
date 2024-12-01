@@ -8,9 +8,9 @@ import { BettererFileTest } from '@betterer/betterer';
 import type { Linter } from 'eslint';
 
 // @public
-export type BettererESLintRulesConfig = Record<string, Linter.RuleLevel | Linter.RuleLevelAndOptions>;
+export type BettererESLintConfig = Array<Linter.Config>;
 
 // @public
-export function eslint(rules: BettererESLintRulesConfig): BettererFileTest;
+export function eslint(...overrideConfig: BettererESLintConfig): BettererFileTest;
 
 ```

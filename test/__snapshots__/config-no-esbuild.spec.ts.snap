@@ -1,0 +1,14 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer > should throw with a .betterer.ts file when esbuild is not available 1`] = `
+[
+  "
+Error: could not import config from "fixtures/config-no-esbuild/.betterer.tsx". 😔
+
+Error: could not import "fixtures/config-no-esbuild/.betterer.tsx". 😔
+
+Error: Transform failed with 1 error:
+       fixtures/config-no-esbuild/.betterer.tsx:4:1: ERROR: Expected identifier but found "{"
+",
+]
+`;

@@ -1,16 +1,19 @@
 import { useCallback, useEffect, useRef, useState } from '@betterer/render';
-import { getPreciseTime__ } from '@betterer/time';
+import { getPreciseTimeΔ } from '@betterer/time';
 
 const DEFAULT_TASK_TIME_INTERVAL = 100;
 
-export type BettererTimerClear = () => void;
-
-export function useTimer(enable = true): [number, BettererTimerClear] {
+/**
+ * @internal This could change at any point! Please don't use!
+ *
+ * @returns the number of milliseconds since the timer started.
+ */
+export function useTimer(): number {
   const timer = useRef<NodeJS.Timeout | null>(null);
-  const [time, setTime] = useState(getPreciseTime__());
+  const [time, setTime] = useState(getPreciseTimeΔ());
 
   const updateTime = useCallback(() => {
-    setTime(getPreciseTime__());
+    setTime(getPreciseTimeΔ());
   }, []);
 
   const clearTime = useCallback(() => {
@@ -20,13 +23,10 @@ export function useTimer(enable = true): [number, BettererTimerClear] {
   }, []);
 
   useEffect(() => {
-    if (!enable) {
-      return;
-    }
     timer.current = setInterval(updateTime, DEFAULT_TASK_TIME_INTERVAL);
     updateTime();
     return clearTime;
   }, [updateTime, clearTime]);
 
-  return [time, clearTime];
+  return time;
 }

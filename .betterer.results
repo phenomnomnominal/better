@@ -3,3 +3,48 @@
 // If this file contains merge conflicts, use `betterer merge` to automatically resolve them:
 // https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
 //
+exports[`no hack comments`] = {
+  value: `{}`
+};
+
+exports[`no knip errors`] = {
+  value: `{
+    ".betterer.ts:194472954": [
+      [0, 0, 0, "Unused files", "3789190540"]
+    ],
+    "packages/betterer/src/fs/version-control.worker.ts:2897508041": [
+      [0, 0, 0, "Unused files", "3789190540"]
+    ],
+    "packages/docgen/package.json:2326583700": [
+      [0, 0, 0, "Unused dependencies: tslib", "975605642"]
+    ],
+    "packages/extension/package.json:710109374": [
+      [0, 0, 0, "Unused dependencies: lodash.debounce", "2305943112"],
+      [0, 0, 0, "Unused dependencies: vscode-languageclient", "2194305828"],
+      [0, 0, 0, "Unused dependencies: vscode-languageserver", "1576609144"],
+      [0, 0, 0, "Unused dependencies: vscode-languageserver-textdocument", "2013829255"],
+      [0, 0, 0, "Unused dependencies: vscode-uri", "2713846241"]
+    ],
+    "packages/fixture/package.json:4000629575": [
+      [0, 0, 0, "Unused dependencies: ansi-regex", "2577412447"]
+    ],
+    "tools/docs-filter.ts:893765149": [
+      [0, 0, 0, "Unused files", "3789190540"]
+    ],
+    "vitest.config.ts:1758587906": [
+      [0, 0, 0, "Unlisted dependencies: @vitest/coverage-v8", "423406117"]
+    ],
+    "website/package.json:2119283197": [
+      [0, 0, 0, "Unused dependencies: @algolia/client-search", "615397950"],
+      [0, 0, 0, "Unused dependencies: @docusaurus/core", "1623780400"],
+      [0, 0, 0, "Unused dependencies: @docusaurus/plugin-client-redirects", "1894418674"],
+      [0, 0, 0, "Unused dependencies: @docusaurus/preset-classic", "3564359911"],
+      [0, 0, 0, "Unused dependencies: @mdx-js/react", "3475488353"],
+      [0, 0, 0, "Unused dependencies: clsx", "1980870894"],
+      [0, 0, 0, "Unused dependencies: react", "964551243"],
+      [0, 0, 0, "Unused dependencies: react-dom", "2933334464"],
+      [0, 0, 0, "Unused dependencies: react-loadable", "4081059722"],
+      [0, 0, 0, "Unlisted binaries: docusaurus", "1661342944"]
+    ]
+  }`
+};

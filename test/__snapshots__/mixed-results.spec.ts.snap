@@ -1,0 +1,83 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer > should work when some tests gets worse and others get better 1`] = `
+[
+  "🌟 Betterer (0ms):
+",
+  "💥 Betterer (0ms): 4 tests done! 1 test errored!
+✅ should shrink: "should shrink" got checked for the first time! 🎉
+✅ should grow: "should grow" got checked for the first time! 🎉
+✅ should stay the same: "should stay the same" got checked for the first time! 🎉
+🔥 should fail: throws
+",
+  "💥 Betterer (0ms): 4 tests done! 1 test errored!
+✅ should shrink: "should shrink" got checked for the first time! 🎉
+✅ should grow: "should grow" got checked for the first time! 🎉
+✅ should stay the same: "should stay the same" got checked for the first time! 🎉
+🔥 should fail: throws
+
+Error: throws
+
+3 tests got checked. 🤔
+3 tests got checked for the first time! 🎉
+1 test failed to run. 🔥
+",
+  "🌟 Betterer (0ms):
+",
+  "💥 Betterer (0ms): 4 tests done! 2 tests errored!
+✅ should shrink: "should shrink" got better! 😍
+🔥 should grow: "should grow" got worse. 😔
+・ - Expected
+・ + Result
+・
+・ - -1
+・ + -2
+✅ should stay the same: "should stay the same" stayed the same. 😐
+🔥 should fail: throws
+",
+  "💥 Betterer (0ms): 4 tests done! 2 tests errored!
+✅ should shrink: "should shrink" got better! 😍
+🔥 should grow: "should grow" got worse. 😔
+・ - Expected
+・ + Result
+・
+・ - -1
+・ + -2
+✅ should stay the same: "should stay the same" stayed the same. 😐
+🔥 should fail: throws
+
+Error: throws
+
+3 tests got checked. 🤔
+1 test got better! 😍
+1 test stayed the same. 😐
+1 test failed to run. 🔥
+1 test got worse. 😔
+
+You should try to fix the new issues! As a last resort, you can run \`betterer --update\` to force an update of the results file. 🆙
+",
+]
+`;
+
+exports[`betterer > should work when some tests gets worse and others get better 2`] = `
+"// BETTERER RESULTS V2.
+//
+// If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
+// https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
+//
+exports[\`should shrink\`] = {
+  value: \`0
+\`
+};
+
+exports[\`should grow\`] = {
+  value: \`-1
+\`
+};
+
+exports[\`should stay the same\`] = {
+  value: \`1
+\`
+};
+"
+`;

@@ -1,4 +1,13 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["**/*.js", "**/*.ts", "**/*.tsx", ".eslintrc.js"]
+  "include": [
+    "**/*.js",
+    "**/*.ts",
+    "**/*.tsx",
+    "*.js",
+    "*.ts",
+    ".betterer.ts",
+    ".prettierrc.js",
+    "commitlint.config.cjs"
+  ]
 }

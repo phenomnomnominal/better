@@ -3,7 +3,7 @@ import path from 'node:path';
 
 interface ApiItem {
   canonicalReference: string;
-  members: Array<ApiItem>;
+  members?: Array<ApiItem>;
 }
 
 const MODELS_DIR = path.join(process.cwd(), 'goldens', 'models');
@@ -17,7 +17,9 @@ void (async () => {
     'coverage',
     'errors',
     'eslint',
+    'knip',
     'logger',
+    'reporter',
     'regexp',
     'stylelint',
     'tsquery',
@@ -44,11 +46,13 @@ async function removeInternalModules(includedPackages: Array<string>) {
 
 async function removeItems(toRemove: Record<string, Array<string>>) {
   await Promise.all(
-    Object.keys(toRemove).map(async (name) => {
+    Object.entries(toRemove).map(async ([name, memberNames]) => {
       const modelJSONPath = path.join(MODELS_DIR, `${name}${MODELS_EXTENSION}`);
       const modelJSON = await fs.readFile(modelJSONPath, 'utf-8');
       const model = JSON.parse(modelJSON) as ApiItem;
-      removeMembers(model.members, toRemove[name]);
+      if (model.members) {
+        removeMembers(model.members, memberNames);
+      }
       await fs.writeFile(modelJSONPath, JSON.stringify(model, null, 2), 'utf-8');
     })
   );

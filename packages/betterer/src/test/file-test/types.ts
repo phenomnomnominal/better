@@ -1,7 +1,6 @@
 import type { BettererFilePaths, BettererFileResolver } from '../../fs/index.js';
-import type { BettererDiff } from '../../test/index.js';
 import type { MaybeAsync } from '../../types.js';
-import type { BettererTestBase, BettererTestConfig } from '../types.js';
+import type { BettererDiff } from '../types.js';
 
 /**
  * @public A serialised {@link @betterer/betterer#BettererFileIssue | `BettererFileIssue`}.
@@ -14,9 +13,24 @@ export type BettererFileIssueSerialised = [line: number, column: number, length:
 export type BettererFileIssuesSerialised = ReadonlyArray<BettererFileIssueSerialised>;
 
 /**
+ * @internal This could change at any point! Please don't use!
+ *
+ * The properties that create a key for a specific issue on a serialised BettererFileTestResult
+ */
+export interface BettererFileTestResultKeyParts {
+  relativePath: string;
+  hash: string;
+}
+
+/**
+ * @public A lookup key for a specific issue on a serialised BettererFileTestResult
+ */
+export type BettererFileTestResultKey = `${string}:${string}`;
+
+/**
  * @public A map from file path to {@link @betterer/betterer#BettererFileIssuesSerialised | `BettererFileIssuesSerialised`}.
  */
-export type BettererFileTestResultSerialised = Record<string, BettererFileIssuesSerialised>;
+export type BettererFileTestResultSerialised = Record<BettererFileTestResultKey, BettererFileIssuesSerialised>;
 
 /**
  * @public A diff object for a single file.
@@ -51,8 +65,8 @@ export type BettererFileTestDiff = BettererDiff<BettererFilesDiff>;
  *
  * @param filePaths - The relevant file paths for this test run. Determined by taking the input file
  * paths (defined by Watch mode or the {@link @betterer/betterer#BettererConfig | global `includes`/`excludes` config})
- * and then validating them with the test {@link @betterer/betterer#BettererFileTest.include | `BettererFileTest.include()` }
- * and {@link @betterer/betterer#BettererFileTest.exclude | `BettererFileTest.exclude()` }.
+ * and then validating them with the test {@link @betterer/betterer#BettererResolverTest.include | `BettererResolverTest.include()` }
+ * and {@link @betterer/betterer#BettererResolverTest.exclude | `BettererResolverTest.exclude()` }.
  * @param fileTestResult - The {@link @betterer/betterer#BettererFileTestResult | `result`} for this test.
  * @param resolver - The {@link @betterer/betterer#BettererFileResolver | `resolver`} for this test.
  */
@@ -114,7 +128,7 @@ export interface BettererFileBase {
   /**
    * The key used for identifying the file in the {@link https://phenomnomnominal.github.io/betterer/docs/results-file | results file}.
    */
-  readonly key: string;
+  readonly key: BettererFileTestResultKey;
 }
 
 /**
@@ -176,25 +190,3 @@ export interface BettererFileTestResult {
    */
   getIssues(absolutePath?: string): BettererFileIssues;
 }
-
-/**
- * @internal This could change at any point! Please don't use!
- *
- * Utility type to improve readability
- */
-export type BettererFileTestBase = BettererTestBase<
-  BettererFileTestResult,
-  BettererFileTestResultSerialised,
-  BettererFilesDiff
->;
-
-/**
- * @internal This could change at any point! Please don't use!
- *
- * Utility type to improve readability
- */
-export type BettererFileTestConfig = BettererTestConfig<
-  BettererFileTestResult,
-  BettererFileTestResultSerialised,
-  BettererFilesDiff
->;

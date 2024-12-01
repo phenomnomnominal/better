@@ -312,12 +312,3 @@ Run `npm run betterer watch --ignore "**/*.js" --ignore "**/*.css"` to run **Bet
 :::info
 When running in [Watch mode](./running-betterer#watch-mode-run-your-tests-when-files-change), ignores can be updated on the fly by first pressing `i`, and then modifying the current ignore.
 :::
-
-## Debug mode
-
-If something isn't working correctly, it can be useful for debugging purposes to get a debug log. You can pass the following options to any of the run commands:
-
-| Option                     | Description                                                                   | Default           |
-| -------------------------- | ----------------------------------------------------------------------------- | ----------------- |
-| `-d`, `--debug`            | Enable debug mode. Also enables the `silent` option to hide reporters output. | `false`           |
-| `-l`, `--debug-log` [path] | Path to the debug log file.                                                   | `./.betterer.log` |

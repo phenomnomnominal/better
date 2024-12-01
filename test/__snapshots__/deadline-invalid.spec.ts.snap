@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer > should do throw when the deadline is not a valid date 1`] = `
+[
+  "
+Error: invalid deadline: Oi oi oi
+",
+]
+`;

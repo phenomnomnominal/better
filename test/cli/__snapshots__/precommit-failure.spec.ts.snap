@@ -1,0 +1,22 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer precommit > should not update the changeset when a test fails 1`] = `
+[
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 throws: running "throws"!
+",
+  "💥 Betterer (0ms): 1 test done! 1 test errored!
+🔥 throws:
+",
+  "💥 Betterer (0ms): 1 test done! 1 test errored!
+🔥 throws:
+
+Error:
+
+0 tests got checked. 🤔
+1 test failed to run. 🔥
+",
+]
+`;

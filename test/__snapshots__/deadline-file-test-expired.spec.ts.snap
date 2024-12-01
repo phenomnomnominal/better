@@ -1,31 +1,28 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer should mark a file test as expired when it is past its deadline 1`] = `
-Array [
+exports[`betterer > should mark a file test as expired when it is past its deadline 1`] = `
+[
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" got checked for the first time! (1 issue) 🎉
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! (1 issue) 🎉
-・ \\"test\\" has passed its deadline. 👻
+✅ test: "test" got checked for the first time! (1 issue) 🎉
+・ "test" has passed its deadline. 👻
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got checked for the first time! (1 issue) 🎉
-・ \\"test\\" has passed its deadline. 👻
+✅ test: "test" got checked for the first time! (1 issue) 🎉
+・ "test" has passed its deadline. 👻
 
 1 test got checked. 🤔
 1 test got checked for the first time! 🎉
-1 test has passed its deadline. 👻)
+1 test has passed its deadline. 👻
 ",
 ]
 `;
 
-exports[`betterer should mark a file test as expired when it is past its deadline 2`] = `
+exports[`betterer > should mark a file test as expired when it is past its deadline 2`] = `
 "// BETTERER RESULTS V2.
 //
 // If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
@@ -33,8 +30,8 @@ exports[`betterer should mark a file test as expired when it is past its deadlin
 //
 exports[\`test\`] = {
   value: \`{
-    \\"src/index.ts:4288672895\\": [
-      [0, 0, 11, \\"TSQuery match\\", \\"3870399096\\"]
+    "src/index.ts:4288672895": [
+      [0, 0, 11, "TSQuery match", "3870399096"]
     ]
   }\`
 };

@@ -1,9 +1,7 @@
-// eslint-disable-next-line import/no-unresolved -- vscode is an implicit dependency for extensions
 import type { ExtensionContext } from 'vscode';
 import type { ErrorAction, ErrorHandler } from 'vscode-languageclient/node';
 
 import assert from 'node:assert';
-// eslint-disable-next-line import/no-unresolved -- vscode is an implicit dependency for extensions
 import { commands } from 'vscode';
 import { CloseAction, LanguageClient } from 'vscode-languageclient/node';
 import { EXTENSION_NAME } from '../constants.js';
@@ -57,7 +55,9 @@ export async function activate(context: ExtensionContext): Promise<void> {
     client.onRequest(BettererNoLibraryRequest, (params) => noLibrary(client, context, params));
 
     context.subscriptions.push(
-      commands.registerCommand(COMMAND_NAMES.showOutputChannel, () => client.outputChannel.show()),
+      commands.registerCommand(COMMAND_NAMES.showOutputChannel, () => {
+        client.outputChannel.show();
+      }),
       started,
       status
     );

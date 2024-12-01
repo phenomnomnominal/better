@@ -11,7 +11,9 @@ const LOGO = `
  `;
 
 /**
- * @public Ink component for rendering an ASCII version of the {@link https://github.com/phenomnomnominal/betterer | **Betterer**}
+ * @internal This could change at any point! Please don't use!
+ *
+ * Ink component for rendering an ASCII version of the {@link https://github.com/phenomnomnominal/betterer | **Betterer**}
  * logo.
  */
 export const BettererLogo: FC = function BettererLogo() {

@@ -2,44 +2,47 @@ import type { BettererContext } from '@betterer/betterer';
 
 import type { ConfigEditField } from '../config/index.js';
 
-import { useInput, useState, useStdin } from '@betterer/render';
+import { useEffect, useState, useStdin } from '@betterer/render';
 
+// Stolen mostly from ink's `useInput` hook.
 export function useControls(context: BettererContext): ConfigEditField {
-  const { isRawModeSupported } = useStdin();
-
+  const { stdin } = useStdin();
   const [editing, setEditing] = useState<ConfigEditField>(null);
 
-  const canEdit = isRawModeSupported;
-  const useEdit = canEdit ? useInput : () => void 0;
+  useEffect(() => {
+    function handleData(data: string) {
+      const input = String(data);
+      const isReturn = input === '\r';
+      const isEscape = input === '\u001B';
 
-  isRawModeSupported &&
-    useEdit((input, key) => {
-      if (key.return) {
-        setEditing(null);
+      if (editing) {
+        if (isReturn || isEscape) {
+          setEditing(null);
+          return;
+        }
         return;
       }
 
-      if (key.escape) {
+      if (isEscape || input === 'q') {
         void context.stop();
         return;
-      }
-
-      if (editing != null) {
-        return;
-      }
-
-      // Don't exit on 'q' if the user is editing filters or ignores:
-      if (input === 'q') {
-        void context.stop();
       }
 
       if (input === 'f') {
         setEditing('filters');
+        return;
       }
+
       if (input === 'i') {
         setEditing('ignores');
+        return;
       }
-    });
+    }
 
+    stdin?.on('data', handleData);
+    return () => {
+      stdin?.off('data', handleData);
+    };
+  }, [editing]);
   return editing;
 }

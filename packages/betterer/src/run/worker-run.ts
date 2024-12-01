@@ -1,38 +1,57 @@
-import type { BettererConfig, BettererWorkerRunConfig } from '../config/index.js';
-import type { BettererFilePaths, BettererVersionControlWorker } from '../fs/index.js';
+import type { BettererLogger } from '@betterer/logger';
+
+import type { BettererFilePaths } from '../fs/index.js';
 import type { BettererResult } from '../results/index.js';
-import type { BettererDiff, BettererTestConfig, BettererTestMeta } from '../test/index.js';
-import type { BettererGlobals } from '../types.js';
-import type { BettererRun, BettererRunning, BettererRunSummary } from './types.js';
+import type {
+  BettererTest,
+  BettererTestConfig,
+  BettererTestFactory,
+  BettererTestMap,
+  BettererTestMeta
+} from '../test/index.js';
+import type { BettererRunMeta } from './meta/index.js';
+import type { BettererRun, BettererRunning, BettererRunningEnd, BettererRunSummary } from './types.js';
 
-import { BettererConstraintResult } from '@betterer/constraints';
-import { BettererError } from '@betterer/errors';
 import assert from 'node:assert';
+import { BettererConstraintResult } from '@betterer/constraints';
+import { BettererError, isBettererErrorΔ } from '@betterer/errors';
 
-import { createWorkerConfig } from '../config/index.js';
-import { forceRelativePaths } from '../fs/index.js';
-import { BettererResultsFileΩ, BettererResultΩ } from '../results/index.js';
-import { isBettererFileTest, loadTestMeta, isBettererTest } from '../test/index.js';
-import { BettererRunStatus, BettererRunSummaryΩ } from './run-summary.js';
+import { forceRelativePaths, importTranspiled } from '../fs/index.js';
+import { getGlobals } from '../globals.js';
+import { BettererResultΩ } from '../results/index.js';
+import { isBettererTest } from '../test/index.js';
+import { isFunction } from '../utils.js';
+import { BettererRunSummaryΩ } from './run-summary.js';
 
-export class BettererWorkerRunΩ implements BettererRun {
-  public readonly config: BettererConfig;
+export class BettererWorkerRunΩ implements BettererRun, BettererTestConfig {
   public readonly isNew: boolean;
+  public readonly isObsolete = false;
+  public readonly isRemoved = false;
   public readonly isSkipped: boolean;
-  public filePaths: BettererFilePaths | null = null;
+  public readonly name: string;
+
+  public readonly constraint = this._test.constraint;
+  public readonly deadline = this._test.deadline;
+  public readonly goal = this._test.goal;
+  public readonly test = this._test.test;
+  public readonly differ = this._test.differ;
+  public readonly printer = this._test.printer;
+  public readonly progress = this._test.progress;
+  public readonly serialiser = this._test.serialiser;
 
   private _baseline: BettererResultΩ | null = null;
   private _expected: BettererResultΩ | null = null;
+  private _filePaths: BettererFilePaths | null = null;
 
-  private constructor(
-    public readonly name: string,
-    public readonly globals: BettererGlobals,
+  constructor(
+    private _test: BettererTestConfig,
+    public readonly logger: BettererLogger,
     public readonly testMeta: BettererTestMeta,
-    public readonly test: BettererTestConfig
+    public readonly runMeta: BettererRunMeta
   ) {
-    this.config = globals.config;
-    this.isNew = testMeta.isNew;
-    this.isSkipped = testMeta.isSkipped;
+    this.isNew = runMeta.isNew;
+    this.isSkipped = runMeta.isSkipped;
+    this.name = testMeta.name;
   }
 
   public get baseline(): BettererResultΩ {
@@ -45,182 +64,164 @@ export class BettererWorkerRunΩ implements BettererRun {
     return this._expected;
   }
 
-  public static async create(
-    runConfig: BettererWorkerRunConfig,
-    name: string,
-    versionControl: BettererVersionControlWorker
-  ): Promise<BettererWorkerRunΩ> {
-    const config = await createWorkerConfig(runConfig);
-    const resultsFile = await BettererResultsFileΩ.create(config.resultsPath, versionControl);
-    const globals = { config, resultsFile, versionControl };
-
-    const isNew = !resultsFile.hasResult(name);
-
-    const testFactories = loadTestMeta(config.configPaths);
-    const testFactoryMeta = testFactories[name];
-    const test = await testFactoryMeta.factory();
-
-    const isTest = isBettererTest(test);
-    const isFileTest = isBettererFileTest(test);
-
-    if (!(isTest || isFileTest)) {
-      throw new BettererError(`"${name}" must return a \`BettererTest\`.`);
-    }
-
-    test.config.configPath = testFactoryMeta.configPath;
-
-    const baseTestMeta = {
-      name,
-      configPath: testFactoryMeta.configPath,
-      isFileTest,
-      isOnly: test.isOnly,
-      isSkipped: test.isSkipped
-    };
-
-    let testMeta: BettererTestMeta;
-    if (isNew) {
-      testMeta = {
-        ...baseTestMeta,
-        isNew: true,
-        baselineJSON: null,
-        expectedJSON: null
-      };
-    } else {
-      const [baselineJSON, expectedJSON] = resultsFile.getExpected(name);
-      testMeta = {
-        ...baseTestMeta,
-        isNew: false,
-        baselineJSON,
-        expectedJSON
-      };
-    }
-
-    return new BettererWorkerRunΩ(name, globals, testMeta, test.config);
+  public get filePaths(): BettererFilePaths | null {
+    return this._filePaths;
   }
 
   public async run(
     filePaths: BettererFilePaths | null,
-    isSkipped: boolean,
+    isFiltered: boolean,
     timestamp: number
   ): Promise<BettererRunSummary> {
-    this.filePaths = filePaths;
+    this.setFilePaths(filePaths);
 
-    if (!this.testMeta.isNew) {
-      this._baseline = this._deserialise(this.testMeta.baselineJSON);
-      this._expected = this._deserialise(this.testMeta.expectedJSON);
+    const { config, results } = getGlobals();
+    const { resultsPath } = config;
+
+    if (!this.runMeta.isNew) {
+      this._baseline = this._deserialise(await results.api.getBaseline(this.name));
+      this._expected = this._deserialise(await results.api.getExpected(this.name));
     }
 
-    const running = this._run(this.config, timestamp);
+    const running = this._run(timestamp);
 
-    if (isSkipped) {
+    if (this.runMeta.isSkipped || isFiltered) {
       return await running.skipped();
     }
 
-    try {
-      const result = new BettererResultΩ(await this.test.test(this));
-      return await running.done(result);
-    } catch (error) {
-      return await running.failed(error as BettererError);
-    }
+    // No try/catch - the main thread handles the `isFailed` case:
+    const result = await this.test(this);
+    const serialisedResult = await this.serialiser.serialise.call(this, result, resultsPath);
+    const printedResult = forceRelativePaths(await this.printer(serialisedResult), resultsPath);
+    return await running.done(new BettererResultΩ(result, printedResult));
+  }
+
+  public setFilePaths(newFilePaths: BettererFilePaths | null) {
+    this._filePaths = newFilePaths;
   }
 
   private _deserialise(resultJSON: string): BettererResultΩ | null {
     try {
       const serialised = JSON.parse(resultJSON) as unknown;
-      const { resultsPath } = this.config;
-      const { deserialise } = this.test.serialiser;
-      return new BettererResultΩ(deserialise(serialised, resultsPath));
+      const { config } = getGlobals();
+      return new BettererResultΩ(this.serialiser.deserialise(serialised, config.resultsPath), resultJSON);
     } catch {
       return null;
     }
   }
 
-  private _run(config: BettererConfig, timestamp: number): BettererRunning {
-    const end = async (
-      status: BettererRunStatus,
-      result: BettererResult | null = null,
-      diff: BettererDiff | null = null,
-      error: BettererError | null = null
-    ): Promise<BettererRunSummary> => {
-      const isBetter = status === BettererRunStatus.better;
-      const isSame = status === BettererRunStatus.same;
-      const isUpdated = status === BettererRunStatus.update;
-      const isSkipped = status === BettererRunStatus.skipped;
-      const isFailed = status === BettererRunStatus.failed;
-      const isWorse = status === BettererRunStatus.worse;
-
-      const baselineValue = this.isNew ? null : this.baseline.value;
-      const resultValue = !result ? null : result.value;
-
-      const delta = await this.test.progress(baselineValue, resultValue);
-
-      const { resultsPath, ci } = config;
-      const { serialise } = this.test.serialiser;
-
-      const resultSerialised = resultValue != null ? new BettererResultΩ(serialise(resultValue, resultsPath)) : null;
-      const baselineSerialised = this.isNew ? null : new BettererResultΩ(serialise(this.baseline.value, resultsPath));
-      const expectedSerialised = this.isNew ? null : new BettererResultΩ(serialise(this.expected.value, resultsPath));
-
-      const isComplete = resultValue != null && (await this.test.goal(resultValue));
-      const isExpired = timestamp >= this.test.deadline;
-      let printed: string | null = null;
-      const shouldPrint = !(isComplete || (this.isNew && (isFailed || isSkipped)));
-      if (shouldPrint) {
-        const toPrint = isFailed || isSkipped || isWorse ? this.expected : (result as BettererResult);
-        const toPrintSerialised = this.test.serialiser.serialise(toPrint.value, config.resultsPath);
-        printed = forceRelativePaths(await this.test.printer(toPrintSerialised), config.versionControlPath);
-      }
-
-      if (this.testMeta.isFileTest && !ci) {
-        if (isComplete) {
-          await this.globals.versionControl.api.clearCache(this.name);
-        } else if (isBetter || isSame || isUpdated || this.isNew) {
-          await this.globals.versionControl.api.updateCache(this.name, this.filePaths as Array<string>);
-        }
-      }
-
-      return new BettererRunSummaryΩ(
-        this,
-        resultSerialised,
-        baselineSerialised,
-        expectedSerialised,
-        status,
-        isComplete,
-        isExpired,
-        delta,
-        diff,
-        error,
-        printed,
-        timestamp
+  private _serialise(deserialised: BettererResult): BettererResultΩ | null {
+    try {
+      const { config } = getGlobals();
+      const deserialisedΩ = deserialised as BettererResultΩ;
+      return new BettererResultΩ(
+        this.serialiser.serialise.call(this, deserialisedΩ.value, config.resultsPath),
+        deserialisedΩ.printed
       );
-    };
+    } catch {
+      return null;
+    }
+  }
 
+  private _run(timestamp: number): BettererRunning {
     return {
       done: async (result: BettererResultΩ): Promise<BettererRunSummary> => {
         if (this.isNew) {
-          return await end(BettererRunStatus.new, result);
+          return await this._end({ comparison: null, result, timestamp });
         }
 
-        const comparison = await this.test.constraint(result.value, this.expected.value);
+        const comparison = await this.constraint(result.value, this.expected.value);
 
         if (comparison === BettererConstraintResult.same) {
-          return await end(BettererRunStatus.same, result);
+          return await this._end({ comparison, result, timestamp });
         }
 
-        const diff = this.test.differ(this.expected.value, result.value);
-        if (comparison === BettererConstraintResult.better) {
-          return await end(BettererRunStatus.better, result, diff);
-        }
-
-        const status = config.update ? BettererRunStatus.update : BettererRunStatus.worse;
-        return await end(status, result, diff);
-      },
-      failed: async (error: BettererError): Promise<BettererRunSummary> => {
-        return await end(BettererRunStatus.failed, null, null, error);
+        const diff = await this.differ(this.expected.value, result.value);
+        return await this._end({ comparison, diff, result, timestamp });
       },
       skipped: async (): Promise<BettererRunSummary> => {
-        return await end(BettererRunStatus.skipped);
+        return await this._end({ timestamp, isSkipped: true });
       }
     };
+  }
+
+  private async _end(end: BettererRunningEnd): Promise<BettererRunSummary> {
+    const { comparison, diff, result, timestamp, isSkipped } = end;
+    const { config } = getGlobals();
+
+    const isWorse = comparison === BettererConstraintResult.worse;
+    const isUpdated = isWorse && config.update;
+
+    const isComplete = !!result && (await this.goal(result.value));
+
+    const isExpired = timestamp >= this.deadline;
+
+    const baselineValue = this.isNew ? null : this.baseline.value;
+    const delta = result ? await this.progress(baselineValue, result.value) : null;
+
+    // Make sure to use the serialised result so it can be passed back to the main thread:
+    const serialisedResult = result ? this._serialise(result) : null;
+    const serialisedBaseline = !this.isNew ? this._serialise(this.baseline) : null;
+    const serialisedExpected = !this.isNew ? this._serialise(this.expected) : null;
+
+    // `logger` isn't included here, which is why we need the `as` but it will
+    // definitely be assigned on the main thread so it's okay!
+    return new BettererRunSummaryΩ({
+      baseline: serialisedBaseline,
+      delta,
+      diff: diff ?? null,
+      expected: serialisedExpected,
+      error: null,
+      filePaths: this.filePaths,
+      isBetter: comparison === BettererConstraintResult.better,
+      isComplete,
+      isExpired,
+      isFailed: false,
+      isNew: this.isNew,
+      isObsolete: this.isObsolete,
+      isRemoved: this.isRemoved,
+      isSame: comparison === BettererConstraintResult.same,
+      isSkipped: !!isSkipped,
+      isUpdated,
+      isWorse,
+      name: this.name,
+      result: serialisedResult,
+      timestamp
+    } as BettererRunSummary);
+  }
+}
+
+export async function loadTest(testMeta: BettererTestMeta): Promise<BettererTest> {
+  const { name } = testMeta;
+
+  let test: BettererTest | null = null;
+  try {
+    const factory = await loadTestFactory(testMeta);
+    test = await factory();
+  } catch (e) {
+    if (isBettererErrorΔ(e)) {
+      throw e;
+    }
+  }
+  const isTest = isBettererTest(test);
+
+  if (!test || !isTest) {
+    throw new BettererError(`"${name}" must return a \`BettererTest\`.`);
+  }
+
+  return test;
+}
+
+async function loadTestFactory(testMeta: BettererTestMeta): Promise<BettererTestFactory> {
+  const { configPath, name } = testMeta;
+  try {
+    const exports = (await importTranspiled(configPath)) as BettererTestMap;
+    const factory = exports[name];
+    if (!isFunction(factory)) {
+      throw new BettererError(`"${name}" must be a function.`);
+    }
+    return factory;
+  } catch (error) {
+    throw new BettererError(`could not create "${name}" from "${configPath}". 😔`, error as BettererError);
   }
 }

@@ -1,17 +1,21 @@
 {
   "name": "@betterer/coverage",
   "description": "A betterer test which ensures that test coverage increases over time",
-  "version": "5.4.0",
+  "version": "6.0.0-alpha.1",
   "license": "MIT",
   "publishConfig": {
     "access": "public"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "type": "module",
   "files": [
     "dist"
   ],
-  "author": "Lucas Treffenstädt <lucas.treffenstaedt@check24.de>",
+  "contributors": [
+    "Lucas Treffenstädt <lucas.treffenstaedt@check24.de>",
+    "Craig Spence <craigspence0@gmail.com>"
+  ],
   "homepage": "https://phenomnomnominal.github.io/betterer",
   "repository": {
     "type": "git",
@@ -25,18 +29,16 @@
     "api": "api-extractor run --local --verbose"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=16"
   },
   "dependencies": {
-    "@betterer/betterer": "^5.4.0",
-    "@betterer/constraints": "^5.3.0",
-    "@betterer/errors": "^5.3.0",
-    "@betterer/logger": "^5.3.4",
-    "minimatch": "^5.0.1",
-    "tslib": "^2.3.1"
+    "@betterer/betterer": "^6.0.0-alpha.1",
+    "@betterer/constraints": "^6.0.0-alpha.1",
+    "@betterer/errors": "^6.0.0-alpha.1",
+    "@betterer/logger": "^6.0.0-alpha.1"
   },
   "devDependencies": {
-    "@types/istanbul-lib-coverage": "2.0.4",
-    "@types/minimatch": "^3.0.5"
-  }
+    "@types/istanbul-lib-coverage": "2.0.4"
+  },
+  "gitHead": "821992635c8b6a4891169dad3334203f866e5521"
 }

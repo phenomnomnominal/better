@@ -1,0 +1,37 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer > should handle eslint rules that mark the entire line of code 1`] = `
+"// BETTERER RESULTS V2.
+//
+// If this file contains merge conflicts, use \`betterer merge\` to automatically resolve them:
+// https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
+//
+exports[\`test\`] = {
+  value: \`{
+    "src/index.ts:3395480044": [
+      [0, 0, 27, "eslint(@eslint-community/eslint-comments/no-unlimited-disable): Unexpected unlimited \\'eslint-disable-next-line\\' comment. Specify some rule names to disable.", "1912322876"],
+      [0, 0, 27, "eslint(@eslint-community/eslint-comments/require-description): Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary.", "1912322876"]
+    ]
+  }\`
+};
+"
+`;
+
+exports[`betterer > should handle eslint rules that mark the entire line of code 2`] = `
+[
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 test: running "test"!
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" got checked for the first time! (2 issues) 🎉
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" got checked for the first time! (2 issues) 🎉
+
+1 test got checked. 🤔
+1 test got checked for the first time! 🎉
+",
+]
+`;

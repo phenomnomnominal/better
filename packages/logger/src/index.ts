@@ -4,10 +4,7 @@
  * @packageDocumentation
  */
 
-export { code__ } from './code.js';
-export { diff__, diffStrings__ } from './diff.js';
-export { log__ } from './log.js';
-export {
+export type {
   BettererLogger,
   BettererLog,
   BettererLogMessage,
@@ -15,5 +12,9 @@ export {
   BettererLogs,
   BettererLoggerCodeInfo,
   BettererLoggerMessage,
-  BettererLoggerMessages
+  BettererLoggerMessages,
+  MaybeAsync
 } from './types.js';
+
+export { codeΔ } from './code.js';
+export { diffΔ, diffStringsΔ } from './diff.js';

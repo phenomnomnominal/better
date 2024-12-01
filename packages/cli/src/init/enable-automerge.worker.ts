@@ -1,7 +1,7 @@
 import type { BettererLogger } from '@betterer/logger';
 
 import { BettererError } from '@betterer/errors';
-import { exposeToMain__ } from '@betterer/worker';
+import { exposeToMainΔ } from '@betterer/worker';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 
@@ -10,15 +10,21 @@ const NEW_LINE = '\n';
 const MERGE_CONFIG = '[merge "betterer"]';
 const MERGE_DIRECTIVE = 'merge=betterer';
 
-export async function run(logger: BettererLogger, cwd: string, resultsPath: string): Promise<void> {
+/** @knipignore part of worker API */
+export async function run(
+  logger: BettererLogger,
+  status: BettererLogger,
+  cwd: string,
+  repoPath: string,
+  resultsPath: string
+): Promise<void> {
+  const gitDir = await validateGitRepo(repoPath);
+  const rootPath = path.dirname(gitDir);
+
   resultsPath = path.resolve(cwd, resultsPath);
 
-  await logger.progress(`enabling Betterer merge for "${resultsPath}" file...`);
-
-  const gitDir = await findGitRoot(cwd);
-  const rootDir = path.dirname(gitDir);
-
-  await Promise.all([gitconfig(logger, gitDir), gitattributes(logger, rootDir, resultsPath)]);
+  await status.progress(`enabling Betterer merge for "${resultsPath}" file...`);
+  await Promise.all([gitconfig(logger, gitDir), gitattributes(logger, rootPath, resultsPath)]);
 }
 
 async function gitconfig(logger: BettererLogger, gitDir: string): Promise<void> {
@@ -41,16 +47,16 @@ async function gitconfig(logger: BettererLogger, gitDir: string): Promise<void> 
   }
 
   const cliPath = require.resolve('@betterer/cli');
-  const mergePath = path.resolve(cliPath, '../../bin/betterer-merge');
-  const mergeCommand = `\tdriver = ${mergePath} %A %B`;
+  const mergePath = path.resolve(cliPath, '../../bin/betterer.js');
+  const mergeCommand = `\tdriver = ${mergePath} merge %A %B`;
 
   lines.push(MERGE_CONFIG, mergeCommand, '');
 
   try {
     await fs.writeFile(gitconfigPath, lines.join(NEW_LINE), 'utf-8');
     await logger.success(`added Betterer merge config to "${gitconfigPath}"!`);
-  } catch {
-    throw new BettererError(`could not write "${gitconfigPath}".`);
+  } catch (error) {
+    throw new BettererError(`could not write "${gitconfigPath}".`, error as Error);
   }
 }
 
@@ -84,23 +90,21 @@ async function gitattributes(logger: BettererLogger, rootDir: string, resultsPat
   try {
     await fs.writeFile(gitattributesPath, lines.join(NEW_LINE), 'utf-8');
     await logger.success(`added Betterer merge attribute to "${gitattributesPath}"!`);
+  } catch (error) {
+    throw new BettererError(`could not write "${gitattributesPath}".`, error as Error);
+  }
+}
+
+async function validateGitRepo(repoPath: string): Promise<string> {
+  try {
+    const gitPath = path.join(repoPath, '.git');
+    await fs.access(gitPath);
+    return gitPath;
   } catch {
-    throw new BettererError(`could not write "${gitattributesPath}".`);
+    throw new BettererError(
+      `".git" directory not found in "${repoPath}". \`--automerge\` only works within a Git repository.`
+    );
   }
 }
 
-async function findGitRoot(cwd: string): Promise<string> {
-  let dir = cwd;
-  while (dir !== path.parse(dir).root) {
-    try {
-      const gitPath = path.join(dir, '.git');
-      await fs.access(gitPath);
-      return gitPath;
-    } catch (err) {
-      dir = path.join(dir, '..');
-    }
-  }
-  throw new BettererError('.git directory not found. Betterer must be used within a git repository.');
-}
-
-exposeToMain__({ run });
+exposeToMainΔ({ run });

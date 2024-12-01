@@ -1,0 +1,22 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`betterer > shouldn't actually run the compiler when there are no valid files 1`] = `
+[
+  "🌟 Betterer (0ms):
+",
+  "🌟 Betterer (0ms): 1 test running...
+🤔 test: running "test"!
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" met its goal! 🎉
+・ No relevant files found. Are the \`include()\`/\`exclude()\` options for this test correct?
+",
+  "🎉 Betterer (0ms): 1 test done!
+✅ test: "test" met its goal! 🎉
+・ No relevant files found. Are the \`include()\`/\`exclude()\` options for this test correct?
+
+1 test got checked. 🤔
+1 test met its goal! 🎉
+",
+]
+`;

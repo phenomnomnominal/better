@@ -1,20 +1,17 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer --silent should be possible to unmute a subsequent run 1`] = `
-Array [
+exports[`betterer --silent > should be possible to unmute a subsequent run 1`] = `
+[
   "🌟 Betterer (0ms):
 ",
   "🌟 Betterer (0ms): 1 test running...
-🤔 test: running \\"test\\"!
-",
-  "🌟 Betterer (0ms): 1 test running...
-✅ test: \\"test\\" got better! 😍
+🤔 test: running "test"!
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got better! 😍
+✅ test: "test" got better! 😍
 ",
   "🎉 Betterer (0ms): 1 test done!
-✅ test: \\"test\\" got better! 😍
+✅ test: "test" got better! 😍
 
 1 test got checked. 🤔
 1 test got better! 😍

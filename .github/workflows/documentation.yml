@@ -11,26 +11,27 @@ jobs:
     if: github.event_name != 'push'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '16.x'
+          node-version: '20.x'
       - name: Test Build
         run: |
-          yarn install --frozen-lockfile
-          yarn api
-          yarn docs
+          npm install
+          npm run api
+          npm run docs
           cd website
-          yarn install --frozen-lockfile
-          yarn build
+          npm install
+          npm run build
   gh-release:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - name: Use node.js 20.x
+        uses: actions/setup-node@v4
         with:
-          node-version: '16.x'
+          node-version: '20.x'
       - name: Add key to allow access to repository
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
@@ -51,9 +52,9 @@ jobs:
         run: |
           git config --global user.email "actions@gihub.com"
           git config --global user.name "gh-actions"
-          yarn install --frozen-lockfile
-          yarn api
-          yarn docs
+          npm install
+          npm run api
+          npm run docs
           cd website
-          yarn install --frozen-lockfile
-          yarn deploy
+          npm install
+          npm run deploy

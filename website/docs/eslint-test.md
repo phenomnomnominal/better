@@ -8,14 +8,22 @@ slug: /eslint-test
 
 ### [`@betterer/eslint`](https://www.npmjs.com/package/@betterer/eslint)
 
-Use this test to incrementally introduce new [**ESLint**](https://eslint.org/) rules to your codebase. You can pass as many [rule configurations](https://eslint.org/docs/rules/) as you like:
+Use this test to incrementally introduce new [**ESLint**](https://eslint.org/) configuration to your codebase.
+
+From [`@betterer/eslint@6.0.0`](https://www.npmjs.com/package/@betterer/eslint), this test only works with ESLint's new flat config, so if you are using the old configuration format, you'll need to use an older version of `@betterer/eslint`.
 
 ```typescript
 import { eslint } from '@betterer/eslint';
 
 export default {
-  'no more debuggers': () => eslint({ 'no-debugger': 'error' }).include('./src/**/*.ts')
+  'new eslint rules': () =>
+    eslint({
+      rules: {
+        'no-debugger': 'error',
+        'no-unsafe-finally': 'error'
+      }
+    }).include('./src/*.ts')
 };
 ```
 
-[`@betterer/eslint`](https://www.npmjs.com/package/@betterer/eslint) is a [BettererFileTest](./betterer.bettererfiletest), so you can use [`include`](./betterer.bettererfiletest.include), [`exclude`](./betterer.bettererfiletest.exclude), [`only`](betterer.bettererfiletest.only), and [`skip`](betterer.bettererfiletest.skip).
+[`@betterer/eslint`](https://www.npmjs.com/package/@betterer/eslint) is a [BettererFileTest](./betterer.bettererfiletest), so you can use [`include`](./betterer.bettererresolvertest.include), [`exclude`](./betterer.bettererresolvertest.exclude), [`only`](betterer.bettererresolvertest.only), and [`skip`](betterer.bettererresolvertest.skip).

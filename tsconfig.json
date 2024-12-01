@@ -11,18 +11,20 @@
     "jsx": "react",
     "resolveJsonModule": true,
     "lib": ["esnext", "DOM"],
-    "module": "CommonJS",
+    "module": "ESNext",
     "moduleResolution": "node",
     "noEmitOnError": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
     "pretty": true,
+    "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
     "target": "ES2017",
-    "outDir": "./dist",
+    "noEmit": false,
     "typeRoots": ["./node_modules/@types", "./types"]
   }
 }

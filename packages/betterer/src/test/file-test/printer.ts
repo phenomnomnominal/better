@@ -1,15 +1,22 @@
 import type { BettererFileTestResultSerialised } from './types.js';
 
+import { isKey } from './serialiser.js';
+
 export function printer(serialised: BettererFileTestResultSerialised): string {
+  const keys = Object.keys(serialised);
+  if (keys.length === 0) {
+    return '{}';
+  }
   let printed = '{\n';
-  Object.keys(serialised)
+  keys
     .sort()
+    .filter(isKey)
     .forEach((filePath, index) => {
       const file = `    "${filePath}": [\n`;
       printed += prependNewline(index, file);
-      serialised[filePath].forEach((issue, index) => {
+      serialised[filePath]?.forEach((issue, index) => {
         const [line, column, length, message, hash] = issue;
-        const printedIssue = `      [${line}, ${column}, ${length}, ${JSON.stringify(message)}, ${JSON.stringify(
+        const printedIssue = `      [${String(line)}, ${String(column)}, ${String(length)}, ${JSON.stringify(message)}, ${JSON.stringify(
           hash
         )}]`;
         printed += prependNewline(index, printedIssue);

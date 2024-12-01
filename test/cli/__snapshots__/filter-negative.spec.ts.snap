@@ -1,18 +1,18 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`betterer cli should filter tests by name with negation 1`] = `
-Array [
+exports[`betterer cli > should filter tests by name with negation 1`] = `
+[
   "🌟 Betterer (0ms):
 ",
   "🎉 Betterer (0ms): 3 tests done!
-✅ test 1: \\"test 1\\" got checked for the first time! 🎉
-✅ test 2: \\"test 2\\" got checked for the first time! 🎉
-✅ test 3: \\"test 3\\" got checked for the first time! 🎉
+✅ test 1: "test 1" got checked for the first time! 🎉
+✅ test 2: "test 2" got checked for the first time! 🎉
+✅ test 3: "test 3" got checked for the first time! 🎉
 ",
   "🎉 Betterer (0ms): 3 tests done!
-✅ test 1: \\"test 1\\" got checked for the first time! 🎉
-✅ test 2: \\"test 2\\" got checked for the first time! 🎉
-✅ test 3: \\"test 3\\" got checked for the first time! 🎉
+✅ test 1: "test 1" got checked for the first time! 🎉
+✅ test 2: "test 2" got checked for the first time! 🎉
+✅ test 3: "test 3" got checked for the first time! 🎉
 
 3 tests got checked. 🤔
 3 tests got checked for the first time! 🎉
@@ -20,14 +20,14 @@ Array [
   "🌟 Betterer (0ms):
 ",
   "🎉 Betterer (0ms): 3 tests done!
-✅ test 1: \\"test 1\\" got skipped. 🚫
-✅ test 2: \\"test 2\\" stayed the same. 😐
-✅ test 3: \\"test 3\\" stayed the same. 😐
+✅ test 1: "test 1" got skipped. 🚫
+✅ test 2: "test 2" stayed the same. 😐
+✅ test 3: "test 3" stayed the same. 😐
 ",
   "🎉 Betterer (0ms): 3 tests done!
-✅ test 1: \\"test 1\\" got skipped. 🚫
-✅ test 2: \\"test 2\\" stayed the same. 😐
-✅ test 3: \\"test 3\\" stayed the same. 😐
+✅ test 1: "test 1" got skipped. 🚫
+✅ test 2: "test 2" stayed the same. 😐
+✅ test 3: "test 3" stayed the same. 😐
 
 2 tests got checked. 🤔
 2 tests stayed the same. 😐
@@ -36,14 +36,14 @@ Array [
   "🌟 Betterer (0ms):
 ",
   "🎉 Betterer (0ms): 3 tests done!
-✅ test 1: \\"test 1\\" stayed the same. 😐
-✅ test 2: \\"test 2\\" got skipped. 🚫
-✅ test 3: \\"test 3\\" got skipped. 🚫
+✅ test 1: "test 1" stayed the same. 😐
+✅ test 2: "test 2" got skipped. 🚫
+✅ test 3: "test 3" got skipped. 🚫
 ",
   "🎉 Betterer (0ms): 3 tests done!
-✅ test 1: \\"test 1\\" stayed the same. 😐
-✅ test 2: \\"test 2\\" got skipped. 🚫
-✅ test 3: \\"test 3\\" got skipped. 🚫
+✅ test 1: "test 1" stayed the same. 😐
+✅ test 2: "test 2" got skipped. 🚫
+✅ test 3: "test 3" got skipped. 🚫
 
 1 test got checked. 🤔
 1 test stayed the same. 😐
