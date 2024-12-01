@@ -1,7 +1,7 @@
 {
   "name": "@betterer/errors",
   "description": "error handler for @betterer/betterer",
-  "version": "6.0.0-alpha.0",
+  "version": "6.0.0-alpha.1",
   "license": "MIT",
   "publishConfig": {
     "access": "public"

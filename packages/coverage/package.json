@@ -1,7 +1,7 @@
 {
   "name": "@betterer/coverage",
   "description": "A betterer test which ensures that test coverage increases over time",
-  "version": "6.0.0-alpha.0",
+  "version": "6.0.0-alpha.1",
   "license": "MIT",
   "publishConfig": {
     "access": "public"
@@ -32,10 +32,10 @@
     "node": ">=16"
   },
   "dependencies": {
-    "@betterer/betterer": "^6.0.0-alpha.0",
-    "@betterer/constraints": "^6.0.0-alpha.0",
-    "@betterer/errors": "^6.0.0-alpha.0",
-    "@betterer/logger": "^6.0.0-alpha.0"
+    "@betterer/betterer": "^6.0.0-alpha.1",
+    "@betterer/constraints": "^6.0.0-alpha.1",
+    "@betterer/errors": "^6.0.0-alpha.1",
+    "@betterer/logger": "^6.0.0-alpha.1"
   },
   "devDependencies": {
     "@types/istanbul-lib-coverage": "2.0.4"

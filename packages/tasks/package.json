@@ -1,7 +1,7 @@
 {
   "name": "@betterer/tasks",
   "description": "task runner and loggerr for @betterer/betterer",
-  "version": "6.0.0-alpha.0",
+  "version": "6.0.0-alpha.1",
   "license": "MIT",
   "publishConfig": {
     "access": "public"
@@ -29,10 +29,10 @@
     "node": ">=16"
   },
   "dependencies": {
-    "@betterer/errors": "^6.0.0-alpha.0",
-    "@betterer/logger": "^6.0.0-alpha.0",
-    "@betterer/render": "^6.0.0-alpha.0",
-    "@betterer/time": "^6.0.0-alpha.0",
+    "@betterer/errors": "^6.0.0-alpha.1",
+    "@betterer/logger": "^6.0.0-alpha.1",
+    "@betterer/render": "^6.0.0-alpha.1",
+    "@betterer/time": "^6.0.0-alpha.1",
     "chalk": "^5.3.0"
   },
   "gitHead": "d71ead509ab75c4d2ab471a6876494ccd85c4217"
