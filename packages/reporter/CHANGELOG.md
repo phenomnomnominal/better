@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-alpha.0](https://github.com/phenomnomnominal/betterer/compare/v5.4.0...v6.0.0-alpha.0) (2024-12-01)
+
+
+### Features
+
+* **beterer ✨:** make logo optional ([#1137](https://github.com/phenomnomnominal/betterer/issues/1137)) ([b3d9cac](https://github.com/phenomnomnominal/betterer/commit/b3d9cac3633aa2e6365f196d06e4acd5937d4dbe))
+* **betterer ✨:** improve CLI output when files have changed but test results have not ([#1185](https://github.com/phenomnomnominal/betterer/issues/1185)) ([aeb46f8](https://github.com/phenomnomnominal/betterer/commit/aeb46f8f96e33b2defed0a178b10a2eaaab3c842))
+* **betterer ✨:** no more weird completed then new tests ([#1213](https://github.com/phenomnomnominal/betterer/issues/1213)) ([da704f2](https://github.com/phenomnomnominal/betterer/commit/da704f2e91b3b26a7f1cd6953a21bd623b3cb9c8))
+
+
+
+
+
 # [5.4.0](https://github.com/phenomnomnominal/betterer/compare/v5.3.6...v5.4.0) (2022-08-09)
 
 **Note:** Version bump only for package @betterer/reporter

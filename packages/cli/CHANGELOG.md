@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-alpha.0](https://github.com/phenomnomnominal/betterer/compare/v5.4.0...v6.0.0-alpha.0) (2024-12-01)
+
+
+### Bug Fixes
+
+* **betterer 🐛:** api stability ([#1235](https://github.com/phenomnomnominal/betterer/issues/1235)) ([d18c176](https://github.com/phenomnomnominal/betterer/commit/d18c176f22ca7c74f7b97a4dd16faaa639ff520e))
+
+
+* feat(betterer ✨)!: allow cache in CI mode (#1218) ([8cf8207](https://github.com/phenomnomnominal/betterer/commit/8cf8207ff3e23c7fd439b067e2c2981c0e4fae44)), closes [#1218](https://github.com/phenomnomnominal/betterer/issues/1218) [#1164](https://github.com/phenomnomnominal/betterer/issues/1164)
+
+
+### Features
+
+* **beterer ✨:** make logo optional ([#1137](https://github.com/phenomnomnominal/betterer/issues/1137)) ([b3d9cac](https://github.com/phenomnomnominal/betterer/commit/b3d9cac3633aa2e6365f196d06e4acd5937d4dbe))
+
+
+### BREAKING CHANGES
+
+* ci: true no longer disables the cache
+
+
+
+
+
 # [5.4.0](https://github.com/phenomnomnominal/betterer/compare/v5.3.6...v5.4.0) (2022-08-09)
 
 **Note:** Version bump only for package @betterer/cli

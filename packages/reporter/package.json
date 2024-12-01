@@ -1,7 +1,7 @@
 {
   "name": "@betterer/reporter",
   "description": "Default reporter @betterer/betterer",
-  "version": "5.4.0",
+  "version": "6.0.0-alpha.0",
   "license": "MIT",
   "publishConfig": {
     "access": "public"
@@ -29,11 +29,11 @@
     "node": ">=16"
   },
   "dependencies": {
-    "@betterer/betterer": "^5.4.0",
-    "@betterer/errors": "^5.3.0",
-    "@betterer/logger": "^5.3.4",
-    "@betterer/render": "^5.3.4",
-    "@betterer/tasks": "^5.3.6",
-    "@betterer/time": "^5.3.4"
+    "@betterer/betterer": "^6.0.0-alpha.0",
+    "@betterer/errors": "^6.0.0-alpha.0",
+    "@betterer/logger": "^6.0.0-alpha.0",
+    "@betterer/render": "^6.0.0-alpha.0",
+    "@betterer/tasks": "^6.0.0-alpha.0",
+    "@betterer/time": "^6.0.0-alpha.0"
   }
 }

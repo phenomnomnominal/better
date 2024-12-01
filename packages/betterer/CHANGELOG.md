@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-alpha.0](https://github.com/phenomnomnominal/betterer/compare/v5.4.0...v6.0.0-alpha.0) (2024-12-01)
+
+
+### Bug Fixes
+
+* **betterer 🐛:** api stability ([#1235](https://github.com/phenomnomnominal/betterer/issues/1235)) ([d18c176](https://github.com/phenomnomnominal/betterer/commit/d18c176f22ca7c74f7b97a4dd16faaa639ff520e))
+* **betterer 🐛:** handle -1 column fixes [#1202](https://github.com/phenomnomnominal/betterer/issues/1202) ([#1214](https://github.com/phenomnomnominal/betterer/issues/1214)) ([d26c395](https://github.com/phenomnomnominal/betterer/commit/d26c3958219a87168d21afbca53656fb0082d109))
+* **betterer 🐛:** handles more paths in results file, and some TypeScript error message fun ([#1226](https://github.com/phenomnomnominal/betterer/issues/1226)) ([ae555e6](https://github.com/phenomnomnominal/betterer/commit/ae555e60eb20b4d3f8ca7625d34e0eda210da011))
+* **betterer 🐛:** just use the string as the memoize key ([#1225](https://github.com/phenomnomnominal/betterer/issues/1225)) ([d897782](https://github.com/phenomnomnominal/betterer/commit/d8977824c2c66190d233dbf773aaf6294c3389d4))
+* **betterer 🐛:** remove printed from api ([#1233](https://github.com/phenomnomnominal/betterer/issues/1233)) ([e452b5e](https://github.com/phenomnomnominal/betterer/commit/e452b5e32358af2fc1c9f42684161f4990f17f9f))
+
+
+* feat(betterer ✨)!: allow cache in CI mode (#1218) ([8cf8207](https://github.com/phenomnomnominal/betterer/commit/8cf8207ff3e23c7fd439b067e2c2981c0e4fae44)), closes [#1218](https://github.com/phenomnomnominal/betterer/issues/1218) [#1164](https://github.com/phenomnomnominal/betterer/issues/1164)
+
+
+### Features
+
+* **beterer ✨:** make logo optional ([#1137](https://github.com/phenomnomnominal/betterer/issues/1137)) ([b3d9cac](https://github.com/phenomnomnominal/betterer/commit/b3d9cac3633aa2e6365f196d06e4acd5937d4dbe))
+* **betterer ✨:** no more git hashes for cache ([#1228](https://github.com/phenomnomnominal/betterer/issues/1228)) ([1b117d7](https://github.com/phenomnomnominal/betterer/commit/1b117d7fb3326defe5ae4dc7d16074fc2c42976e))
+* **betterer ✨:** no more weird completed then new tests ([#1213](https://github.com/phenomnomnominal/betterer/issues/1213)) ([da704f2](https://github.com/phenomnomnominal/betterer/commit/da704f2e91b3b26a7f1cd6953a21bd623b3cb9c8))
+* **betterer ✨:** specify different cache strategies ([#1232](https://github.com/phenomnomnominal/betterer/issues/1232)) ([df77035](https://github.com/phenomnomnominal/betterer/commit/df7703537910c320c0444e26582e8436947ff00d))
+
+
+### BREAKING CHANGES
+
+* ci: true no longer disables the cache
+
+
+
+
+
 # [5.4.0](https://github.com/phenomnomnominal/betterer/compare/v5.3.6...v5.4.0) (2022-08-09)
 
 **Note:** Version bump only for package @betterer/betterer

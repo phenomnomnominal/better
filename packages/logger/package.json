@@ -1,7 +1,7 @@
 {
   "name": "@betterer/logger",
   "description": "logger for @betterer/betterer",
-  "version": "5.3.4",
+  "version": "6.0.0-alpha.0",
   "license": "MIT",
   "publishConfig": {
     "access": "public"

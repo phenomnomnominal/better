@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-alpha.0](https://github.com/phenomnomnominal/betterer/compare/v5.4.0...v6.0.0-alpha.0) (2024-12-01)
+
+
+### Bug Fixes
+
+* **betterer 🐛:** improve docs, handle include and exclude, add tests, simplify ([#1219](https://github.com/phenomnomnominal/betterer/issues/1219)) ([285d432](https://github.com/phenomnomnominal/betterer/commit/285d4323896ac00dbf5cf44f94cba961d0605f37))
+
+
+
+
+
 # [5.4.0](https://github.com/phenomnomnominal/betterer/compare/v5.3.6...v5.4.0) (2022-08-09)
 
 **Note:** Version bump only for package @betterer/coverage

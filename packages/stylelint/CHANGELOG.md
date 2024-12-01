@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0-alpha.0](https://github.com/phenomnomnominal/betterer/compare/v5.4.0...v6.0.0-alpha.0) (2024-12-01)
+
+
+### Bug Fixes
+
+* **betterer 🐛:** api stability ([#1235](https://github.com/phenomnomnominal/betterer/issues/1235)) ([d18c176](https://github.com/phenomnomnominal/betterer/commit/d18c176f22ca7c74f7b97a4dd16faaa639ff520e))
+
+
+### Features
+
+* **betterer ✨:** add more details to file issues ([#1211](https://github.com/phenomnomnominal/betterer/issues/1211)) ([5a53e45](https://github.com/phenomnomnominal/betterer/commit/5a53e45b4d51e643458c21bd911b5500e698a1a8))
+* **betterer ✨:** specify different cache strategies ([#1232](https://github.com/phenomnomnominal/betterer/issues/1232)) ([df77035](https://github.com/phenomnomnominal/betterer/commit/df7703537910c320c0444e26582e8436947ff00d))
+
+
+
+
+
 # [5.4.0](https://github.com/phenomnomnominal/betterer/compare/v5.3.6...v5.4.0) (2022-08-09)
 
 **Note:** Version bump only for package @betterer/stylelint

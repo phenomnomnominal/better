@@ -21,7 +21,7 @@
     "packages/worker"
   ],
   "npmClient": "npm",
-  "version": "5.4.0",
+  "version": "6.0.0-alpha.0",
   "command": {
     "publish": {
       "conventionalCommits": true

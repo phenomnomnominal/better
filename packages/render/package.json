@@ -1,7 +1,7 @@
 {
   "name": "@betterer/render",
   "description": "Renderer for @betterer/betterer",
-  "version": "5.3.4",
+  "version": "6.0.0-alpha.0",
   "license": "MIT",
   "publishConfig": {
     "access": "public"
@@ -35,8 +35,8 @@
     "@rollup/plugin-replace": "^5.0.5",
     "@rollup/plugin-typescript": "^11.1.6",
     "ink": "^3.0.9",
-    "ink-text-input": "^4.0.1",
     "ink-link": "^2.0.0",
+    "ink-text-input": "^4.0.1",
     "rollup": "^4.14.3"
   }
 }
