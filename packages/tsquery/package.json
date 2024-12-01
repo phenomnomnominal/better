@@ -32,5 +32,6 @@
     "@betterer/betterer": "^6.0.0-alpha.0",
     "@betterer/errors": "^6.0.0-alpha.0",
     "@phenomnomnominal/tsquery": "^6.1.3"
-  }
+  },
+  "gitHead": "d71ead509ab75c4d2ab471a6876494ccd85c4217"
 }

@@ -35,5 +35,6 @@
     "@betterer/render": "^6.0.0-alpha.0",
     "@betterer/tasks": "^6.0.0-alpha.0",
     "@betterer/time": "^6.0.0-alpha.0"
-  }
+  },
+  "gitHead": "d71ead509ab75c4d2ab471a6876494ccd85c4217"
 }

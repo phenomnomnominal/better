@@ -26,7 +26,7 @@
     "node": ">=16"
   },
   "dependencies": {
-    "@betterer/betterer": "^5.4.0",
+    "@betterer/betterer": "^6.0.0-alpha.0",
     "ansi-regex": "^5.0.0"
   },
   "devDependencies": {
