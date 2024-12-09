@@ -1,4 +1,4 @@
-import type { CompilerOptions } from '@angular/compiler-cli';
+import type { CompilerOptions, Program } from '@angular/compiler-cli';
 import type { DiagnosticWithLocation } from 'typescript';
 
 import { performCompilation, readConfiguration } from '@angular/compiler-cli';
@@ -54,7 +54,15 @@ export function angular(configFilePath: string, extraCompilerOptions: CompilerOp
 
     const { diagnostics } = performCompilation({
       rootNames,
-      options
+      options,
+      gatherDiagnostics: (program: Program) => [
+        ...program.getNgOptionDiagnostics(),
+        ...program.getNgSemanticDiagnostics(),
+        ...program.getNgStructuralDiagnostics(),
+        ...program.getTsOptionDiagnostics(),
+        ...program.getTsSemanticDiagnostics(),
+        ...program.getTsSyntacticDiagnostics(),
+      ]
     });
 
     diagnostics.forEach((diagnostic) => {
